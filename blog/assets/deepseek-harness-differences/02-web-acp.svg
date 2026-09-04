@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="630" viewBox="0 0 640 630" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Web 与 ACP：不同的应用入口</title>
+  <desc id="desc">Web 和 ACP 分别复用 Base Bundle。Web 增加界面、服务和会话级 Preset，面向浏览器用户；ACP 增加协议服务，面向自动化程序。两种 Profile 各自启动运行时。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#496277"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
+      .title { font-size: 30px; font-weight: 700; text-anchor: start; }
+      .label { font-size: 28px; font-weight: 600; }
+      .copy { font-size: 24px; }
+      .line { fill: none; stroke: #496277; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="640" height="630" rx="16" fill="#f6f8fb"/>
+  <text class="title" x="32" y="52">Web 与 ACP：不同的应用入口</text>
+  <rect x="32" y="88" width="576" height="130" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
+  <text class="label" x="320" y="128">Base Bundle</text>
+  <text class="copy" x="320" y="166">模型 · 工具 · 会话持久化</text>
+  <text class="copy" x="320" y="202">权限策略等基础能力</text>
+  <path class="line" d="M320 218V244H170V272"/>
+  <path class="line" d="M320 244H470V272"/>
+  <rect x="32" y="282" width="276" height="276" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
+  <text class="label" x="170" y="324">web</text>
+  <path d="M56 342H284" stroke="#b3c5da"/>
+  <text class="copy" x="170" y="380">Web 应用层</text>
+  <text class="copy" x="170" y="420">界面与服务</text>
+  <text class="copy" x="170" y="460">会话级 Preset</text>
+  <rect x="52" y="486" width="236" height="52" rx="8" fill="#ffffff"/>
+  <text class="copy" x="170" y="520">浏览器中的人</text>
+  <rect x="332" y="282" width="276" height="276" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
+  <text class="label" x="470" y="324">acp</text>
+  <path d="M356 342H584" stroke="#b3c5da"/>
+  <text class="copy" x="470" y="380">ACP 应用层</text>
+  <text class="copy" x="470" y="420">协议服务</text>
+  <text class="copy" x="470" y="460">请求与更新</text>
+  <rect x="352" y="486" width="236" height="52" rx="8" fill="#ffffff"/>
+  <text class="copy" x="470" y="520">自动化程序</text>
+  <text class="copy" x="320" y="604">各自启动运行时，复用配置与插件</text>
+</svg>

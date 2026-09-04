@@ -95,6 +95,7 @@ Cordis 回答插件如何协作并遵守生命周期，Plugin / Bundle / Profile
 <a id="further-exploration"></a>
 ## 延伸阅读
 
+- [DeepSeek Harness 有什么不同：从插件组合到会话恢复](deepseek-harness-differences.md) — 从 Web／ACP、SDK／SDK Minimal 和会话恢复理解 DSH 的可见能力。
 - [DeepSeek Harness 官方发布页](https://www.deepseek.com/harness/en/) — 官方对插件化、可追溯运行和多种模式的概括。
 - [仓库架构文档](../docs/architecture.zh.md) — 当前实现所遵守的组合、事件、Session Log 与扩展规则。
 - [Cordis 入门](../docs/cordis-primer.zh.md) — Context、Service、Event 与可逆 Effect 的基本语义。

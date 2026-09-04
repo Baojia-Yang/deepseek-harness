@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="744" viewBox="0 0 640 744" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">从配置层到运行中的插件树</title>
+  <desc id="desc">Profile 选择按顺序应用的 Bundle Patch，再叠加 Profile、Home 和本次启动的用户 Patch，形成最终插件配置。Cordis 根据配置挂载插件树。树边表示挂载关系，子节点以能力类别示意。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#496277"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
+      .title { font-size: 30px; font-weight: 700; text-anchor: start; }
+      .label { font-size: 26px; font-weight: 600; }
+      .copy { font-size: 24px; }
+      .line { fill: none; stroke: #496277; stroke-width: 2.5; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; }
+    </style>
+  </defs>
+  <rect width="640" height="744" rx="16" fill="#f6f8fb"/>
+  <text class="title" x="32" y="52">从配置层到运行中的插件树</text>
+  <rect x="32" y="84" width="576" height="94" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
+  <text class="label" x="320" y="123">Profile 选择有序 Bundle</text>
+  <text class="copy" x="320" y="160">Bundle 的 Patch 按顺序应用</text>
+  <path class="line" d="M320 178V204"/>
+  <rect x="32" y="214" width="576" height="100" rx="12" fill="#fff2d9" stroke="#c3a668"/>
+  <text class="label" x="320" y="254">继续叠加用户 Patch</text>
+  <text class="copy" x="320" y="291">Profile → Home → 本次启动</text>
+  <path class="line" d="M320 314V346"/>
+  <rect x="32" y="356" width="576" height="64" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
+  <text class="label" x="320" y="398">最终插件配置</text>
+  <path d="M320 420V438" stroke="#496277" stroke-width="2.5"/>
+  <text class="copy" x="320" y="472">Cordis 挂载</text>
+  <path class="line" d="M320 488V510"/>
+  <rect x="32" y="520" width="576" height="196" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
+  <rect x="204" y="538" width="232" height="52" rx="8" fill="#e5eef9"/>
+  <text class="label" x="320" y="573">Plugin Tree</text>
+  <path class="tree" d="M320 590V614H140V642M320 614V642M320 614H500V642"/>
+  <rect x="60" y="642" width="160" height="52" rx="8" fill="#dff2ec" stroke="#6b9e90"/>
+  <rect x="240" y="642" width="160" height="52" rx="8" fill="#dff2ec" stroke="#6b9e90"/>
+  <rect x="420" y="642" width="160" height="52" rx="8" fill="#dff2ec" stroke="#6b9e90"/>
+  <text class="copy" x="140" y="677">服务插件</text>
+  <text class="copy" x="320" y="677">工具插件</text>
+  <text class="copy" x="500" y="677">入口插件</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="680" viewBox="0 0 640 680" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">同一份日志，生成多种视图</title>
+  <desc id="desc">输入、模型响应、工具调用和结果进入只追加的 Session Log。同一份日志生成模型上下文、供用户查看的会话执行历史和持久会话状态，并为恢复和分叉提供记录依据。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#496277"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
+      .title { font-size: 30px; font-weight: 700; text-anchor: start; }
+      .label { font-size: 26px; font-weight: 600; }
+      .copy { font-size: 24px; }
+      .inverse { fill: #ffffff; }
+      .line { fill: none; stroke: #496277; stroke-width: 2.5; marker-end: url(#arrow); }
+      .branch { fill: none; stroke: #496277; stroke-width: 2.5; }
+    </style>
+  </defs>
+  <rect width="640" height="680" rx="16" fill="#f6f8fb"/>
+  <text class="title" x="32" y="52">同一份日志，生成多种视图</text>
+  <rect x="32" y="88" width="576" height="76" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
+  <text class="copy" x="320" y="136">输入 · 模型响应 · 工具调用与结果</text>
+  <path class="line" d="M147 164V206"/>
+  <rect x="32" y="216" width="230" height="432" rx="12" fill="#17324d"/>
+  <text class="label inverse" x="147" y="276">Session Log</text>
+  <path d="M56 303H238" stroke="#60758a"/>
+  <text class="copy inverse" x="147" y="370">按顺序追加</text>
+  <text class="copy inverse" x="147" y="414">保存会话事实</text>
+  <text class="copy inverse" x="147" y="458">保留历史依据</text>
+  <path class="branch" d="M262 432H292M292 260V602"/>
+  <path class="line" d="M292 260H318"/>
+  <path class="line" d="M292 374H318"/>
+  <path class="line" d="M292 488H318"/>
+  <path class="line" d="M292 602H318"/>
+  <rect x="328" y="216" width="280" height="90" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
+  <text class="label" x="468" y="249">模型上下文</text>
+  <text class="copy" x="468" y="289">下一次请求使用</text>
+  <rect x="328" y="330" width="280" height="90" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
+  <text class="label" x="468" y="363">会话执行历史</text>
+  <text class="copy" x="468" y="403">供用户查看</text>
+  <rect x="328" y="444" width="280" height="90" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
+  <text class="label" x="468" y="477">持久会话状态</text>
+  <text class="copy" x="468" y="517">如 Goal、Todo</text>
+  <rect x="328" y="558" width="280" height="90" rx="12" fill="#dff2ec" stroke="#6b9e90"/>
+  <text class="label" x="468" y="591">恢复与分叉</text>
+  <text class="copy" x="468" y="631">从历史继续工作</text>
+</svg>

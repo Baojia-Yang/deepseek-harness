@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">SDK 接口相同，能力组合不同</title>
+  <desc id="desc">sdk 使用 Base 加 SDK 应用层，提供默认工具、上下文和配套服务。sdk-minimal 使用独立 Bundle，默认提供持久 Shell、文本编辑及精简提示上下文。两者都保留 SDK 协议、Agent Loop 和 Session Log。</desc>
+  <style>
+    text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
+    .title { font-size: 30px; font-weight: 700; text-anchor: start; }
+    .label { font-size: 28px; font-weight: 600; }
+    .copy { font-size: 24px; }
+  </style>
+  <rect width="640" height="640" rx="16" fill="#f6f8fb"/>
+  <text class="title" x="32" y="52">SDK 接口相同，能力组合不同</text>
+  <rect x="32" y="88" width="276" height="402" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
+  <text class="label" x="170" y="136">sdk</text>
+  <text class="copy" x="170" y="178">Base + SDK App</text>
+  <path d="M56 202H284" stroke="#b3c5da"/>
+  <text class="copy" x="170" y="256">默认工具与上下文</text>
+  <text class="copy" x="170" y="306">Skill、子 Agent</text>
+  <text class="copy" x="170" y="356">压缩、设置等服务</text>
+  <rect x="52" y="418" width="236" height="52" rx="8" fill="#ffffff"/>
+  <text class="copy" x="170" y="452">完整默认组合</text>
+  <rect x="332" y="88" width="276" height="402" rx="12" fill="#dff2ec" stroke="#6b9e90"/>
+  <text class="label" x="470" y="136">sdk-minimal</text>
+  <text class="copy" x="470" y="178">独立 Bundle</text>
+  <path d="M356 202H584" stroke="#a3c6ba"/>
+  <text class="copy" x="470" y="256">持久 Shell</text>
+  <text class="copy" x="470" y="306">文本编辑</text>
+  <text class="copy" x="470" y="356">精简提示上下文</text>
+  <rect x="352" y="418" width="236" height="52" rx="8" fill="#ffffff"/>
+  <text class="copy" x="470" y="452">精简默认组合</text>
+  <rect x="32" y="518" width="576" height="98" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
+  <text class="copy" x="320" y="552">两者都保留</text>
+  <text class="copy" x="320" y="594">SDK 协议 · Agent Loop · Session Log</text>
+</svg>
