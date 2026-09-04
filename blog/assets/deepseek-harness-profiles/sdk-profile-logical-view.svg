@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1390" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">DeepSeek Harness SDK Profile 逻辑视图</title>
+  <desc id="desc">展示 SDK Profile 如何从 dsh-base 与 dsh-sdk-app 生成 stdio JSON-RPC Runtime，以及 TypeScript 或 Python SDK 客户端如何初始化运行时、按 sessionId 惰性创建多个 Agent 并接收事件通知。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#667085"/></marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; } .page-subtitle { font-size: 17px; fill: #667085; }
+      .section-title { font-size: 21px; font-weight: 750; } .section-copy { font-size: 15px; fill: #667085; }
+      .card-title { font-size: 20px; font-weight: 750; } .card-subtitle { font-size: 15px; font-weight: 650; }
+      .copy { font-size: 14px; fill: #475467; } .small { font-size: 13px; fill: #667085; } .chip { font-size: 13px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; } .inverse { fill: #FFFFFF; } .inverse-muted { fill: #DDE7F2; }
+      .section { fill: #FFFFFF; stroke: #D8DEE8; stroke-width: 1.5; } .card { stroke-width: 1.4; }
+      .edge { fill: none; stroke: #667085; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.4; marker-end: url(#arrow-blue); }
+      .edge-back { fill: none; stroke: #8795A8; stroke-width: 1.8; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .edge-label { font-size: 13px; font-weight: 650; fill: #667085; }
+    </style>
+  </defs>
+  <rect width="1600" height="1390" fill="#F5F7FA"/>
+  <text class="page-title" x="54" y="54">SDK Profile：完整 Harness 的 stdio Runtime</text>
+  <text class="page-subtitle" x="54" y="84">TypeScript / Python SDK 通过 DeepSeek Harness JSON-RPC 协议驱动同一进程内的多个 Session Agent。</text>
+
+  <rect class="section" x="40" y="112" width="1520" height="300" rx="22"/>
+  <rect x="64" y="134" width="188" height="34" rx="17" fill="#E8F1FC"/><text class="section-title" x="82" y="158" fill="#175EA8">1　启动装配</text>
+  <text class="section-copy" x="275" y="157">dsh-base 提供完整能力，dsh-sdk-app 增加 SDK stdio 应用入口</text>
+  <rect class="card" x="72" y="190" width="260" height="158" rx="15" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="94" y="222">SDK Profile</text><text class="copy" x="94" y="250">名称：<tspan class="mono" font-weight="700">sdk</tspan></text>
+  <text class="small mono" x="94" y="277">1. dsh-base</text><text class="small mono" x="94" y="299">2. dsh-sdk-app</text>
+  <rect x="94" y="313" width="154" height="24" rx="12" fill="#CFE5FA"/><text class="chip" x="171" y="330" text-anchor="middle" fill="#175EA8">Patch Reload: startup</text>
+  <path class="edge-blue" d="M332 269 H380"/><text class="edge-label" x="356" y="252" text-anchor="middle">选择、排序</text>
+  <rect class="card" x="388" y="190" width="422" height="158" rx="15" fill="#F8FAFC" stroke="#98A2B3" filter="url(#shadow)"/>
+  <text class="card-title" x="410" y="222">Bundle Patch 层</text>
+  <rect x="410" y="244" width="178" height="73" rx="12" fill="#EAF3FF" stroke="#78AEE3"/><text class="card-subtitle mono" x="428" y="272">① dsh-base</text><text class="small" x="428" y="297">完整产品 Runtime</text>
+  <rect x="610" y="244" width="178" height="73" rx="12" fill="#EEE9FF" stroke="#9983D8"/><text class="card-subtitle mono" x="628" y="272">② dsh-sdk-app</text><text class="small" x="628" y="297">Startup + JSON-RPC Server</text>
+  <path class="edge-blue" d="M810 269 H860"/><text class="edge-label" x="835" y="252" text-anchor="middle">依次应用</text>
+  <rect class="card" x="868" y="190" width="278" height="158" rx="15" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="card-title" x="890" y="222">Loader 配置</text><text class="copy" x="890" y="251">base 行 + sdk-app 行</text>
+  <line x1="890" y1="268" x2="1124" y2="268" stroke="#E3C984"/><text class="small" x="890" y="292">禁用模型生成 Session Title</text><text class="small" x="890" y="316">stdout 仅承载 JSON-RPC Frame</text>
+  <path class="edge-blue" d="M1146 269 H1196"/><text class="edge-label" x="1171" y="252" text-anchor="middle">实例化</text>
+  <rect class="card" x="1204" y="190" width="316" height="158" rx="15" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="card-title inverse" x="1226" y="223">SDK Runtime 进程</text><text class="copy inverse-muted" x="1226" y="252">newline-delimited JSON-RPC / stdio</text>
+  <line x1="1226" y1="269" x2="1498" y2="269" stroke="#667085"/><text class="small inverse" x="1226" y="294">长期服务一个 SDK 客户端连接</text><text class="small inverse" x="1226" y="318">shutdown / EOF / Signal 触发释放</text>
+  <rect x="388" y="365" width="824" height="29" rx="14.5" fill="#F2F4F7"/><text class="small" x="800" y="385" text-anchor="middle">SDK 是外部协议入口；Agent Loop、Session、工具和安全策略仍由 dsh-base 提供。</text>
+
+  <rect class="section" x="40" y="440" width="1520" height="392" rx="22"/>
+  <rect x="64" y="462" width="188" height="34" rx="17" fill="#EEE9FF"/><text class="section-title" x="82" y="486" fill="#6849B8">2　进程运行时</text>
+  <text class="section-copy" x="275" y="485">一棵进程级插件树；SDK Server 是协议适配器，不替代完整 Harness Runtime</text>
+  <rect x="72" y="518" width="1456" height="280" rx="18" fill="#FBFCFE" stroke="#98A2B3" stroke-width="1.6"/>
+  <rect x="94" y="538" width="318" height="32" rx="16" fill="#344054"/><text class="chip inverse" x="253" y="560" text-anchor="middle">SDK Process · Cordis Root</text>
+  <rect class="card" x="98" y="592" width="416" height="170" rx="15" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-title" x="118" y="625">dsh-base 完整 Runtime</text><text class="copy" x="118" y="654">LLM · Session/Persistence · Agent Loop</text><text class="copy" x="118" y="680">完整 Tools / Skills · Sandbox · Approval</text><text class="copy" x="118" y="706">Settings · Credentials · Telemetry · Compaction</text>
+  <rect x="118" y="720" width="248" height="25" rx="12.5" fill="#CFE5FA"/><text class="chip" x="242" y="738" text-anchor="middle" fill="#175EA8">Agent 组合位于进程全局层</text>
+  <path class="edge" d="M514 677 H558"/>
+  <rect class="card" x="566" y="592" width="416" height="170" rx="15" fill="#EEE9FF" stroke="#9983D8"/>
+  <text class="card-title" x="586" y="625">dsh-sdk-app</text><text class="copy" x="586" y="654">sdk-app-startup：零选项命令与关闭</text><text class="copy" x="586" y="680">sdk-jsonrpc-server：请求与通知映射</text><text class="copy" x="586" y="706">initialize 是 Loader 就绪边界</text>
+  <rect x="586" y="720" width="232" height="25" rx="12.5" fill="#DCD3FA"/><text class="chip" x="702" y="738" text-anchor="middle" fill="#6849B8">stdout 只允许协议帧</text>
+  <path class="edge" d="M982 677 H1026"/>
+  <rect class="card" x="1034" y="592" width="468" height="170" rx="15" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="card-title" x="1054" y="625">按 sessionId 管理 Agent</text><text class="copy" x="1054" y="654">未知 sessionId 首次 prompt 时惰性创建</text><text class="copy" x="1054" y="680">多个 Agent / Session 可在一个进程并存</text><text class="copy" x="1054" y="706">事件与状态实时投影为协议通知</text>
+  <rect x="1054" y="720" width="244" height="25" rx="12.5" fill="#D9F2E3"/><text class="chip" x="1176" y="738" text-anchor="middle" fill="#167047">没有 dsh-agent-presets</text>
+
+  <rect class="section" x="40" y="860" width="1520" height="446" rx="22"/>
+  <rect x="64" y="882" width="188" height="34" rx="17" fill="#E8F7F2"/><text class="section-title" x="82" y="906" fill="#16785E">3　协议与多会话</text>
+  <text class="section-copy" x="275" y="905">一次 initialize 固定运行时选择；不同 sessionId 对应不同 Session Agent</text>
+  <rect class="card" x="78" y="958" width="300" height="188" rx="16" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="100" y="992">TypeScript / Python SDK</text><text class="copy" x="100" y="1021">启动 <tspan class="mono">dsh --profile sdk</tspan></text><text class="copy" x="100" y="1047">发送 initialize / session/prompt</text><text class="copy" x="100" y="1073">接收 session.event / status</text>
+  <line x1="100" y1="1092" x2="356" y2="1092" stroke="#B6D2ED"/><text class="small" x="100" y="1117">客户端拥有 cwd、模型选择和 sessionId</text>
+  <path class="edge-blue" d="M378 1035 H442"/><text class="edge-label" x="410" y="1018" text-anchor="middle">stdio 请求</text>
+  <path class="edge-back" d="M442 1090 H386"/><text class="edge-label" x="414" y="1110" text-anchor="middle">通知</text>
+  <rect class="card" x="450" y="958" width="330" height="188" rx="16" fill="#EEE9FF" stroke="#9983D8" filter="url(#shadow)"/>
+  <text class="card-title" x="472" y="992">SDK JSON-RPC Server</text><text class="copy" x="472" y="1021">initialize：路由、模型、cwd、上限</text><text class="copy" x="472" y="1047">session/prompt：排入用户消息</text><text class="copy" x="472" y="1073">shutdown：释放根 Runtime 并退出</text>
+  <line x1="472" y1="1092" x2="758" y2="1092" stroke="#CEC2F1"/><text class="small" x="472" y="1117">一条 stdio 连接，多条 Session 流</text>
+  <path d="M780 1052 H816 V922 H1340" fill="none" stroke="#2878C8" stroke-width="2.4"/>
+  <path class="edge-blue" d="M1002 922 V932"/><path class="edge-blue" d="M1340 922 V932"/>
+  <rect x="1013" y="910" width="218" height="24" rx="12" fill="#FFFFFF"/><text class="edge-label" x="1122" y="927" text-anchor="middle">按 sessionId 路由并惰性创建</text>
+  <rect class="card" x="852" y="940" width="300" height="206" rx="16" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="874" y="974">sessionId = A</text><text class="copy" x="874" y="1003">Agent A + Session Log A</text><text class="copy" x="874" y="1029">共享进程级工具组合</text><text class="copy" x="874" y="1055">独立消息与工具调用历史</text><rect x="874" y="1083" width="198" height="25" rx="12.5" fill="#D9F2E3"/><text class="chip" x="973" y="1101" text-anchor="middle" fill="#167047">持续存活到进程关闭</text>
+  <rect class="card" x="1190" y="940" width="300" height="206" rx="16" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="1212" y="974">sessionId = B</text><text class="copy" x="1212" y="1003">Agent B + Session Log B</text><text class="copy" x="1212" y="1029">共享进程级工具组合</text><text class="copy" x="1212" y="1055">独立消息与工具调用历史</text><rect x="1212" y="1083" width="198" height="25" rx="12.5" fill="#D9F2E3"/><text class="chip" x="1311" y="1101" text-anchor="middle" fill="#167047">持续存活到进程关闭</text>
+  <rect x="270" y="1182" width="1060" height="78" rx="18" fill="#F2F4F7"/>
+  <text class="card-subtitle" x="800" y="1212" text-anchor="middle">生命周期结论</text>
+  <text class="copy" x="800" y="1239" text-anchor="middle">SDK Profile 定义完整的协议 Runtime 进程；SDK 请求在该进程内创建并驱动多个独立 Session Agent。</text>
+  <rect x="365" y="1332" width="870" height="34" rx="17" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <circle cx="406" cy="1349" r="7" fill="#78AEE3"/><text class="small" x="421" y="1354">装配</text><circle cx="526" cy="1349" r="7" fill="#9983D8"/><text class="small" x="541" y="1354">SDK 协议</text><circle cx="669" cy="1349" r="7" fill="#60B985"/><text class="small" x="684" y="1354">Session Agent</text><text class="small" x="874" y="1354">核心关系：</text><text class="chip" x="944" y="1354">一个连接 → 多个 sessionId → 多个 Agent</text>
+</svg>

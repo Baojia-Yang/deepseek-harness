@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
+  <title id="title">一个 Web Runtime 中的多个 Agent</title>
+  <desc id="desc">一个 Web Profile 启动的 DSH 进程包含共享宿主能力，以及 standard 和 minimal 两个 Agent Preset scope。Session A 和 C 加入 standard，Session B 加入 minimal；每个 Session 都拥有独立的日志和动态状态。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5F6370"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #303640; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #68707C; }
+      .plane-title { font-size: 20px; font-weight: 700; }
+      .scope-title { font-size: 20px; font-weight: 700; }
+      .session-title { font-size: 17px; font-weight: 700; }
+      .copy { font-size: 14px; fill: #535B67; }
+      .chip { font-size: 13px; font-weight: 600; }
+      .inverse { fill: #FFFFFF; }
+      .edge { fill: none; stroke: #5F6370; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-label { font-size: 13px; font-weight: 600; fill: #5F6370; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="860" fill="#F5F7F9"/>
+  <text class="title" x="52" y="50">一个 Web Runtime 中的多个 Agent</text>
+  <text class="subtitle" x="52" y="76">宿主基础设施进程级共享；Preset 组合按 scope 可见；Session 状态彼此独立。</text>
+
+  <rect x="30" y="96" width="1140" height="718" rx="22" fill="#FFFFFF" stroke="#BCC3CB" stroke-width="1.8"/>
+  <rect x="54" y="112" width="238" height="32" rx="16" fill="#5F6370"/>
+  <text class="inverse" x="173" y="134" font-size="15" font-weight="700" text-anchor="middle">Web Profile → DSH Process</text>
+
+  <rect x="60" y="162" width="1080" height="178" rx="16" fill="#E7F2F8" stroke="#7FAAC2" stroke-width="1.5"/>
+  <text class="plane-title" x="86" y="195">Host Plane · 进程级共享</text>
+  <text class="copy" x="86" y="219">由 Profile / Bundle 装配，所有 Session 复用同一组基础服务。</text>
+
+  <rect x="86" y="246" width="126" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="149" y="272" text-anchor="middle">LLM Route</text>
+  <rect x="224" y="246" width="144" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="296" y="272" text-anchor="middle">Session Store</text>
+  <rect x="380" y="246" width="148" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="454" y="272" text-anchor="middle">Tools / Skills</text>
+  <rect x="540" y="246" width="132" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="606" y="272" text-anchor="middle">Subprocess</text>
+  <rect x="684" y="246" width="120" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="744" y="272" text-anchor="middle">Sandbox</text>
+  <rect x="816" y="246" width="120" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="876" y="272" text-anchor="middle">Approval</text>
+  <rect x="948" y="246" width="166" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="1031" y="272" text-anchor="middle">Web Server / API</text>
+
+  <path class="edge" d="M325 340 V370"/>
+  <path class="edge" d="M955 340 V370"/>
+  <rect x="496" y="345" width="208" height="25" rx="12" fill="#FFFFFF"/>
+  <text class="edge-label" x="600" y="363" text-anchor="middle">向所有 Agent 提供共享服务</text>
+
+  <rect x="60" y="380" width="700" height="362" rx="18" fill="#FEF5F4" stroke="#D78078" stroke-width="1.7" stroke-dasharray="8 6"/>
+  <text class="scope-title" x="86" y="416">standard Preset Scope</text>
+  <text class="copy" x="86" y="440">一份常驻组合，多个选择 standard 的 Session 加入该 scope。</text>
+  <rect x="86" y="458" width="76" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="124" y="478" text-anchor="middle">Bash</text>
+  <rect x="170" y="458" width="64" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="202" y="478" text-anchor="middle">FS</text>
+  <rect x="242" y="458" width="70" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="277" y="478" text-anchor="middle">Web</text>
+  <rect x="320" y="458" width="72" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="356" y="478" text-anchor="middle">Skills</text>
+  <rect x="400" y="458" width="72" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="436" y="478" text-anchor="middle">Plan</text>
+  <rect x="480" y="458" width="104" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="532" y="478" text-anchor="middle">Workflow</text>
+  <rect x="592" y="458" width="112" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="648" y="478" text-anchor="middle">Subagent</text>
+
+  <rect x="86" y="514" width="306" height="188" rx="14" fill="#FFFFFF" stroke="#AEB5BE" stroke-width="1.4"/>
+  <rect x="86" y="514" width="306" height="42" rx="14" fill="#F9D6D2"/>
+  <path d="M86 542 V556 H392 V542" fill="#F9D6D2"/>
+  <text class="session-title" x="106" y="541">Session A · Agent 实例</text>
+  <text class="copy" x="106" y="582">scope → standard</text>
+  <line x1="106" y1="598" x2="372" y2="598" stroke="#D6DAE0"/>
+  <text class="session-title" x="106" y="626">Session Log A</text>
+  <text class="copy" x="106" y="650">消息 · 工具调用 · Goal · 权限状态</text>
+  <rect x="106" y="668" width="124" height="22" rx="11" fill="#EEF1F4"/>
+  <text x="168" y="684" font-size="12" fill="#59616D" text-anchor="middle">独立动态状态</text>
+
+  <rect x="420" y="514" width="306" height="188" rx="14" fill="#FFFFFF" stroke="#AEB5BE" stroke-width="1.4"/>
+  <rect x="420" y="514" width="306" height="42" rx="14" fill="#F9D6D2"/>
+  <path d="M420 542 V556 H726 V542" fill="#F9D6D2"/>
+  <text class="session-title" x="440" y="541">Session C · Agent 实例</text>
+  <text class="copy" x="440" y="582">scope → standard</text>
+  <line x1="440" y1="598" x2="706" y2="598" stroke="#D6DAE0"/>
+  <text class="session-title" x="440" y="626">Session Log C</text>
+  <text class="copy" x="440" y="650">消息 · 工具调用 · Goal · 权限状态</text>
+  <rect x="440" y="668" width="124" height="22" rx="11" fill="#EEF1F4"/>
+  <text x="502" y="684" font-size="12" fill="#59616D" text-anchor="middle">独立动态状态</text>
+
+  <rect x="790" y="380" width="350" height="362" rx="18" fill="#FFF9E9" stroke="#D6A94C" stroke-width="1.7" stroke-dasharray="8 6"/>
+  <text class="scope-title" x="816" y="416">minimal Preset Scope</text>
+  <text class="copy" x="816" y="440">固定 Persona，精简工具组合。</text>
+  <rect x="816" y="458" width="142" height="30" rx="15" fill="#F4D58D"/>
+  <text class="chip" x="887" y="478" text-anchor="middle">Persistent Shell</text>
+  <rect x="966" y="458" width="142" height="30" rx="15" fill="#F4D58D"/>
+  <text class="chip" x="1037" y="478" text-anchor="middle">Editor</text>
+
+  <rect x="816" y="514" width="298" height="188" rx="14" fill="#FFFFFF" stroke="#AEB5BE" stroke-width="1.4"/>
+  <rect x="816" y="514" width="298" height="42" rx="14" fill="#F9E7B8"/>
+  <path d="M816 542 V556 H1114 V542" fill="#F9E7B8"/>
+  <text class="session-title" x="836" y="541">Session B · Agent 实例</text>
+  <text class="copy" x="836" y="582">scope → minimal</text>
+  <line x1="836" y1="598" x2="1094" y2="598" stroke="#D6DAE0"/>
+  <text class="session-title" x="836" y="626">Session Log B</text>
+  <text class="copy" x="836" y="650">消息 · 工具调用 · 权限状态</text>
+  <rect x="836" y="668" width="124" height="22" rx="11" fill="#EEF1F4"/>
+  <text x="898" y="684" font-size="12" fill="#59616D" text-anchor="middle">独立动态状态</text>
+
+  <rect x="168" y="768" width="864" height="28" rx="14" fill="#EEF1F4"/>
+  <text x="600" y="787" font-size="14" fill="#535B67" text-anchor="middle">Scope 表达注册可见性与生命周期所有权；它不是操作系统安全边界。</text>
+</svg>

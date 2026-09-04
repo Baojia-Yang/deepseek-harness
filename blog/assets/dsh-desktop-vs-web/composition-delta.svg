@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">原生 dsh web 与 DSH Desktop 装配差异</title>
+  <desc id="desc">左右并排展示原生 Web 和 DSH Desktop。Desktop 继承相同的 dsh-base、dsh-web-app 和 Agent Preset，在两者之间增加 Electron 启动器所有的 Desktop Patch、Host 插件、Client 插件和少量平台替换。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#1f2937" flood-opacity="0.09"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrow-coral" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c75b52"/>
+    </marker>
+    <style>
+      .canvas { fill: #f5f7f9; }
+      .panel { fill: #ffffff; stroke: #d8dee6; stroke-width: 2; }
+      .title { font: 700 34px Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #252b35; }
+      .subtitle { font: 500 19px Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #667085; }
+      .panel-title { font: 700 27px Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #252b35; }
+      .panel-note { font: 500  17px Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #667085; }
+      .card-title { font: 700 21px Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #26303d; }
+      .card-text { font: 500 18px Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #3f4a59; }
+      .small { font: 500 16px Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #586474; }
+      .inverse { fill: #ffffff; }
+      .official { fill: #e8f2f9; stroke: #78a9c5; stroke-width: 2; }
+      .official-dark { fill: #517f9c; stroke: #3f6f8b; stroke-width: 2; }
+      .desktop { fill: #fbe8e5; stroke: #d87970; stroke-width: 2; }
+      .conditional { fill: #fff4d5; stroke: #d5a842; stroke-width: 2; stroke-dasharray: 8 6; }
+      .preset { fill: #e4f4ef; stroke: #62a38e; stroke-width: 2; }
+      .neutral { fill: #f1f3f6; stroke: #b7c0cc; stroke-width: 2; }
+      .arrow { fill: none; stroke: #4b5563; stroke-width: 3; marker-end: url(#arrow); }
+      .desktop-arrow { fill: none; stroke: #c75b52; stroke-width: 3; marker-end: url(#arrow-coral); }
+      .shared-line { fill: none; stroke: #62a38e; stroke-width: 3; stroke-dasharray: 9 7; }
+    </style>
+  </defs>
+
+  <rect class="canvas" width="1600" height="1120"/>
+  <text class="title" x="800" y="54" text-anchor="middle">原生 Web 与 DSH Desktop：相同 Agent Runtime，不同应用宿主</text>
+  <text class="subtitle" x="800" y="88" text-anchor="middle">颜色表示所有权：蓝色为官方继承，珊瑚色为 Desktop 增量，黄色虚线为条件替换，绿色为共享的会话级 Preset</text>
+
+  <g transform="translate(398 110)">
+    <rect class="official" x="0" y="0" width="30" height="18" rx="5"/>
+    <text class="small" x="40" y="15">官方 DSH</text>
+    <rect class="desktop" x="155" y="0" width="30" height="18" rx="5"/>
+    <text class="small" x="195" y="15">Desktop 新增</text>
+    <rect class="conditional" x="350" y="0" width="30" height="18" rx="5"/>
+    <text class="small" x="390" y="15">条件替换</text>
+    <rect class="preset" x="535" y="0" width="30" height="18" rx="5"/>
+    <text class="small" x="575" y="15">共享 Preset</text>
+  </g>
+
+  <rect class="panel" x="52" y="154" width="704" height="884" rx="24" filter="url(#shadow)"/>
+  <rect class="panel" x="844" y="154" width="704" height="884" rx="24" filter="url(#shadow)"/>
+
+  <text class="panel-title" x="404" y="202" text-anchor="middle">原生 dsh web</text>
+  <text class="panel-note" x="404" y="232" text-anchor="middle">Profile 自己定义完整的浏览器应用组合</text>
+  <text class="panel-title" x="1196" y="202" text-anchor="middle">DSH Desktop</text>
+  <text class="panel-note" x="1196" y="232" text-anchor="middle">Electron launcher 承载并扩展 Web-capable Profile</text>
+
+  <rect class="official-dark" x="112" y="265" width="584" height="76" rx="14"/>
+  <text class="card-title inverse" x="404" y="294" text-anchor="middle">Launcher</text>
+  <text class="card-text inverse" x="404" y="323" text-anchor="middle">dsh web CLI → 选择 web Profile</text>
+
+  <rect class="desktop" x="904" y="265" width="584" height="76" rx="14"/>
+  <text class="card-title" x="1196" y="294" text-anchor="middle">Electron Launcher</text>
+  <text class="card-text" x="1196" y="323" text-anchor="middle">选择 Profile、提供 native runtime、直接 boot()</text>
+
+  <path class="arrow" d="M404 341 V371"/>
+  <path class="desktop-arrow" d="M1196 341 V371"/>
+
+  <rect class="official" x="112" y="372" width="584" height="92" rx="14"/>
+  <text class="card-title" x="404" y="402" text-anchor="middle">Profile：web</text>
+  <text class="card-text" x="404" y="432" text-anchor="middle">bundles: dsh-base + dsh-web-app</text>
+  <text class="small" x="404" y="454" text-anchor="middle">patchReload: live</text>
+
+  <rect class="neutral" x="904" y="372" width="584" height="92" rx="14"/>
+  <text class="card-title" x="1196" y="402" text-anchor="middle">选中的 Web-capable Profile</text>
+  <text class="card-text" x="1196" y="432" text-anchor="middle">默认 desktop，也可以选择原生 web</text>
+  <text class="small" x="1196" y="454" text-anchor="middle">官方 Web Bundle 前缀 + 第三方 Bundle</text>
+
+  <path class="arrow" d="M404 464 V494"/>
+  <path class="desktop-arrow" d="M1196 464 V494"/>
+
+  <rect class="official" x="112" y="495" width="584" height="118" rx="14"/>
+  <text class="card-title" x="404" y="526" text-anchor="middle">Bundle / Patch</text>
+  <text class="card-text" x="404" y="557" text-anchor="middle">dsh-base → dsh-web-app</text>
+  <text class="small" x="404" y="585" text-anchor="middle">→ Profile Patch → Home Patch → CLI Overlay</text>
+
+  <rect class="official" x="904" y="495" width="584" height="54" rx="14"/>
+  <text class="card-text" x="1196" y="529" text-anchor="middle">dsh-base → dsh-web-app</text>
+  <rect class="desktop" x="904" y="559" width="584" height="78" rx="14"/>
+  <text class="card-title" x="1196" y="589" text-anchor="middle">Launcher-owned Desktop Patch</text>
+  <text class="small" x="1196" y="616" text-anchor="middle">不写入 Profile Bundle 列表；在 web-app 后强制插入</text>
+
+  <path class="arrow" d="M404 613 V651"/>
+  <path class="desktop-arrow" d="M1196 637 V651"/>
+
+  <rect class="official" x="112" y="652" width="584" height="190" rx="14"/>
+  <text class="card-title" x="404" y="684" text-anchor="middle">官方 Plugin Tree</text>
+  <text class="card-text" x="404" y="718" text-anchor="middle">Host：Agent / Loop / LLM / Session / Tools</text>
+  <text class="card-text" x="404" y="749" text-anchor="middle">Web：Server / API / Controller / Client modules</text>
+  <text class="card-text" x="404" y="780" text-anchor="middle">Client：Layout / Chat / Settings / Workspace</text>
+  <text class="small" x="404" y="816" text-anchor="middle">浏览器是应用界面，Agent 在 Host 内按 Session 创建</text>
+
+  <rect class="official" x="904" y="652" width="282" height="190" rx="14"/>
+  <text class="card-title" x="1045" y="684" text-anchor="middle">继承官方树</text>
+  <text class="card-text" x="1045" y="721" text-anchor="middle">Agent Runtime</text>
+  <text class="card-text" x="1045" y="752" text-anchor="middle">Web API</text>
+  <text class="card-text" x="1045" y="783" text-anchor="middle">官方 Client</text>
+  <text class="small" x="1045" y="816" text-anchor="middle">模型可见能力不变</text>
+
+  <rect class="desktop" x="1206" y="652" width="282" height="118" rx="14"/>
+  <text class="card-title" x="1347" y="684" text-anchor="middle">Desktop 插件</text>
+  <text class="small" x="1347" y="714" text-anchor="middle">Shell / Profile / pnpm</text>
+  <text class="small" x="1347" y="741" text-anchor="middle">Terminal / 通知 / 诊断 / 更新</text>
+  <rect class="conditional" x="1206" y="780" width="282" height="62" rx="14"/>
+  <text class="small" x="1347" y="806" text-anchor="middle">WebServer / UI Layout</text>
+  <text class="small" x="1347" y="830" text-anchor="middle">Windows 平台 provider</text>
+
+  <path class="arrow" d="M404 842 V880"/>
+  <path class="arrow" d="M1196 842 V880"/>
+
+  <rect class="preset" x="112" y="881" width="584" height="112" rx="14"/>
+  <text class="card-title" x="404" y="913" text-anchor="middle">每个 Session：Agent Preset</text>
+  <text class="card-text" x="404" y="946" text-anchor="middle">standard · minimal · ptc · cordis</text>
+  <text class="small" x="404" y="975" text-anchor="middle">官方 roster、选择、standing generation 与恢复语义</text>
+
+  <rect class="preset" x="904" y="881" width="584" height="112" rx="14"/>
+  <text class="card-title" x="1196" y="913" text-anchor="middle">每个 Session：同一套 Agent Preset</text>
+  <text class="card-text" x="1196" y="946" text-anchor="middle">standard · minimal · ptc · cordis</text>
+  <text class="small" x="1196" y="975" text-anchor="middle">只补充打包后的 system root，不定义 Desktop preset</text>
+
+  <path class="shared-line" d="M696 937 H904"/>
+  <text class="small" x="800" y="927" text-anchor="middle">机制与内容共享</text>
+
+  <rect x="294" y="1054" width="1012" height="46" rx="23" fill="#303640"/>
+  <text class="card-text inverse" x="800" y="1084" text-anchor="middle">结论：Desktop 扩展应用宿主与基础设施，不替换 Agent Runtime 和会话级 Agent 组合</text>
+</svg>

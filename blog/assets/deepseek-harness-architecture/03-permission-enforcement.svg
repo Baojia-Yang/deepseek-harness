@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">从工具可见性到 Sandbox 强制执行</title>
+  <desc id="desc">Agent Preset 决定 Agent 是否看到 Bash 工具，Permission Preset 决定会话的 Sandbox 模式和 Approval 策略，Profile 与 Bundle 安装执行基础设施。工具调用解析有效策略后由 Sandbox Backend 强制执行；显式升权请求可经过一次性 Approval。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5F6370"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #303640; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #68707C; }
+      .card-title { font-size: 20px; font-weight: 700; }
+      .node-title { font-size: 17px; font-weight: 700; }
+      .copy { font-size: 14px; fill: #535B67; }
+      .small { font-size: 13px; fill: #5F6773; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #EDF0F3; }
+      .edge { fill: none; stroke: #5F6370; stroke-width: 2.2; marker-end: url(#arrow); }
+      .optional { fill: none; stroke: #C06D65; stroke-width: 2.2; stroke-dasharray: 7 5; marker-end: url(#arrow); }
+      .edge-label { font-size: 13px; font-weight: 600; fill: #5F6370; }
+      .optional-label { font-size: 13px; font-weight: 600; fill: #A55750; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="820" fill="#F5F7F9"/>
+  <text class="title" x="52" y="50">从工具可见性到 Sandbox 强制执行</text>
+  <text class="subtitle" x="52" y="76">组合、可见性、策略和强制执行是四个不同问题。</text>
+
+  <rect x="44" y="112" width="320" height="150" rx="16" fill="#FDECEA" stroke="#D78078" stroke-width="1.5"/>
+  <text class="card-title" x="68" y="146">Agent Preset</text>
+  <text class="copy" x="68" y="174">决定 Agent 是否获得 Bash 工具</text>
+  <rect x="68" y="194" width="272" height="44" rx="10" fill="#F2A7A0"/>
+  <text x="204" y="213" font-size="13" font-weight="600" text-anchor="middle">声明 bash → 工具进入可见目录</text>
+  <text x="204" y="231" font-size="12" text-anchor="middle">未声明 → 不存在该调用入口</text>
+
+  <rect x="440" y="112" width="320" height="150" rx="16" fill="#FFF9E9" stroke="#D6A94C" stroke-width="1.5"/>
+  <text class="card-title" x="464" y="146">Permission Preset</text>
+  <text class="copy" x="464" y="174">为 Session 选择两个策略旋钮</text>
+  <rect x="464" y="194" width="128" height="44" rx="10" fill="#F4D58D"/>
+  <text x="528" y="213" font-size="13" font-weight="600" text-anchor="middle">Sandbox</text>
+  <text x="528" y="231" font-size="12" text-anchor="middle">workspace-write</text>
+  <rect x="608" y="194" width="128" height="44" rx="10" fill="#F4D58D"/>
+  <text x="672" y="213" font-size="13" font-weight="600" text-anchor="middle">Approval</text>
+  <text x="672" y="231" font-size="12" text-anchor="middle">ask / never</text>
+
+  <rect x="836" y="112" width="320" height="150" rx="16" fill="#E7F2F8" stroke="#7FAAC2" stroke-width="1.5"/>
+  <text class="card-title" x="860" y="146">Profile / Bundle</text>
+  <text class="copy" x="860" y="174">安装并配置执行基础设施</text>
+  <text class="small" x="860" y="204">Tool Registry · Shell Executor</text>
+  <text class="small" x="860" y="226">Sandbox Backend · Approval Service</text>
+  <text class="small" x="860" y="248">决定“系统有没有这些机制”</text>
+
+  <path class="edge" d="M204 262 V346 H300 V372"/>
+  <text class="edge-label" x="220" y="326">提供可见工具</text>
+  <path class="edge" d="M600 262 V346 H690 V372"/>
+  <text class="edge-label" x="613" y="326">提供会话策略</text>
+  <path class="edge" d="M996 262 V346 H905 V372"/>
+  <text class="edge-label" x="870" y="326">提供执行机制</text>
+
+  <rect x="36" y="380" width="144" height="104" rx="14" fill="#5F6370"/>
+  <text class="node-title inverse" x="108" y="416" text-anchor="middle">Agent / Model</text>
+  <text class="inverse-muted" x="108" y="443" font-size="13" text-anchor="middle">选择可见工具</text>
+  <text class="inverse-muted" x="108" y="464" font-size="13" text-anchor="middle">生成调用参数</text>
+
+  <rect x="216" y="380" width="178" height="104" rx="14" fill="#FDECEA" stroke="#D78078" stroke-width="1.4"/>
+  <text class="node-title" x="305" y="416" text-anchor="middle">Agent 工具目录</text>
+  <text class="copy" x="305" y="443" text-anchor="middle">按 scope 解析</text>
+  <text class="small" x="305" y="464" text-anchor="middle">例如：bash 可见</text>
+
+  <rect x="430" y="380" width="148" height="104" rx="14" fill="#FFFFFF" stroke="#8F97A2" stroke-width="1.4"/>
+  <text class="node-title" x="504" y="416" text-anchor="middle">Bash Tool Call</text>
+  <text class="copy" x="504" y="443" text-anchor="middle">命令与调用上下文</text>
+  <text class="small" x="504" y="464" text-anchor="middle">尚未产生外部效果</text>
+
+  <rect x="614" y="380" width="180" height="104" rx="14" fill="#FFF9E9" stroke="#D6A94C" stroke-width="1.4"/>
+  <text class="node-title" x="704" y="416" text-anchor="middle">解析有效策略</text>
+  <text class="copy" x="704" y="443" text-anchor="middle">显式获批模式</text>
+  <text class="small" x="704" y="464" text-anchor="middle">或 Session 模式 / 部署默认</text>
+
+  <rect x="830" y="380" width="166" height="104" rx="14" fill="#E6F6F3" stroke="#62AFA6" stroke-width="1.4"/>
+  <text class="node-title" x="913" y="416" text-anchor="middle">Sandbox Backend</text>
+  <text class="copy" x="913" y="443" text-anchor="middle">包装并约束执行</text>
+  <text class="small" x="913" y="464" text-anchor="middle">无法强制时关闭失败</text>
+
+  <rect x="1032" y="380" width="132" height="104" rx="14" fill="#DDE2E8" stroke="#8F97A2" stroke-width="1.4"/>
+  <text class="node-title" x="1098" y="416" text-anchor="middle">外部效果</text>
+  <text class="copy" x="1098" y="443" text-anchor="middle">文件写入</text>
+  <text class="small" x="1098" y="464" text-anchor="middle">子进程行为</text>
+
+  <path class="edge" d="M180 432 H208"/>
+  <path class="edge" d="M394 432 H422"/>
+  <path class="edge" d="M578 432 H606"/>
+  <path class="edge" d="M794 432 H822"/>
+  <text class="edge-label" x="808" y="418" text-anchor="middle">当前策略</text>
+  <path class="edge" d="M996 432 H1024"/>
+
+  <rect x="590" y="588" width="228" height="104" rx="14" fill="#FDECEA" stroke="#D78078" stroke-width="1.4"/>
+  <text class="node-title" x="704" y="624" text-anchor="middle">一次性 Approval</text>
+  <text class="copy" x="704" y="651" text-anchor="middle">allowed-once / rejected</text>
+  <text class="small" x="704" y="674" text-anchor="middle">只批准当前具体操作</text>
+
+  <rect x="354" y="600" width="176" height="80" rx="14" fill="#EEF1F4" stroke="#AEB5BE" stroke-width="1.4"/>
+  <text class="node-title" x="442" y="633" text-anchor="middle">拒绝执行</text>
+  <text class="small" x="442" y="658" text-anchor="middle">无外部效果</text>
+
+  <path class="optional" d="M704 484 V580"/>
+  <rect x="719" y="521" width="190" height="26" rx="13" fill="#F5F7F9"/>
+  <text class="optional-label" x="814" y="539" text-anchor="middle">显式请求严格更宽模式</text>
+  <path class="optional" d="M590 640 H538"/>
+  <text class="optional-label" x="564" y="625" text-anchor="middle">拒绝</text>
+  <path class="optional" d="M818 640 H913 V492"/>
+  <rect x="833" y="615" width="116" height="26" rx="13" fill="#F5F7F9"/>
+  <text class="optional-label" x="891" y="633" text-anchor="middle">allowed-once</text>
+
+  <rect x="92" y="748" width="1016" height="34" rx="17" fill="#EEF1F4"/>
+  <text x="600" y="770" font-size="14" fill="#535B67" text-anchor="middle">工具可见性 ≠ 操作授权；Scope / Realm ≠ Sandbox；只有执行后端真正约束外部效果。</text>
+</svg>

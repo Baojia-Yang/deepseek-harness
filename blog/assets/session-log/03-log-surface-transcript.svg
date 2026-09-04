@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">压缩改变模型所见，不删除会话事实</title>
+  <desc id="desc">压缩前，完整日志、用户历史和模型上下文都包含消息 A、B、C。压缩后，日志继续保留 A、B、C，并追加压缩记录、摘要 S 和后续消息 D；用户历史仍保留原始对话，而模型上下文只使用摘要 S 和消息 D。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5F6370"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #303640; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #68707C; }
+      .panel-title { font-size: 19px; font-weight: 700; }
+      .lane { font-size: 16px; font-weight: 700; fill: #4B5360; }
+      .node-title { font-size: 20px; font-weight: 700; }
+      .node-copy { font-size: 15px; fill: #4B5360; }
+      .small { font-size: 14px; fill: #5F6773; }
+      .chip { font-size: 14px; font-weight: 700; }
+      .inverse { fill: #FFFFFF; }
+      .edge { fill: none; stroke: #5F6370; stroke-width: 2.2; marker-end: url(#arrow); }
+      .reference { fill: none; stroke: #5F6370; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="800" fill="#F5F7F9"/>
+  <text class="title" x="52" y="50">压缩改变模型所见，不删除会话事实</text>
+  <text class="subtitle" x="52" y="76">压缩是一条新的历史关系：完整记录继续存在，模型从更短的上下文继续工作。</text>
+
+  <rect x="32" y="104" width="1136" height="236" rx="20" fill="#FFFFFF" stroke="#D5DAE0" stroke-width="1.5"/>
+  <rect x="54" y="124" width="126" height="34" rx="17" fill="#DDE2E8"/>
+  <text class="panel-title" x="117" y="147" text-anchor="middle">压缩之前</text>
+
+  <text class="lane" x="70" y="203">完整事实</text>
+  <rect x="230" y="176" width="150" height="48" rx="12" fill="#5F6370"/>
+  <text class="chip inverse" x="305" y="205" text-anchor="middle">消息 A</text>
+  <rect x="396" y="176" width="150" height="48" rx="12" fill="#5F6370"/>
+  <text class="chip inverse" x="471" y="205" text-anchor="middle">消息 B</text>
+  <rect x="562" y="176" width="150" height="48" rx="12" fill="#5F6370"/>
+  <text class="chip inverse" x="637" y="205" text-anchor="middle">消息 C</text>
+  <path class="edge" d="M380 200 H388"/>
+  <path class="edge" d="M546 200 H554"/>
+
+  <text class="lane" x="70" y="269">用户历史</text>
+  <rect x="230" y="242" width="150" height="48" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="305" y="271" text-anchor="middle">A</text>
+  <rect x="396" y="242" width="150" height="48" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="471" y="271" text-anchor="middle">B</text>
+  <rect x="562" y="242" width="150" height="48" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="637" y="271" text-anchor="middle">C</text>
+
+  <text class="lane" x="806" y="203">模型上下文</text>
+  <rect x="934" y="176" width="58" height="48" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="963" y="205" text-anchor="middle">A</text>
+  <rect x="1002" y="176" width="58" height="48" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="1031" y="205" text-anchor="middle">B</text>
+  <rect x="1070" y="176" width="58" height="48" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="1099" y="205" text-anchor="middle">C</text>
+  <text class="small" x="934" y="263">三条消息都进入下一次请求</text>
+
+  <rect x="32" y="364" width="1136" height="354" rx="20" fill="#FFFFFF" stroke="#D5DAE0" stroke-width="1.5"/>
+  <rect x="54" y="384" width="126" height="34" rx="17" fill="#F2A7A0"/>
+  <text class="panel-title" x="117" y="407" text-anchor="middle">压缩之后</text>
+
+  <text class="lane" x="70" y="474">完整事实</text>
+  <rect x="230" y="446" width="106" height="50" rx="12" fill="#5F6370"/>
+  <text class="chip inverse" x="283" y="476" text-anchor="middle">A</text>
+  <rect x="346" y="446" width="106" height="50" rx="12" fill="#5F6370"/>
+  <text class="chip inverse" x="399" y="476" text-anchor="middle">B</text>
+  <rect x="462" y="446" width="106" height="50" rx="12" fill="#5F6370"/>
+  <text class="chip inverse" x="515" y="476" text-anchor="middle">C</text>
+  <rect x="578" y="446" width="150" height="50" rx="12" fill="#F2A7A0"/>
+  <text class="chip" x="653" y="468" text-anchor="middle">压缩记录</text>
+  <text class="small" x="653" y="487" text-anchor="middle">引用 A–C</text>
+  <rect x="738" y="446" width="150" height="50" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="813" y="468" text-anchor="middle">摘要 S</text>
+  <text class="small" x="813" y="487" text-anchor="middle">替代 A–C</text>
+  <rect x="898" y="446" width="150" height="50" rx="12" fill="#5F6370"/>
+  <text class="chip inverse" x="973" y="476" text-anchor="middle">后续消息 D</text>
+  <path class="edge" d="M336 471 H338"/>
+  <path class="edge" d="M452 471 H454"/>
+  <path class="edge" d="M568 471 H570"/>
+  <path class="edge" d="M728 471 H730"/>
+  <path class="edge" d="M888 471 H890"/>
+
+  <path class="reference" d="M813 438 V424 H399 V438"/>
+  <rect x="526" y="407" width="160" height="26" rx="13" fill="#FFFFFF"/>
+  <text class="small" x="606" y="425" text-anchor="middle">摘要说明被遮蔽的范围</text>
+
+  <text class="lane" x="70" y="570">用户历史</text>
+  <rect x="230" y="542" width="106" height="50" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="283" y="572" text-anchor="middle">A</text>
+  <rect x="346" y="542" width="106" height="50" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="399" y="572" text-anchor="middle">B</text>
+  <rect x="462" y="542" width="106" height="50" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="515" y="572" text-anchor="middle">C</text>
+  <rect x="578" y="542" width="190" height="50" rx="12" fill="#DDE2E8" stroke="#9FA7B1" stroke-dasharray="7 6"/>
+  <text class="chip" x="673" y="564" text-anchor="middle">压缩检查点</text>
+  <text class="small" x="673" y="583" text-anchor="middle">可以单独呈现</text>
+  <rect x="778" y="542" width="150" height="50" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="853" y="572" text-anchor="middle">D</text>
+  <text class="small" x="950" y="572">原始对话仍可检查</text>
+
+  <text class="lane" x="70" y="658">模型上下文</text>
+  <rect x="230" y="630" width="220" height="50" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="340" y="660" text-anchor="middle">摘要 S</text>
+  <rect x="466" y="630" width="180" height="50" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="556" y="660" text-anchor="middle">消息 D</text>
+  <path class="edge" d="M450 655 H458"/>
+  <text class="node-copy" x="686" y="650">A–C 不再直接进入请求</text>
+  <text class="small" x="686" y="673">模型记忆变短，完整日志没有缩短</text>
+
+  <rect x="208" y="740" width="784" height="36" rx="18" fill="#5F6370"/>
+  <text class="inverse" x="600" y="763" text-anchor="middle" font-size="15" font-weight="700">完整历史回答“发生过什么”；Surface 回答“模型现在看什么”</text>
+</svg>

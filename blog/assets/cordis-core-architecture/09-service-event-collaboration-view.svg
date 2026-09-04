@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Service 与 Event 的两种协作方式</title>
+  <desc id="desc">Service 用于 Consumer 直接调用一个稳定能力，Consumer 无需依赖具体 Provider；Event 用于让 Producer 发出一个扩展点，由未知数量的 Listener 观察、拦截或参与处理。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#21866B"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .title { font-size: 34px; font-weight: 750; } .subtitle { font-size: 18px; fill: #667085; }
+      .panel-title { font-size: 26px; font-weight: 750; } .node-title { font-size: 20px; font-weight: 700; }
+      .copy { font-size: 17px; fill: #475467; } .small { font-size: 15px; fill: #667085; } .chip { font-size: 16px; font-weight: 700; }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.7; marker-end: url(#arrow-blue); }
+      .edge-green { fill: none; stroke: #21866B; stroke-width: 2.7; marker-end: url(#arrow-green); }
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#F5F7FA"/>
+  <text class="title" x="48" y="56">两种协作方式：调用能力，或扩展过程</text>
+  <text class="subtitle" x="48" y="88">Service 面向明确的能力结果；Event 面向开放的参与者。</text>
+
+  <rect x="48" y="132" width="520" height="504" rx="24" fill="#FFFFFF" stroke="#78AEE3" stroke-width="1.5"/>
+  <rect x="72" y="154" width="118" height="34" rx="17" fill="#CFE5FA"/>
+  <text class="chip" x="131" y="177" text-anchor="middle" fill="#175EA8">直接调用</text>
+  <text class="panel-title" x="72" y="232">Service</text>
+  <text class="copy" x="72" y="262">“我需要一个明确的能力和结果”</text>
+
+  <rect x="76" y="318" width="132" height="84" rx="16" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="node-title" x="142" y="352" text-anchor="middle">Consumer</text>
+  <text class="small" x="142" y="380" text-anchor="middle">能力使用者</text>
+  <path class="edge-blue" d="M208 360 H240"/>
+  <text class="small" x="224" y="342" text-anchor="middle" fill="#175EA8">调用</text>
+  <rect x="248" y="318" width="120" height="84" rx="42" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="node-title" x="308" y="352" text-anchor="middle">Service</text>
+  <text class="small" x="308" y="380" text-anchor="middle">稳定能力</text>
+  <path class="edge-blue" d="M408 360 H376"/>
+  <text class="small" x="392" y="342" text-anchor="middle" fill="#175EA8">提供</text>
+  <rect x="408" y="318" width="132" height="84" rx="16" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title" x="474" y="352" text-anchor="middle">Provider</text>
+  <text class="small" x="474" y="380" text-anchor="middle">具体实现</text>
+
+  <rect x="90" y="458" width="436" height="86" rx="18" fill="#F8FBFF" stroke="#C6DDF5"/>
+  <text class="node-title" x="308" y="492" text-anchor="middle">能力名保持稳定</text>
+  <text class="copy" x="308" y="522" text-anchor="middle">Provider 可以替换，Consumer 不随之改写</text>
+  <text class="small" x="308" y="594" text-anchor="middle">关系：一项能力的调用与返回</text>
+
+  <rect x="632" y="132" width="520" height="504" rx="24" fill="#FFFFFF" stroke="#60B985" stroke-width="1.5"/>
+  <rect x="656" y="154" width="118" height="34" rx="17" fill="#DDF3EB"/>
+  <text class="chip" x="715" y="177" text-anchor="middle" fill="#16785E">开放扩展</text>
+  <text class="panel-title" x="656" y="232">Event</text>
+  <text class="copy" x="656" y="262">“这里发生了一件事，允许其他 Plugin 参与”</text>
+
+  <rect x="660" y="336" width="132" height="84" rx="16" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="node-title" x="726" y="370" text-anchor="middle">Producer</text>
+  <text class="small" x="726" y="398" text-anchor="middle">事件发起者</text>
+  <path class="edge-green" d="M792 378 H824"/>
+  <rect x="832" y="336" width="120" height="84" rx="42" fill="#E8F7F2" stroke="#60B985"/>
+  <text class="node-title" x="892" y="370" text-anchor="middle">Event</text>
+  <text class="small" x="892" y="398" text-anchor="middle">扩展点</text>
+  <path class="edge-green" d="M952 378 H974 V322 H990"/>
+  <path class="edge-green" d="M974 378 V434 H990"/>
+  <rect x="998" y="280" width="126" height="76" rx="16" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="node-title" x="1061" y="314" text-anchor="middle">Listener A</text>
+  <text class="small" x="1061" y="339" text-anchor="middle">观察</text>
+  <rect x="998" y="400" width="126" height="76" rx="16" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="node-title" x="1061" y="434" text-anchor="middle">Listener B</text>
+  <text class="small" x="1061" y="459" text-anchor="middle">拦截 / 扩展</text>
+
+  <rect x="674" y="506" width="436" height="58" rx="18" fill="#F6FEF9" stroke="#B9E1D1"/>
+  <text class="copy" x="892" y="541" text-anchor="middle">Producer 不需要知道有多少参与者</text>
+  <text class="small" x="892" y="594" text-anchor="middle">关系：一个过程的观察、决策或扩展</text>
+
+  <rect x="250" y="678" width="700" height="38" rx="19" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <text class="subtitle" x="600" y="703" text-anchor="middle">需要调用结果 → Service　　需要开放参与 → Event</text>
+</svg>

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Session 对外生命周期</title>
+  <desc id="desc">一个 Session 获得稳定标识后，在多轮交互中持续追加历史。关闭运行实例不会删除持久会话；恢复同一标识后，旧历史用于重建上下文，新工作继续追加，旧更新不会被当作新事件再次播放。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5F6370"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #303640; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #68707C; }
+      .stage { font-size: 16px; font-weight: 700; fill: #5F6370; }
+      .node-title { font-size: 20px; font-weight: 700; }
+      .node-copy { font-size: 15px; fill: #4B5360; }
+      .small { font-size: 14px; fill: #5F6773; }
+      .chip { font-size: 14px; font-weight: 600; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #EBEEF2; }
+      .card { stroke: #6F7782; stroke-width: 1.4; }
+      .edge { fill: none; stroke: #5F6370; stroke-width: 2.4; marker-end: url(#arrow); }
+      .edge-label { font-size: 14px; font-weight: 600; fill: #5F6370; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#F5F7F9"/>
+  <text class="title" x="52" y="50">Session 对外生命周期：同一历史持续生长</text>
+  <text class="subtitle" x="52" y="76">运行实例可以结束；持久会话仍可查阅，并在恢复后沿用同一个 Session ID。</text>
+
+  <rect x="32" y="104" width="1136" height="492" rx="20" fill="#FFFFFF" stroke="#D5DAE0" stroke-width="1.5"/>
+
+  <text class="stage" x="78" y="142">01 · 创建</text>
+  <text class="stage" x="315" y="142">02 · 交互</text>
+  <text class="stage" x="557" y="142">03 · Cold</text>
+  <text class="stage" x="790" y="142">04 · Resume</text>
+  <text class="stage" x="1015" y="142">05 · 继续</text>
+
+  <rect class="card" x="62" y="166" width="190" height="142" rx="16" fill="#FFF7E2"/>
+  <circle cx="98" cy="202" r="18" fill="#F4D58D"/>
+  <text class="chip" x="98" y="207" text-anchor="middle">ID</text>
+  <text class="node-title" x="126" y="208">新 Session</text>
+  <text class="node-copy" x="84" y="244">获得稳定 Session ID</text>
+  <text class="small" x="84" y="270">初始历史为空</text>
+  <text class="small" x="84" y="292">建立当前会话范围</text>
+
+  <rect class="card" x="292" y="166" width="206" height="142" rx="16" fill="#E6F6F3"/>
+  <text class="node-title" x="316" y="204">多轮工作</text>
+  <text class="node-copy" x="316" y="235">提示词 · 回复</text>
+  <text class="node-copy" x="316" y="260">工具活动 · 状态变化</text>
+  <rect x="316" y="278" width="158" height="12" rx="6" fill="#9EDFD8"/>
+
+  <rect class="card" x="532" y="166" width="206" height="142" rx="16" fill="#EEF1F4"/>
+  <text class="node-title" x="556" y="204">运行实例结束</text>
+  <text class="node-copy" x="556" y="235">会话仍可列出</text>
+  <text class="node-copy" x="556" y="260">历史仍可查看与分页</text>
+  <text class="small" x="556" y="286">没有活动 Agent</text>
+
+  <rect class="card" x="772" y="166" width="206" height="142" rx="16" fill="#E7F2F8"/>
+  <text class="node-title" x="796" y="204">恢复同一 Session</text>
+  <text class="node-copy" x="796" y="235">重建历史与当前上下文</text>
+  <text class="node-copy" x="796" y="260">沿用原 Session ID</text>
+  <text class="small" x="796" y="286">旧更新不作为新更新重播</text>
+
+  <rect class="card" x="1012" y="166" width="126" height="142" rx="16" fill="#E6F6F3"/>
+  <text class="node-title" x="1036" y="204">新一轮</text>
+  <text class="node-copy" x="1036" y="235">继续追加</text>
+  <text class="node-copy" x="1036" y="260">保持连续</text>
+  <text class="small" x="1036" y="286">同一会话</text>
+
+  <path class="edge" d="M252 237 H284"/>
+  <path class="edge" d="M498 237 H524"/>
+  <path class="edge" d="M738 237 H764"/>
+  <path class="edge" d="M978 237 H1004"/>
+
+  <text class="stage" x="62" y="356">用户看到的连续历史</text>
+  <rect x="62" y="382" width="1076" height="130" rx="16" fill="#F7F9FA" stroke="#C7CDD4" stroke-width="1.3"/>
+  <rect x="84" y="407" width="172" height="58" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="170" y="431" text-anchor="middle">Session ID · S</text>
+  <text class="small" x="170" y="452" text-anchor="middle">创建</text>
+
+  <rect x="270" y="407" width="292" height="58" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="416" y="431" text-anchor="middle">历史前缀</text>
+  <text class="small" x="416" y="452" text-anchor="middle">Turn 1 · Turn 2 · Turn 3</text>
+
+  <rect x="576" y="407" width="150" height="58" rx="12" fill="#DDE2E8"/>
+  <text class="chip" x="651" y="431" text-anchor="middle">Cold</text>
+  <text class="small" x="651" y="452" text-anchor="middle">没有新增事实</text>
+
+  <rect x="740" y="407" width="172" height="58" rx="12" fill="#A9C9DC"/>
+  <text class="chip" x="826" y="431" text-anchor="middle">恢复 S</text>
+  <text class="small" x="826" y="452" text-anchor="middle">读取既有前缀</text>
+
+  <rect x="926" y="407" width="190" height="58" rx="12" fill="#9EDFD8"/>
+  <text class="chip" x="1021" y="431" text-anchor="middle">新增历史</text>
+  <text class="small" x="1021" y="452" text-anchor="middle">Turn 4 · Turn 5</text>
+
+  <path d="M84 487 H1116" stroke="#5F6370" stroke-width="2.3" marker-end="url(#arrow)"/>
+  <text class="small" x="600" y="503" text-anchor="middle">同一条逻辑时间线</text>
+
+  <rect x="32" y="616" width="1136" height="94" rx="18" fill="#EEF1F4" stroke="#9FA7B1" stroke-width="1.5" stroke-dasharray="8 7"/>
+  <text class="node-title" x="58" y="650">不会随 Session Resume 自动恢复</text>
+  <text class="node-copy" x="58" y="680">工作区文件的旧版本 · 旧进程的内存对象 · 已变化的外部系统状态</text>
+  <text class="small" x="1138" y="680" text-anchor="end">会话连续性不等于运行环境回滚</text>
+
+  <text class="small" x="1148" y="738" text-anchor="end">对外保证：同一 ID、连续历史、恢复后继续追加</text>
+</svg>

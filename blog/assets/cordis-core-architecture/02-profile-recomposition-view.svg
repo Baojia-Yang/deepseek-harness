@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1180" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">从 DeepSeek Harness Profile 到 Cordis 运行时重组</title>
+  <desc id="desc">展示 Profile 和 Patch 如何形成 Loader 配置树，配置变化如何事务式更新 Entry，并通过 Fiber、Service 依赖和 Effect 清理完成运行时重组。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#182230" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#667085"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/>
+    </marker>
+    <marker id="arrow-coral" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#C45F55"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#21866B"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; letter-spacing: 0.2px; }
+      .page-subtitle { font-size: 17px; fill: #667085; }
+      .section-title { font-size: 21px; font-weight: 750; }
+      .section-copy { font-size: 15px; fill: #667085; }
+      .card-title { font-size: 20px; font-weight: 750; }
+      .card-subtitle { font-size: 15px; font-weight: 700; }
+      .copy { font-size: 14px; fill: #475467; }
+      .small { font-size: 13px; fill: #667085; }
+      .chip { font-size: 13px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #DDE7F2; }
+      .section { fill: #FFFFFF; stroke: #D8DEE8; stroke-width: 1.5; }
+      .card { stroke-width: 1.4; }
+      .edge { fill: none; stroke: #667085; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.4; marker-end: url(#arrow-blue); }
+      .edge-coral { fill: none; stroke: #C45F55; stroke-width: 2.3; marker-end: url(#arrow-coral); }
+      .edge-green { fill: none; stroke: #21866B; stroke-width: 2.3; marker-end: url(#arrow-green); }
+      .edge-dashed { fill: none; stroke: #98A2B3; stroke-width: 1.8; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .edge-label { font-size: 13px; font-weight: 650; fill: #667085; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1180" fill="#F5F7FA"/>
+  <text class="page-title" x="54" y="54">从 Profile 变化到 Cordis 运行时重组</text>
+  <text class="page-subtitle" x="54" y="84">配置层描述目标组合；Loader 计算差异；Fiber、Service 与 Effect 保证变化过程保持一致。</text>
+
+  <!-- DSH composition -->
+  <rect class="section" x="40" y="112" width="1520" height="246" rx="22"/>
+  <rect x="64" y="134" width="204" height="34" rx="17" fill="#E8F1FC"/>
+  <text class="section-title" x="82" y="158" fill="#175EA8">1　DSH 组合层</text>
+  <text class="section-copy" x="292" y="157">Profile 决定有序输入，Patch 决定最终目标配置</text>
+
+  <rect class="card" x="72" y="192" width="276" height="126" rx="15" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="94" y="224">Profile</text>
+  <text class="copy" x="94" y="250">Bundle 顺序</text>
+  <text class="small mono" x="94" y="275">dsh-base → dsh-web-app</text>
+  <rect x="94" y="288" width="100" height="22" rx="11" fill="#CFE5FA"/>
+  <text class="chip" x="144" y="304" text-anchor="middle" fill="#175EA8">web · live</text>
+
+  <rect class="card" x="402" y="192" width="382" height="126" rx="15" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="card-title" x="424" y="224">有序 Patch 栈</text>
+  <text class="copy" x="424" y="251">Bundle → Profile → Home → --patch</text>
+  <rect x="424" y="272" width="338" height="32" rx="9" fill="#FFF0C7"/>
+  <text class="small" x="593" y="293" text-anchor="middle">后层覆盖前层；insert 扩展配置行</text>
+
+  <rect class="card" x="838" y="192" width="318" height="126" rx="15" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="card-title" x="860" y="224">目标 Entry 列表</text>
+  <text class="copy" x="860" y="251">一份完整、有序的插件树描述</text>
+  <text class="small" x="860" y="277">每行：id · name · config</text>
+  <text class="small" x="860" y="299">inject · isolate · disabled</text>
+
+  <rect class="card" x="1210" y="192" width="318" height="126" rx="15" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="card-title inverse" x="1232" y="224">Root Include</text>
+  <text class="copy inverse-muted" x="1232" y="251">配置世界进入 Cordis 的入口</text>
+  <text class="small inverse" x="1232" y="278">读取 · 应用 Patch · 提交候选树</text>
+
+  <path class="edge-blue" d="M348 255 H394"/>
+  <text class="edge-label" x="371" y="240" text-anchor="middle">展开</text>
+  <path class="edge-blue" d="M784 255 H830"/>
+  <text class="edge-label" x="807" y="240" text-anchor="middle">合成</text>
+  <path class="edge-blue" d="M1156 255 H1202"/>
+  <text class="edge-label" x="1179" y="240" text-anchor="middle">挂载</text>
+
+  <!-- Loader reconciliation -->
+  <rect class="section" x="40" y="386" width="1520" height="246" rx="22"/>
+  <rect x="64" y="408" width="238" height="34" rx="17" fill="#FFF4D8"/>
+  <text class="section-title" x="82" y="432" fill="#8C6515">2　Loader 协调层</text>
+  <text class="section-copy" x="326" y="431">只改变受影响的 Entry；失败时恢复上一棵可用树</text>
+
+  <rect class="card" x="72" y="466" width="280" height="126" rx="15" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="card-title" x="94" y="498">变化来源</text>
+  <text class="copy" x="94" y="525">启动时应用一次</text>
+  <text class="copy" x="94" y="550">或 Web Profile 的 HMR 通知</text>
+  <text class="small" x="94" y="576">startup Profile 不安装 watcher</text>
+
+  <rect class="card" x="404" y="466" width="280" height="126" rx="15" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="card-title" x="426" y="498">EntryTree</text>
+  <text class="copy" x="426" y="525">比较当前树与候选树</text>
+  <text class="small" x="426" y="550">新增 · 更新 · 移除 · 移动</text>
+  <text class="small" x="426" y="576">Group 负责批量事务</text>
+
+  <rect class="card" x="736" y="466" width="336" height="126" rx="15" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="758" y="498">受影响的 Entry</text>
+  <text class="copy" x="758" y="525">配置变化 → Fiber.update</text>
+  <text class="copy" x="758" y="550">插件变化 → 替换 Fiber</text>
+  <text class="small" x="758" y="576">未受影响的 Entry 保持运行</text>
+
+  <rect class="card" x="1124" y="466" width="404" height="126" rx="15" fill="#FFF7F6" stroke="#DB7C73"/>
+  <text class="card-title" x="1146" y="498">提交或回滚</text>
+  <rect x="1146" y="520" width="158" height="38" rx="10" fill="#DDF3EB"/>
+  <text class="chip" x="1225" y="544" text-anchor="middle" fill="#16785E">候选启动成功</text>
+  <rect x="1326" y="520" width="178" height="38" rx="10" fill="#F8D1CD"/>
+  <text class="chip" x="1415" y="544" text-anchor="middle" fill="#A33C33">失败：恢复旧树</text>
+  <text class="small" x="1146" y="579">外部看到的是新的一致状态，或最后一个可用状态。</text>
+
+  <path class="edge" d="M352 529 H396"/>
+  <path class="edge" d="M684 529 H728"/>
+  <path class="edge" d="M1072 529 H1116"/>
+
+  <!-- Reactive runtime -->
+  <rect class="section" x="40" y="660" width="1520" height="450" rx="22"/>
+  <rect x="64" y="682" width="272" height="34" rx="17" fill="#FFF0EF"/>
+  <text class="section-title" x="82" y="706" fill="#A33C33">3　Cordis 运行时重组</text>
+  <text class="section-copy" x="360" y="705">Provider 替换会沿 Service 依赖传播；Consumer 的 Effect 随生命周期撤销并重建</text>
+
+  <!-- Stable A -->
+  <rect class="card" x="72" y="750" width="432" height="294" rx="17" fill="#F8FAFC" stroke="#98A2B3"/>
+  <rect x="94" y="770" width="132" height="25" rx="12.5" fill="#EAF3FF"/>
+  <text class="chip" x="160" y="788" text-anchor="middle" fill="#175EA8">状态 A · 稳定</text>
+  <rect x="102" y="822" width="158" height="56" rx="12" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-subtitle" x="181" y="846" text-anchor="middle">Provider A</text>
+  <text class="small mono" x="181" y="866" text-anchor="middle">ACTIVE</text>
+  <rect x="304" y="822" width="164" height="56" rx="28" fill="#CFE5FA"/>
+  <text class="card-subtitle mono" x="386" y="846" text-anchor="middle">Service</text>
+  <text class="small" x="386" y="866" text-anchor="middle">具名能力</text>
+  <path class="edge-blue" d="M260 850 H296"/>
+
+  <rect x="102" y="914" width="158" height="56" rx="12" fill="#DDF3EB" stroke="#60B985"/>
+  <text class="card-subtitle" x="181" y="938" text-anchor="middle">Consumer</text>
+  <text class="small mono" x="181" y="958" text-anchor="middle">ACTIVE</text>
+  <rect x="304" y="914" width="164" height="56" rx="12" fill="#FFF0C7" stroke="#D7A63F"/>
+  <text class="card-subtitle" x="386" y="938" text-anchor="middle">Effects</text>
+  <text class="small" x="386" y="958" text-anchor="middle">已注册资源</text>
+  <path class="edge-green" d="M386 878 V904 H260"/>
+  <path class="edge" d="M260 942 H296"/>
+  <text class="small" x="288" y="1020" text-anchor="middle">Service 满足 inject，Consumer 正常工作</text>
+
+  <!-- Transition -->
+  <rect class="card" x="584" y="750" width="432" height="294" rx="17" fill="#FFF7F6" stroke="#DB7C73" filter="url(#shadow)"/>
+  <rect x="606" y="770" width="158" height="25" rx="12.5" fill="#F8D1CD"/>
+  <text class="chip" x="685" y="788" text-anchor="middle" fill="#A33C33">变化中 · 受控</text>
+  <rect x="614" y="822" width="372" height="52" rx="12" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="card-subtitle" x="636" y="844">① Provider A 卸载</text>
+  <text class="small" x="636" y="864">Service 暂时不可用</text>
+  <rect x="614" y="888" width="372" height="52" rx="12" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="card-subtitle" x="636" y="910">② Consumer Fiber 卸载</text>
+  <text class="small" x="636" y="930">依赖不满足，不保留失效引用</text>
+  <rect x="614" y="954" width="372" height="52" rx="12" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="card-subtitle" x="636" y="976">③ Effects 自动撤销</text>
+  <text class="small" x="636" y="996">工具、监听器、子插件与外部资源被清理</text>
+  <path class="edge-coral" d="M800 874 V880"/>
+  <path class="edge-coral" d="M800 940 V946"/>
+  <text class="small" x="800" y="1028" text-anchor="middle">Consumer 进入 PENDING，等待新的 Provider</text>
+
+  <!-- Stable B -->
+  <rect class="card" x="1096" y="750" width="432" height="294" rx="17" fill="#F6FEF9" stroke="#60B985"/>
+  <rect x="1118" y="770" width="132" height="25" rx="12.5" fill="#DDF3EB"/>
+  <text class="chip" x="1184" y="788" text-anchor="middle" fill="#16785E">状态 B · 稳定</text>
+  <rect x="1126" y="822" width="158" height="56" rx="12" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-subtitle" x="1205" y="846" text-anchor="middle">Provider B</text>
+  <text class="small mono" x="1205" y="866" text-anchor="middle">ACTIVE</text>
+  <rect x="1328" y="822" width="164" height="56" rx="28" fill="#CFE5FA"/>
+  <text class="card-subtitle mono" x="1410" y="846" text-anchor="middle">Service</text>
+  <text class="small" x="1410" y="866" text-anchor="middle">新实现</text>
+  <path class="edge-blue" d="M1284 850 H1320"/>
+
+  <rect x="1126" y="914" width="158" height="56" rx="12" fill="#DDF3EB" stroke="#60B985"/>
+  <text class="card-subtitle" x="1205" y="938" text-anchor="middle">Consumer</text>
+  <text class="small mono" x="1205" y="958" text-anchor="middle">RELOADED</text>
+  <rect x="1328" y="914" width="164" height="56" rx="12" fill="#FFF0C7" stroke="#D7A63F"/>
+  <text class="card-subtitle" x="1410" y="938" text-anchor="middle">Effects</text>
+  <text class="small" x="1410" y="958" text-anchor="middle">重新创建</text>
+  <path class="edge-green" d="M1410 878 V904 H1284"/>
+  <path class="edge" d="M1284 942 H1320"/>
+  <text class="small" x="1312" y="1020" text-anchor="middle">依赖重新满足，Consumer 使用新实现启动</text>
+
+  <path class="edge-coral" d="M504 897 H576"/>
+  <text class="edge-label" x="540" y="880" text-anchor="middle">替换</text>
+  <path class="edge-green" d="M1016 897 H1088"/>
+  <text class="edge-label" x="1052" y="880" text-anchor="middle">恢复</text>
+
+  <rect x="176" y="1066" width="1248" height="28" rx="14" fill="#F2F4F7"/>
+  <text class="small" x="800" y="1085" text-anchor="middle">一致性来源：依赖失效即停止消费者，资源随 Fiber 撤销，候选失败则由 Loader 恢复上一棵可用配置树。</text>
+
+  <!-- Legend -->
+  <rect x="316" y="1128" width="968" height="30" rx="15" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <circle cx="356" cy="1143" r="7" fill="#78AEE3"/>
+  <text class="small" x="371" y="1148">配置与 Service</text>
+  <circle cx="548" cy="1143" r="7" fill="#60B985"/>
+  <text class="small" x="563" y="1148">正常激活与恢复</text>
+  <circle cx="760" cy="1143" r="7" fill="#DB7C73"/>
+  <text class="small" x="775" y="1148">变化与卸载</text>
+  <circle cx="934" cy="1143" r="7" fill="#D7A63F"/>
+  <text class="small" x="949" y="1148">配置、等待与资源</text>
+  <text class="small" x="1165" y="1148">实线箭头：主要处理方向</text>
+</svg>

@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1180" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Cordis 核心逻辑视图</title>
+  <desc id="desc">展示 Cordis 如何从插件定义创建 Fiber，并以 Context 管理空间可见性、以 Fiber 和 Effect 管理时间生命周期，同时通过 Service 和 Event 支持插件协作。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#182230" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#667085"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/>
+    </marker>
+    <marker id="arrow-coral" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#C45F55"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; letter-spacing: 0.2px; }
+      .page-subtitle { font-size: 17px; fill: #667085; }
+      .section-title { font-size: 21px; font-weight: 750; }
+      .section-copy { font-size: 15px; fill: #667085; }
+      .card-title { font-size: 21px; font-weight: 750; }
+      .card-subtitle { font-size: 15px; font-weight: 700; }
+      .copy { font-size: 15px; fill: #475467; }
+      .small { font-size: 13px; fill: #667085; }
+      .chip { font-size: 13px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #DDE7F2; }
+      .section { fill: #FFFFFF; stroke: #D8DEE8; stroke-width: 1.5; }
+      .card { stroke-width: 1.4; }
+      .edge { fill: none; stroke: #667085; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.4; marker-end: url(#arrow-blue); }
+      .edge-coral { fill: none; stroke: #C45F55; stroke-width: 2.3; marker-end: url(#arrow-coral); }
+      .edge-dashed { fill: none; stroke: #98A2B3; stroke-width: 1.8; stroke-dasharray: 7 6; }
+      .edge-label { font-size: 13px; font-weight: 650; fill: #667085; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1180" fill="#F5F7FA"/>
+  <text class="page-title" x="54" y="54">Cordis 核心：Context 管空间，Fiber 管时间</text>
+  <text class="page-subtitle" x="54" y="84">Plugin 是装配单元；Service 与 Event 负责协作；Effect 把所有运行资源归属到明确的生命周期。</text>
+
+  <!-- Composition path -->
+  <rect class="section" x="40" y="112" width="1520" height="226" rx="22"/>
+  <rect x="64" y="134" width="188" height="34" rx="17" fill="#E8F1FC"/>
+  <text class="section-title" x="82" y="158" fill="#175EA8">1　实例化路径</text>
+  <text class="section-copy" x="275" y="157">外部组合只决定挂载什么；Cordis 从 Plugin 定义创建可管理的运行实例</text>
+
+  <rect class="card" x="76" y="190" width="268" height="112" rx="15" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-title" x="98" y="222">Host / Loader</text>
+  <text class="copy" x="98" y="250">选择插件与配置</text>
+  <text class="small" x="98" y="277">位于最小内核之外</text>
+
+  <rect class="card" x="420" y="190" width="268" height="112" rx="15" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="card-title" x="442" y="222">Plugin</text>
+  <text class="copy" x="442" y="250">可复用的行为定义</text>
+  <text class="small" x="442" y="277">函数 · 类 · apply 对象</text>
+
+  <rect class="card" x="764" y="190" width="268" height="112" rx="15" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="card-title" x="786" y="222">Registry</text>
+  <text class="copy" x="786" y="250">保存 Plugin Runtime</text>
+  <text class="small" x="786" y="277">一个定义可产生多个实例</text>
+
+  <rect class="card" x="1108" y="190" width="416" height="112" rx="15" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="card-title inverse" x="1132" y="222">Fiber</text>
+  <text class="copy inverse-muted" x="1132" y="250">一次 Plugin 挂载的运行实例</text>
+  <text class="small inverse" x="1132" y="277">独立 Context · 依赖快照 · 生命周期 · Effects</text>
+
+  <path class="edge-blue" d="M344 246 H412"/>
+  <text class="edge-label" x="378" y="231" text-anchor="middle">选择</text>
+  <path class="edge-blue" d="M688 246 H756"/>
+  <text class="edge-label" x="722" y="231" text-anchor="middle">注册</text>
+  <path class="edge-blue" d="M1032 246 H1100"/>
+  <text class="edge-label" x="1066" y="231" text-anchor="middle">创建</text>
+
+  <!-- Spatial and temporal axes -->
+  <rect class="section" x="40" y="366" width="1520" height="456" rx="22"/>
+  <rect x="64" y="388" width="260" height="34" rx="17" fill="#E8F7F2"/>
+  <text class="section-title" x="82" y="412" fill="#16785E">2　两条正交的组合轴</text>
+  <text class="section-copy" x="348" y="411">同一个 Fiber 同时拥有一份 Context 视图和一组 Effect</text>
+
+  <!-- Context panel -->
+  <rect class="card" x="72" y="448" width="700" height="320" rx="18" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <rect x="94" y="468" width="148" height="27" rx="13.5" fill="#C9EBDD"/>
+  <text class="chip" x="168" y="487" text-anchor="middle" fill="#16785E">空间轴 · Context</text>
+  <text class="card-title" x="94" y="530">决定“当前插件能看到什么”</text>
+
+  <rect x="100" y="558" width="636" height="48" rx="12" fill="#DDF3EB" stroke="#83C9B1"/>
+  <text class="card-subtitle" x="122" y="588">Root Context</text>
+  <text class="small" x="262" y="588">公共 Service 与公共运行能力</text>
+
+  <path class="edge-dashed" d="M214 606 V633 H168 V648"/>
+  <path class="edge-dashed" d="M418 606 V648"/>
+  <path class="edge-dashed" d="M622 606 V633 H668 V648"/>
+
+  <rect x="100" y="648" width="188" height="72" rx="12" fill="#FFFFFF" stroke="#83C9B1"/>
+  <text class="card-subtitle mono" x="194" y="676" text-anchor="middle">Context A</text>
+  <text class="small" x="194" y="701" text-anchor="middle">standard scope</text>
+  <rect x="324" y="648" width="188" height="72" rx="12" fill="#FFFFFF" stroke="#83C9B1"/>
+  <text class="card-subtitle mono" x="418" y="676" text-anchor="middle">Context B</text>
+  <text class="small" x="418" y="701" text-anchor="middle">minimal scope</text>
+  <rect x="548" y="648" width="188" height="72" rx="12" fill="#FFFFFF" stroke="#83C9B1"/>
+  <text class="card-subtitle mono" x="642" y="676" text-anchor="middle">Context C</text>
+  <text class="small" x="642" y="701" text-anchor="middle">ptc scope</text>
+
+  <text class="small" x="418" y="749" text-anchor="middle">继承公共能力，并可按 Service 名隔离或覆盖实现</text>
+
+  <!-- Fiber panel -->
+  <rect class="card" x="828" y="448" width="700" height="320" rx="18" fill="#FFF7F6" stroke="#DB7C73" filter="url(#shadow)"/>
+  <rect x="850" y="468" width="166" height="27" rx="13.5" fill="#F8D1CD"/>
+  <text class="chip" x="933" y="487" text-anchor="middle" fill="#A33C33">时间轴 · Fiber</text>
+  <text class="card-title" x="850" y="530">决定“当前插件何时存活”</text>
+
+  <rect x="856" y="566" width="116" height="46" rx="23" fill="#FFF0C7" stroke="#D7A63F"/>
+  <text class="chip mono" x="914" y="594" text-anchor="middle">PENDING</text>
+  <rect x="1012" y="566" width="116" height="46" rx="23" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="chip mono" x="1070" y="594" text-anchor="middle">LOADING</text>
+  <rect x="1168" y="566" width="116" height="46" rx="23" fill="#DDF3EB" stroke="#60B985"/>
+  <text class="chip mono" x="1226" y="594" text-anchor="middle">ACTIVE</text>
+  <rect x="1324" y="566" width="146" height="46" rx="23" fill="#F8D1CD" stroke="#DB7C73"/>
+  <text class="chip mono" x="1397" y="594" text-anchor="middle">UNLOADING</text>
+
+  <path class="edge-coral" d="M972 589 H1004"/>
+  <path class="edge-coral" d="M1128 589 H1160"/>
+  <path class="edge-coral" d="M1284 589 H1316"/>
+
+  <rect x="856" y="646" width="614" height="78" rx="13" fill="#FFFFFF" stroke="#E6A49E"/>
+  <text class="card-subtitle" x="878" y="674">Fiber 拥有的 Effects</text>
+  <text class="copy" x="878" y="702">Service 注册 · Event 监听器 · 子插件 · 定时器 · 连接 · watcher</text>
+  <path class="edge-coral" d="M1226 612 V638"/>
+  <text class="small" x="1468" y="749" text-anchor="end">卸载时统一撤销；依赖恢复后可以重新创建</text>
+
+  <rect x="650" y="782" width="300" height="25" rx="12.5" fill="#F2F4F7"/>
+  <text class="small" x="800" y="800" text-anchor="middle">一份 Context 视图 ↔ 一个 Fiber 生命周期实例</text>
+
+  <!-- Collaboration mechanisms -->
+  <rect class="section" x="40" y="850" width="1520" height="282" rx="22"/>
+  <rect x="64" y="872" width="216" height="34" rx="17" fill="#FFF4D8"/>
+  <text class="section-title" x="82" y="896" fill="#8C6515">3　插件协作机制</text>
+  <text class="section-copy" x="304" y="895">能力、协作和资源分别由 Service、Event、Effect 表达</text>
+
+  <rect class="card" x="72" y="932" width="456" height="154" rx="16" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-title" x="94" y="964">Service</text>
+  <text class="copy" x="94" y="990">明确的能力调用与响应式依赖</text>
+  <rect x="94" y="1016" width="108" height="38" rx="10" fill="#FFFFFF" stroke="#78AEE3"/>
+  <text class="chip" x="148" y="1040" text-anchor="middle">Provider</text>
+  <rect x="246" y="1016" width="116" height="38" rx="19" fill="#CFE5FA"/>
+  <text class="chip mono" x="304" y="1040" text-anchor="middle">ctx.service</text>
+  <rect x="406" y="1016" width="100" height="38" rx="10" fill="#FFFFFF" stroke="#78AEE3"/>
+  <text class="chip" x="456" y="1040" text-anchor="middle">Consumer</text>
+  <path class="edge-blue" d="M202 1035 H238"/>
+  <path class="edge-blue" d="M362 1035 H398"/>
+  <text class="small" x="300" y="1075" text-anchor="middle">提供能力　　　　　　　　　inject 依赖</text>
+
+  <rect class="card" x="572" y="932" width="456" height="154" rx="16" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="card-title" x="594" y="964">Event</text>
+  <text class="copy" x="594" y="990">观察、广播、决策与中间件式扩展</text>
+  <rect x="594" y="1016" width="108" height="38" rx="10" fill="#FFFFFF" stroke="#60B985"/>
+  <text class="chip" x="648" y="1040" text-anchor="middle">Producer</text>
+  <rect x="746" y="1016" width="108" height="38" rx="19" fill="#DDF3EB"/>
+  <text class="chip mono" x="800" y="1040" text-anchor="middle">event/*</text>
+  <rect x="898" y="1016" width="108" height="38" rx="10" fill="#FFFFFF" stroke="#60B985"/>
+  <text class="chip" x="952" y="1040" text-anchor="middle">Listeners</text>
+  <path class="edge" d="M702 1035 H738"/>
+  <path class="edge" d="M854 1035 H890"/>
+  <text class="small" x="800" y="1075" text-anchor="middle">不要求生产者知道监听者</text>
+
+  <rect class="card" x="1072" y="932" width="456" height="154" rx="16" fill="#FFF7F6" stroke="#DB7C73"/>
+  <text class="card-title" x="1094" y="964">Effect</text>
+  <text class="copy" x="1094" y="990">把资源的创建与销毁归属于 Fiber</text>
+  <rect x="1094" y="1016" width="104" height="38" rx="10" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="chip" x="1146" y="1040" text-anchor="middle">Acquire</text>
+  <rect x="1242" y="1016" width="116" height="38" rx="19" fill="#F8D1CD"/>
+  <text class="chip mono" x="1300" y="1040" text-anchor="middle">Fiber owns</text>
+  <rect x="1402" y="1016" width="104" height="38" rx="10" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="chip" x="1454" y="1040" text-anchor="middle">Dispose</text>
+  <path class="edge-coral" d="M1198 1035 H1234"/>
+  <path class="edge-coral" d="M1358 1035 H1394"/>
+  <text class="small" x="1300" y="1075" text-anchor="middle">任何卸载路径都经过同一套清理语义</text>
+
+  <rect x="332" y="1103" width="936" height="22" rx="11" fill="#F2F4F7"/>
+  <text class="small" x="800" y="1119" text-anchor="middle">核心结果：同一进程可以安全承载多套作用域组合，并在运行中替换其中的插件与能力。</text>
+</svg>

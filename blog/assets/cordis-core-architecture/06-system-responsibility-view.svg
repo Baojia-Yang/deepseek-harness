@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Cordis 的系统责任</title>
+  <desc id="desc">Cordis 接收一棵目标 Plugin Tree，通过 Context、Service 依赖、Service 与 Event、Fiber 与 Effect 四类机制，将它维持为可组合、可隔离、可替换、可重组的运行系统。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#21866B"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .title { font-size: 34px; font-weight: 750; } .subtitle { font-size: 18px; fill: #667085; }
+      .heading { font-size: 25px; font-weight: 750; } .card-title { font-size: 21px; font-weight: 750; }
+      .copy { font-size: 17px; fill: #475467; } .small { font-size: 15px; fill: #667085; } .chip { font-size: 16px; font-weight: 700; }
+      .inverse { fill: #FFFFFF; } .inverse-muted { fill: #DDE7F2; }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.8; marker-end: url(#arrow-blue); }
+      .edge-green { fill: none; stroke: #21866B; stroke-width: 2.8; marker-end: url(#arrow-green); }
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#F5F7FA"/>
+  <text class="title" x="48" y="56">Cordis 的系统责任：让 Plugin 可以共同演化</text>
+  <text class="subtitle" x="48" y="88">Cordis 不提供具体产品能力；它管理一组 Plugin 如何组成并持续运行。</text>
+
+  <rect x="48" y="246" width="230" height="214" rx="22" fill="#FFF8E8" stroke="#D7A63F" stroke-width="1.6" filter="url(#shadow)"/>
+  <text class="heading" x="163" y="286" text-anchor="middle">目标 Plugin Tree</text>
+  <text class="small" x="163" y="314" text-anchor="middle">声明“系统需要什么”</text>
+  <rect x="111" y="338" width="104" height="42" rx="12" fill="#FFFFFF" stroke="#D7A63F"/>
+  <text class="chip" x="163" y="365" text-anchor="middle">Root</text>
+  <path d="M163 380 V398 M93 398 H233 M93 398 V414 M163 398 V414 M233 398 V414" fill="none" stroke="#8C6515" stroke-width="2"/>
+  <rect x="66" y="414" width="54" height="30" rx="8" fill="#FFFFFF" stroke="#D7A63F"/>
+  <rect x="136" y="414" width="54" height="30" rx="8" fill="#FFFFFF" stroke="#D7A63F"/>
+  <rect x="206" y="414" width="54" height="30" rx="8" fill="#FFFFFF" stroke="#D7A63F"/>
+
+  <path class="edge-blue" d="M278 353 H338"/>
+  <text class="small" x="308" y="337" text-anchor="middle" fill="#175EA8">交给</text>
+
+  <rect x="350" y="126" width="500" height="520" rx="26" fill="#FFFFFF" stroke="#344054" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="350" y="126" width="500" height="76" rx="24" fill="#344054"/>
+  <rect x="350" y="178" width="500" height="24" fill="#344054"/>
+  <text class="heading inverse" x="600" y="170" text-anchor="middle">Cordis Runtime</text>
+
+  <rect x="382" y="230" width="205" height="150" rx="18" fill="#F6FEF9" stroke="#60B985" stroke-width="1.5"/>
+  <text class="card-title" x="484.5" y="269" text-anchor="middle">Context</text>
+  <text class="copy" x="484.5" y="301" text-anchor="middle">可见范围</text>
+  <text class="small" x="484.5" y="332" text-anchor="middle">谁能看到哪些能力</text>
+
+  <rect x="613" y="230" width="205" height="150" rx="18" fill="#EAF3FF" stroke="#78AEE3" stroke-width="1.5"/>
+  <text class="card-title" x="715.5" y="269" text-anchor="middle">Service 依赖</text>
+  <text class="copy" x="715.5" y="301" text-anchor="middle">运行条件</text>
+  <text class="small" x="715.5" y="332" text-anchor="middle">能力就绪后再启动</text>
+
+  <rect x="382" y="406" width="205" height="150" rx="18" fill="#E8F7F2" stroke="#60B985" stroke-width="1.5"/>
+  <text class="card-title" x="484.5" y="445" text-anchor="middle">Service / Event</text>
+  <text class="copy" x="484.5" y="477" text-anchor="middle">协作方式</text>
+  <text class="small" x="484.5" y="508" text-anchor="middle">调用能力或扩展过程</text>
+
+  <rect x="613" y="406" width="205" height="150" rx="18" fill="#FFF7F6" stroke="#DB7C73" stroke-width="1.5"/>
+  <text class="card-title" x="715.5" y="445" text-anchor="middle">Fiber / Effect</text>
+  <text class="copy" x="715.5" y="477" text-anchor="middle">生命周期</text>
+  <text class="small" x="715.5" y="508" text-anchor="middle">资源随 Plugin 撤销</text>
+
+  <rect x="438" y="586" width="324" height="34" rx="17" fill="#F2F4F7"/>
+  <text class="small" x="600" y="608" text-anchor="middle">协调运行机制，而不是内置产品功能</text>
+
+  <path class="edge-green" d="M850 353 H910"/>
+  <text class="small" x="880" y="337" text-anchor="middle" fill="#16785E">维持</text>
+
+  <rect x="922" y="246" width="230" height="214" rx="22" fill="#F6FEF9" stroke="#60B985" stroke-width="1.6" filter="url(#shadow)"/>
+  <text class="heading" x="1037" y="286" text-anchor="middle">运行中的应用</text>
+  <text class="small" x="1037" y="314" text-anchor="middle">组合可以持续变化</text>
+  <rect x="956" y="342" width="94" height="38" rx="19" fill="#DDF3EB"/>
+  <text class="chip" x="1003" y="367" text-anchor="middle" fill="#16785E">可组合</text>
+  <rect x="1060" y="342" width="58" height="38" rx="19" fill="#DDF3EB"/>
+  <text class="chip" x="1089" y="367" text-anchor="middle" fill="#16785E">隔离</text>
+  <rect x="956" y="394" width="76" height="38" rx="19" fill="#DDF3EB"/>
+  <text class="chip" x="994" y="419" text-anchor="middle" fill="#16785E">替换</text>
+  <rect x="1042" y="394" width="76" height="38" rx="19" fill="#DDF3EB"/>
+  <text class="chip" x="1080" y="419" text-anchor="middle" fill="#16785E">重组</text>
+
+  <text class="subtitle" x="600" y="704" text-anchor="middle">输入是“想要的 Plugin 结构”，输出是“保持一致的运行系统”。</text>
+</svg>

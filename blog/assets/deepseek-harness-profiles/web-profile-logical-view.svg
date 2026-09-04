@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1540" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">DeepSeek Harness Web Profile 逻辑视图</title>
+  <desc id="desc">从启动装配、Web 进程级插件树和会话作用域三个层面展示 Web Profile、Bundle、dsh-agent-presets、Preset 常驻插件子树与 Session Agent 的关系。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#182230" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#667085"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; letter-spacing: 0.2px; }
+      .page-subtitle { font-size: 17px; fill: #667085; }
+      .section-title { font-size: 21px; font-weight: 750; }
+      .section-copy { font-size: 15px; fill: #667085; }
+      .card-title { font-size: 20px; font-weight: 750; }
+      .card-subtitle { font-size: 15px; font-weight: 650; }
+      .copy { font-size: 14px; fill: #475467; }
+      .small { font-size: 13px; fill: #667085; }
+      .chip { font-size: 13px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #DDE7F2; }
+      .edge { fill: none; stroke: #667085; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.4; marker-end: url(#arrow-blue); }
+      .edge-dashed { fill: none; stroke: #98A2B3; stroke-width: 1.8; stroke-dasharray: 7 6; }
+      .host-edge { fill: none; stroke: #78AEE3; stroke-width: 1.8; stroke-dasharray: 6 6; marker-end: url(#arrow-blue); }
+      .edge-label { font-size: 13px; font-weight: 650; fill: #667085; }
+      .section { fill: #FFFFFF; stroke: #D8DEE8; stroke-width: 1.5; }
+      .card { stroke-width: 1.4; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1540" fill="#F5F7FA"/>
+  <text id="title-text" class="page-title" x="54" y="54">Web Profile：从启动装配到按会话 Agent Preset</text>
+  <text class="page-subtitle" x="54" y="84">Profile 与 Bundle 决定如何生成应用进程；dsh-agent-presets 在该进程内管理按会话可见的 Agent 插件组合。</text>
+
+  <!-- 1. Boot composition -->
+  <rect class="section" x="40" y="112" width="1520" height="328" rx="22"/>
+  <rect x="64" y="134" width="188" height="34" rx="17" fill="#E8F1FC"/>
+  <text class="section-title" x="82" y="158" fill="#175EA8">1　启动装配</text>
+  <text class="section-copy" x="275" y="157">来源与覆盖关系 · 只在启动配置层面保留</text>
+
+  <rect class="card" x="72" y="190" width="258" height="174" rx="15" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="94" y="221">Web Profile</text>
+  <text class="copy" x="94" y="247">名称：<tspan class="mono" font-weight="700">web</tspan></text>
+  <text class="copy" x="94" y="273">Bundle 顺序：</text>
+  <text class="small mono" x="110" y="296">1. dsh-base</text>
+  <text class="small mono" x="110" y="317">2. dsh-web-app</text>
+  <rect x="94" y="329" width="134" height="24" rx="12" fill="#CFE5FA"/>
+  <text class="chip" x="161" y="346" text-anchor="middle" fill="#175EA8">Patch Reload: live</text>
+
+  <path class="edge-blue" d="M330 277 H378"/>
+  <text class="edge-label" x="354" y="260" text-anchor="middle">选择、排序</text>
+
+  <rect class="card" x="386" y="190" width="420" height="174" rx="15" fill="#F8FAFC" stroke="#98A2B3" filter="url(#shadow)"/>
+  <text class="card-title" x="408" y="221">Bundle Patch 层</text>
+  <rect x="408" y="241" width="176" height="88" rx="12" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-subtitle mono" x="426" y="269">① dsh-base</text>
+  <text class="small" x="426" y="293">公共 Runtime 配置行</text>
+  <text class="small" x="426" y="315">基础插件与默认值</text>
+  <rect x="606" y="241" width="176" height="88" rx="12" fill="#E8F7F2" stroke="#66B69D"/>
+  <text class="card-subtitle mono" x="624" y="269">② dsh-web-app</text>
+  <text class="small" x="624" y="293">Web 应用配置行</text>
+  <text class="small" x="624" y="315">插入 agent-presets</text>
+  <text class="small" x="408" y="351">每层贡献可被后续 Profile、Home 与命令行 Patch 覆盖。</text>
+
+  <path class="edge-blue" d="M806 277 H858"/>
+  <text class="edge-label" x="832" y="260" text-anchor="middle">依次应用</text>
+
+  <rect class="card" x="866" y="190" width="302" height="174" rx="15" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="card-title" x="888" y="221">合并后的 Loader 配置</text>
+  <text class="copy" x="888" y="250">一份有序 Cordis 配置行列表</text>
+  <line x1="888" y1="267" x2="1146" y2="267" stroke="#E3C984"/>
+  <text class="small" x="888" y="291">• 公共基础设施行</text>
+  <text class="small" x="888" y="314">• Web Host 与 Client 行</text>
+  <text class="small" x="888" y="337">• agent-presets 行</text>
+
+  <path class="edge-blue" d="M1168 277 H1218"/>
+  <text class="edge-label" x="1193" y="260" text-anchor="middle">实例化</text>
+
+  <rect class="card" x="1226" y="190" width="294" height="174" rx="15" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="card-title inverse" x="1248" y="223">一个 Web 应用进程</text>
+  <text class="copy inverse-muted" x="1248" y="251">运行一棵 Cordis Root 插件树</text>
+  <line x1="1248" y1="268" x2="1498" y2="268" stroke="#667085"/>
+  <text class="small inverse" x="1248" y="294">Profile：启动配方</text>
+  <text class="small inverse" x="1248" y="318">Bundle：配置与分发层</text>
+  <text class="small inverse" x="1248" y="342">Plugin：实际运行单元</text>
+
+  <rect x="387" y="383" width="825" height="35" rx="17.5" fill="#F2F4F7"/>
+  <text class="copy" x="800" y="406" text-anchor="middle">Bundle 边界用于说明配置来源；Patch 合并后，Bundle 不作为运行时父容器存在。</text>
+
+  <!-- 2. Runtime root -->
+  <rect class="section" x="40" y="468" width="1520" height="522" rx="22"/>
+  <rect x="64" y="490" width="188" height="34" rx="17" fill="#E8F7F2"/>
+  <text class="section-title" x="82" y="514" fill="#16785E">2　进程运行时</text>
+  <text class="section-copy" x="275" y="513">一棵进程级插件树 · Host 服务共享，Preset 组合受 scope 控制</text>
+
+  <rect x="72" y="546" width="1456" height="410" rx="18" fill="#FBFCFE" stroke="#98A2B3" stroke-width="1.6"/>
+  <rect x="94" y="566" width="316" height="32" rx="16" fill="#344054"/>
+  <text class="chip inverse" x="252" y="588" text-anchor="middle">Web Process · Cordis Root</text>
+
+  <rect class="card" x="98" y="622" width="420" height="264" rx="16" fill="#EAF3FF" stroke="#78AEE3"/>
+  <rect x="118" y="642" width="146" height="25" rx="12.5" fill="#CFE5FA"/>
+  <text class="chip" x="191" y="660" text-anchor="middle" fill="#175EA8">主要来自 dsh-base</text>
+  <text class="card-title" x="118" y="698">进程级公共基础设施</text>
+  <text class="copy" x="118" y="729">• LLM 路由与模型适配器</text>
+  <text class="copy" x="118" y="757">• Session、日志与持久化</text>
+  <text class="copy" x="118" y="785">• Agent Registry 与 Agent Loop</text>
+  <text class="copy" x="118" y="813">• Sandbox、Approval 与 Settings</text>
+  <line x1="118" y1="837" x2="498" y2="837" stroke="#B6D2ED"/>
+  <text class="small" x="118" y="862">所有 Web Session 复用这些宿主服务。</text>
+
+  <rect class="card" x="550" y="622" width="420" height="264" rx="16" fill="#E8F7F2" stroke="#66B69D"/>
+  <rect x="570" y="642" width="182" height="25" rx="12.5" fill="#C9EBDD"/>
+  <text class="chip" x="661" y="660" text-anchor="middle" fill="#16785E">来自 dsh-web-app</text>
+  <text class="card-title" x="570" y="698">Web 应用与宿主插件</text>
+  <text class="copy" x="570" y="729">• HTTP / Web Server</text>
+  <text class="copy" x="570" y="757">• Browser UI 与连接传输</text>
+  <text class="copy" x="570" y="785">• API Gateway 与 Session Controller</text>
+  <text class="copy" x="570" y="813">• Workspace、历史与设置界面</text>
+  <line x1="570" y1="837" x2="950" y2="837" stroke="#ACDACB"/>
+  <text class="small" x="570" y="862">负责多会话 Web 应用入口与控制面。</text>
+
+  <rect class="card" x="1002" y="622" width="500" height="264" rx="16" fill="#FFF0EF" stroke="#DB7C73"/>
+  <rect x="1022" y="642" width="222" height="25" rx="12.5" fill="#F8D1CD"/>
+  <text class="chip" x="1133" y="660" text-anchor="middle" fill="#A33C33">由 dsh-web-app Patch 插入</text>
+  <text class="card-title mono" x="1022" y="698">dsh-agent-presets</text>
+  <text class="copy" x="1022" y="727">进程级 Roster / Composition Manager 插件</text>
+  <text class="small" x="1022" y="753">发现 Preset · 解析默认值 · 管理常驻挂载 · 接入 Agent scope</text>
+  <rect x="1022" y="779" width="104" height="42" rx="10" fill="#F8D1CD"/>
+  <text class="chip mono" x="1074" y="796" text-anchor="middle">standard</text>
+  <text class="small" x="1074" y="814" text-anchor="middle">standing</text>
+  <rect x="1138" y="779" width="104" height="42" rx="10" fill="#F8D1CD"/>
+  <text class="chip mono" x="1190" y="796" text-anchor="middle">minimal</text>
+  <text class="small" x="1190" y="814" text-anchor="middle">standing</text>
+  <rect x="1254" y="779" width="104" height="42" rx="10" fill="#F8D1CD"/>
+  <text class="chip mono" x="1306" y="796" text-anchor="middle">ptc</text>
+  <text class="small" x="1306" y="814" text-anchor="middle">standing</text>
+  <rect x="1370" y="779" width="104" height="42" rx="10" fill="#F8D1CD"/>
+  <text class="chip mono" x="1422" y="796" text-anchor="middle">cordis</text>
+  <text class="small" x="1422" y="814" text-anchor="middle">standing</text>
+  <line x1="1022" y1="837" x2="1482" y2="837" stroke="#EAB4AE"/>
+  <text class="small" x="1022" y="862">默认选择 standard；每个 Preset 对应一份常驻插件子树。</text>
+
+  <path class="edge-dashed" d="M518 752 H542"/>
+  <path class="edge-dashed" d="M970 752 H994"/>
+  <rect x="316" y="911" width="968" height="28" rx="14" fill="#F2F4F7"/>
+  <text class="small" x="800" y="930" text-anchor="middle">Roster 自身属于进程级插件树；它管理的 Preset Plugin Tree 通过作用域向 Agent 提供模型侧注册项。</text>
+
+  <!-- 3. Session scopes -->
+  <rect class="section" x="40" y="1018" width="1520" height="442" rx="22"/>
+  <rect x="64" y="1040" width="188" height="34" rx="17" fill="#FFF0EF"/>
+  <text class="section-title" x="82" y="1064" fill="#A33C33">3　会话作用域</text>
+  <text class="section-copy" x="275" y="1063">一个进程内可并存多个 Agent 组合；Agent 同时看到公共服务和自己加入的 Preset</text>
+
+  <rect x="78" y="1094" width="1444" height="50" rx="14" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-subtitle" x="100" y="1125" fill="#175EA8">进程级公共 Host 服务</text>
+  <text class="copy" x="330" y="1125">LLM · Session · Agent Loop · Persistence · Sandbox · Approval · Web API</text>
+  <rect x="1320" y="1107" width="180" height="24" rx="12" fill="#CFE5FA"/>
+  <text class="chip" x="1410" y="1124" text-anchor="middle" fill="#175EA8">所有 Agent 均可见</text>
+
+  <path class="host-edge" d="M130 1144 H82 V1354 H90"/>
+  <path class="host-edge" d="M495 1144 H447 V1354 H455"/>
+  <path class="host-edge" d="M860 1144 H812 V1354 H820"/>
+  <path class="host-edge" d="M1225 1144 H1177 V1354 H1185"/>
+
+  <!-- Preset scopes -->
+  <rect class="card" x="98" y="1170" width="308" height="74" rx="14" fill="#FFF0EF" stroke="#DB7C73"/>
+  <text class="card-subtitle mono" x="252" y="1198" text-anchor="middle">standard Preset Scope</text>
+  <text class="small" x="252" y="1222" text-anchor="middle">一份常驻 Plugin Tree</text>
+  <rect class="card" x="463" y="1170" width="308" height="74" rx="14" fill="#FFF0EF" stroke="#DB7C73"/>
+  <text class="card-subtitle mono" x="617" y="1198" text-anchor="middle">minimal Preset Scope</text>
+  <text class="small" x="617" y="1222" text-anchor="middle">一份常驻 Plugin Tree</text>
+  <rect class="card" x="828" y="1170" width="308" height="74" rx="14" fill="#FFF0EF" stroke="#DB7C73"/>
+  <text class="card-subtitle mono" x="982" y="1198" text-anchor="middle">ptc Preset Scope</text>
+  <text class="small" x="982" y="1222" text-anchor="middle">一份常驻 Plugin Tree</text>
+  <rect class="card" x="1193" y="1170" width="308" height="74" rx="14" fill="#FFF0EF" stroke="#DB7C73"/>
+  <text class="card-subtitle mono" x="1347" y="1198" text-anchor="middle">cordis Preset Scope</text>
+  <text class="small" x="1347" y="1222" text-anchor="middle">一份常驻 Plugin Tree</text>
+
+  <!-- Join arrows -->
+  <path class="edge" d="M252 1290 V1252"/>
+  <path class="edge" d="M617 1290 V1252"/>
+  <path class="edge" d="M982 1290 V1252"/>
+  <path class="edge" d="M1347 1290 V1252"/>
+  <rect x="216" y="1260" width="72" height="22" rx="11" fill="#FFFFFF"/>
+  <text class="edge-label" x="252" y="1276" text-anchor="middle">scope 加入</text>
+  <rect x="581" y="1260" width="72" height="22" rx="11" fill="#FFFFFF"/>
+  <text class="edge-label" x="617" y="1276" text-anchor="middle">scope 加入</text>
+  <rect x="946" y="1260" width="72" height="22" rx="11" fill="#FFFFFF"/>
+  <text class="edge-label" x="982" y="1276" text-anchor="middle">scope 加入</text>
+  <rect x="1311" y="1260" width="72" height="22" rx="11" fill="#FFFFFF"/>
+  <text class="edge-label" x="1347" y="1276" text-anchor="middle">scope 加入</text>
+
+  <!-- Agents -->
+  <rect class="card" x="98" y="1298" width="308" height="112" rx="14" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="118" y="1330">Session A · Agent A</text>
+  <text class="copy" x="118" y="1358">可见 = 公共 Host + standard</text>
+  <text class="small" x="118" y="1385">独立 Session Log 与动态状态</text>
+  <rect class="card" x="463" y="1298" width="308" height="112" rx="14" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="483" y="1330">Session B · Agent B</text>
+  <text class="copy" x="483" y="1358">可见 = 公共 Host + minimal</text>
+  <text class="small" x="483" y="1385">独立 Session Log 与动态状态</text>
+  <rect class="card" x="828" y="1298" width="308" height="112" rx="14" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="848" y="1330">Session C · Agent C</text>
+  <text class="copy" x="848" y="1358">可见 = 公共 Host + ptc</text>
+  <text class="small" x="848" y="1385">独立 Session Log 与动态状态</text>
+  <rect class="card" x="1193" y="1298" width="308" height="112" rx="14" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="1213" y="1330">Session D · Agent D</text>
+  <text class="copy" x="1213" y="1358">可见 = 公共 Host + cordis</text>
+  <text class="small" x="1213" y="1385">独立 Session Log 与动态状态</text>
+
+  <text class="small" x="800" y="1439" text-anchor="middle">同一 Preset 可被多个 Agent 加入；它们共享插件组合，但 Session 状态彼此隔离。</text>
+
+  <!-- Legend -->
+  <rect x="284" y="1484" width="1032" height="34" rx="17" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <circle cx="325" cy="1501" r="7" fill="#78AEE3"/>
+  <text class="small" x="340" y="1506">启动装配</text>
+  <circle cx="481" cy="1501" r="7" fill="#66B69D"/>
+  <text class="small" x="496" y="1506">进程级 Host</text>
+  <circle cx="660" cy="1501" r="7" fill="#DB7C73"/>
+  <text class="small" x="675" y="1506">Preset 组合</text>
+  <circle cx="829" cy="1501" r="7" fill="#60B985"/>
+  <text class="small" x="844" y="1506">Session Agent</text>
+  <text class="small" x="1012" y="1506">核心关系：</text>
+  <text class="chip" x="1082" y="1506">应用进程 ≠ 单个 Agent</text>
+</svg>

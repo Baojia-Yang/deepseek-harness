@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Fiber 与 Effect 的生命周期所有权</title>
+  <desc id="desc">Plugin 是可复用行为定义。每次挂载产生一个 Fiber 运行实例，运行期间创建的 Service 注册、Event 监听、子 Plugin 和连接等 Effect 都归该 Fiber 所有；Fiber 卸载时这些资源统一撤销。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/></marker>
+    <marker id="arrow-coral" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#C45F55"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .title { font-size: 34px; font-weight: 750; } .subtitle { font-size: 18px; fill: #667085; }
+      .heading { font-size: 26px; font-weight: 750; } .node-title { font-size: 20px; font-weight: 700; }
+      .copy { font-size: 17px; fill: #475467; } .small { font-size: 15px; fill: #667085; } .chip { font-size: 16px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; } .inverse-muted { fill: #DDE7F2; }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.8; marker-end: url(#arrow-blue); }
+      .edge-coral { fill: none; stroke: #C45F55; stroke-width: 2.8; marker-end: url(#arrow-coral); }
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#F5F7FA"/>
+  <text class="title" x="48" y="56">Plugin 是定义，Fiber 是一次运行，Effect 是它拥有的资源</text>
+  <text class="subtitle" x="48" y="88">生命周期所有权让安装与撤销始终成对发生。</text>
+
+  <rect x="48" y="260" width="220" height="190" rx="22" fill="#FFF8E8" stroke="#D7A63F" stroke-width="1.6" filter="url(#shadow)"/>
+  <rect x="72" y="282" width="92" height="32" rx="16" fill="#FFF0C7"/>
+  <text class="chip" x="118" y="304" text-anchor="middle" fill="#8C6515">定义</text>
+  <text class="heading mono" x="72" y="354">Plugin</text>
+  <text class="copy" x="72" y="389">可复用的行为</text>
+  <text class="small" x="72" y="421">尚未占用运行资源</text>
+
+  <path class="edge-blue" d="M268 355 H338"/>
+  <rect x="278" y="320" width="52" height="28" rx="14" fill="#E8F1FC"/>
+  <text class="chip" x="304" y="340" text-anchor="middle" fill="#175EA8">挂载</text>
+
+  <rect x="350" y="142" width="500" height="430" rx="24" fill="#FFFFFF" stroke="#344054" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="350" y="142" width="500" height="86" rx="22" fill="#344054"/>
+  <rect x="350" y="204" width="500" height="24" fill="#344054"/>
+  <text class="heading inverse" x="382" y="184">Fiber</text>
+  <text class="copy inverse-muted" x="382" y="211">这一次 Plugin 挂载的运行实例</text>
+  <rect x="690" y="168" width="126" height="34" rx="17" fill="#DDF3EB"/>
+  <text class="chip" x="753" y="191" text-anchor="middle" fill="#16785E">运行中</text>
+
+  <text class="node-title" x="382" y="270">Fiber 拥有的 Effects</text>
+  <rect x="382" y="296" width="205" height="82" rx="16" fill="#FFF7F6" stroke="#DB7C73"/>
+  <text class="node-title" x="484.5" y="331" text-anchor="middle">Service 注册</text>
+  <text class="small" x="484.5" y="358" text-anchor="middle">对外提供能力</text>
+  <rect x="613" y="296" width="205" height="82" rx="16" fill="#FFF7F6" stroke="#DB7C73"/>
+  <text class="node-title" x="715.5" y="331" text-anchor="middle">Event 监听</text>
+  <text class="small" x="715.5" y="358" text-anchor="middle">参与扩展过程</text>
+  <rect x="382" y="402" width="205" height="82" rx="16" fill="#FFF7F6" stroke="#DB7C73"/>
+  <text class="node-title" x="484.5" y="437" text-anchor="middle">子 Plugin</text>
+  <text class="small" x="484.5" y="464" text-anchor="middle">随父实例存在</text>
+  <rect x="613" y="402" width="205" height="82" rx="16" fill="#FFF7F6" stroke="#DB7C73"/>
+  <text class="node-title" x="715.5" y="437" text-anchor="middle">连接 / 定时器</text>
+  <text class="small" x="715.5" y="464" text-anchor="middle">其他运行资源</text>
+  <rect x="422" y="516" width="356" height="34" rx="17" fill="#F8D1CD"/>
+  <text class="small" x="600" y="538" text-anchor="middle" fill="#A33C33">所有 Effect 都绑定到同一个 Fiber 生命周期</text>
+
+  <path class="edge-coral" d="M850 355 H920"/>
+  <rect x="860" y="320" width="52" height="28" rx="14" fill="#F8D1CD"/>
+  <text class="chip" x="886" y="340" text-anchor="middle" fill="#A33C33">卸载</text>
+
+  <rect x="932" y="260" width="220" height="190" rx="22" fill="#FFF7F6" stroke="#DB7C73" stroke-width="1.6" filter="url(#shadow)"/>
+  <rect x="956" y="282" width="92" height="32" rx="16" fill="#F8D1CD"/>
+  <text class="chip" x="1002" y="304" text-anchor="middle" fill="#A33C33">结束</text>
+  <text class="heading" x="956" y="354">统一撤销</text>
+  <text class="copy" x="956" y="389">Effect 全部清理</text>
+  <text class="small" x="956" y="421">不遗留监听、注册或连接</text>
+
+  <text class="subtitle" x="600" y="640" text-anchor="middle">Plugin 可以再次挂载并产生新的 Fiber；旧 Fiber 的资源不会泄漏到下一次运行。</text>
+  <rect x="302" y="682" width="596" height="36" rx="18" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <text class="subtitle" x="600" y="706" text-anchor="middle">定义可复用　·　实例有边界　·　资源有归属</text>
+</svg>

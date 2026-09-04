@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek Harness 的组合、运行与记录模型</title>
+  <desc id="desc">应用级 Profile、Bundle 和 Patch，以及会话级 Preset，从左侧装配进入中间的 Cordis 运行时。运行时中的会话事实持续追加到右侧 Session Log，再派生模型上下文、用户历史和产品状态。</desc>
+  <defs>
+    <style>
+      .canvas { fill: #f6f7f9; }
+      .panel { fill: #ffffff; stroke: #d9dee6; stroke-width: 2; }
+      .panel-blue { fill: #eef5fa; stroke: #a9c9dc; stroke-width: 2; }
+      .panel-teal { fill: #edf8f6; stroke: #86cfc6; stroke-width: 2; }
+      .panel-yellow { fill: #fff8e8; stroke: #e6c56f; stroke-width: 2; }
+      .chip { fill: #ffffff; stroke: #cfd6df; stroke-width: 1.5; }
+      .title { fill: #26303c; font: 700 31px Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .subtitle { fill: #657180; font: 400 17px Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .section { fill: #303a47; font: 700 23px Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .label { fill: #303a47; font: 650 19px Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .body { fill: #53606e; font: 400 16px Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .small { fill: #53606e; font: 500 14px Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .pill { fill: #303a47; font: 650 15px Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .arrow { fill: none; stroke: #687687; stroke-width: 2.5; marker-end: url(#arrowhead); }
+      .derive { fill: none; stroke: #7a8796; stroke-width: 2; stroke-dasharray: 6 6; marker-end: url(#arrowhead-light); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#687687"/>
+    </marker>
+    <marker id="arrowhead-light" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a8796"/>
+    </marker>
+  </defs>
+
+  <rect class="canvas" width="1200" height="720" rx="24"/>
+  <text class="title" x="54" y="55">DSH：组合能力，管理运行，记录事实</text>
+  <text class="subtitle" x="54" y="86">两层组合进入同一个 Cordis 运行时；一次运行的不同视图来自同一条 Session Log。</text>
+
+  <text class="section" x="54" y="134">1　组合：选择什么</text>
+  <rect class="panel-blue" x="54" y="154" width="300" height="174" rx="16"/>
+  <text class="label" x="76" y="188">应用级组合</text>
+  <rect class="chip" x="76" y="208" width="105" height="42" rx="10"/>
+  <text class="pill" x="128.5" y="235" text-anchor="middle">Profile</text>
+  <path class="arrow" d="M 184 229 H 209"/>
+  <rect class="chip" x="216" y="208" width="116" height="42" rx="10"/>
+  <text class="pill" x="274" y="235" text-anchor="middle">Bundle</text>
+  <text class="body" x="76" y="279">选择有序应用层，叠加其他 Patch，</text>
+  <text class="body" x="76" y="304">形成进程级插件树。</text>
+
+  <rect class="panel-yellow" x="54" y="350" width="300" height="164" rx="16"/>
+  <text class="label" x="76" y="384">会话级组合</text>
+  <rect class="chip" x="76" y="403" width="105" height="42" rx="10"/>
+  <text class="pill" x="128.5" y="430" text-anchor="middle">Preset</text>
+  <text class="body" x="76" y="474">选择一个 Agent 可见的工具、提示词、</text>
+  <text class="body" x="76" y="496">persona 与 skill。</text>
+
+  <path class="arrow" d="M 354 241 H 416"/>
+  <text class="small" x="385" y="229" text-anchor="middle">装配</text>
+  <path class="arrow" d="M 354 425 H 386 V 441 H 416"/>
+  <text class="small" x="381" y="411" text-anchor="middle">装配 Agent</text>
+
+  <text class="section" x="416" y="134">2　运行：如何共存</text>
+  <rect class="panel-teal" x="416" y="154" width="384" height="346" rx="16"/>
+  <text class="label" x="440" y="188">Cordis 运行时 · Plugin Tree</text>
+  <rect class="chip" x="440" y="207" width="96" height="34" rx="17"/>
+  <text class="small" x="488" y="229" text-anchor="middle">Context</text>
+  <rect class="chip" x="546" y="207" width="112" height="34" rx="17"/>
+  <text class="small" x="602" y="229" text-anchor="middle">Service / Event</text>
+  <rect class="chip" x="668" y="207" width="108" height="34" rx="17"/>
+  <text class="small" x="722" y="229" text-anchor="middle">Fiber / Effect</text>
+
+  <rect class="panel" x="440" y="263" width="336" height="94" rx="13"/>
+  <text class="label" x="462" y="294">共享 Host 能力</text>
+  <text class="body" x="462" y="326">Session　Storage　Sandbox　UI</text>
+  <text class="small" x="462" y="348">由应用级插件树提供</text>
+
+  <rect class="panel" x="440" y="376" width="336" height="98" rx="13"/>
+  <text class="label" x="462" y="407">会话 Agent 作用域</text>
+  <text class="body" x="462" y="439">Model　Tools　Prompt　Skills</text>
+  <text class="small" x="462" y="462">继承 Host 能力并加入所选 Preset</text>
+
+  <path class="arrow" d="M 800 269 H 862"/>
+  <text class="small" x="831" y="256" text-anchor="middle">追加事实</text>
+
+  <text class="section" x="862" y="134">3　记录：发生了什么</text>
+  <rect class="panel-yellow" x="862" y="154" width="284" height="184" rx="16"/>
+  <text class="label" x="886" y="188">Session Log</text>
+  <text class="body" x="886" y="222">只追加的会话事实序列</text>
+  <text class="body" x="886" y="253">用户输入 · 模型响应</text>
+  <text class="body" x="886" y="282">工具调用与结果 · 状态变化</text>
+  <text class="small" x="886" y="314">模型可见内容必须可从日志重建</text>
+
+  <path class="derive" d="M 1004 338 V 374"/>
+  <text class="small" x="1023" y="361">派生</text>
+  <rect class="panel" x="862" y="376" width="284" height="124" rx="16"/>
+  <rect class="chip" x="884" y="398" width="240" height="26" rx="8"/>
+  <text class="small" x="1004" y="416" text-anchor="middle">模型上下文 · Surface</text>
+  <rect class="chip" x="884" y="430" width="240" height="26" rx="8"/>
+  <text class="small" x="1004" y="448" text-anchor="middle">用户历史 · Transcript</text>
+  <rect class="chip" x="884" y="462" width="240" height="26" rx="8"/>
+  <text class="small" x="1004" y="480" text-anchor="middle">产品状态 · Projections</text>
+
+  <rect class="panel-blue" x="54" y="548" width="300" height="88" rx="16"/>
+  <text class="label" x="76" y="582">复用与定制</text>
+  <text class="body" x="76" y="611">同一能力形成不同应用与 Agent</text>
+  <rect class="panel-teal" x="416" y="548" width="384" height="88" rx="16"/>
+  <text class="label" x="440" y="582">可管理的变化</text>
+  <text class="body" x="440" y="611">依赖、作用域与资源遵守统一生命周期</text>
+  <rect class="panel-yellow" x="862" y="548" width="284" height="88" rx="16"/>
+  <text class="label" x="886" y="582">延续与理解</text>
+  <text class="body" x="886" y="611">恢复、分叉、搜索与回放共享事实</text>
+
+  <text class="subtitle" x="600" y="682" text-anchor="middle">Session Log 保存会话事实，但不等于工作区、外部服务或整个运行环境的快照。</text>
+</svg>

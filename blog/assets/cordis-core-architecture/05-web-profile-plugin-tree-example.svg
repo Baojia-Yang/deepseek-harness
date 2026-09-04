@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 940" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">web Profile 的 Plugin Tree 示例</title>
+  <desc id="desc">展示 web Profile 由 dsh-base 和 dsh-web-app 两个 Bundle 贡献 Plugin。dsh-base 提供 Agent Runtime 基础，dsh-web-app 提供 Web 入口和 Agent Preset Roster；Preset 由不同 Session 独立选择。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/>
+    </marker>
+    <marker id="arrow-dashed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#667085"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; }
+      .page-subtitle { font-size: 18px; fill: #667085; }
+      .profile-title { font-size: 26px; font-weight: 750; }
+      .group-title { font-size: 23px; font-weight: 750; }
+      .node-title { font-size: 20px; font-weight: 700; }
+      .copy { font-size: 17px; fill: #475467; }
+      .small { font-size: 15px; fill: #667085; }
+      .chip { font-size: 16px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #DDE7F2; }
+      .tree-edge { fill: none; stroke: #667085; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .profile-edge { fill: none; stroke: #2878C8; stroke-width: 2.8; marker-end: url(#arrow-blue); }
+      .choice-edge { fill: none; stroke: #667085; stroke-width: 2.1; stroke-dasharray: 7 6; marker-end: url(#arrow-dashed); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="940" fill="#F5F7FA"/>
+  <text class="page-title" x="48" y="56">一个具体例子：web Profile 的 Plugin Tree</text>
+  <text class="page-subtitle" x="48" y="88">同一棵运行树由多个 Bundle 贡献；背景分区只表示配置来源。</text>
+
+  <!-- Profile input -->
+  <rect x="390" y="122" width="420" height="100" rx="20" fill="#EAF3FF" stroke="#78AEE3" stroke-width="1.6" filter="url(#shadow)"/>
+  <rect x="414" y="144" width="92" height="30" rx="15" fill="#CFE5FA"/>
+  <text class="chip" x="460" y="165" text-anchor="middle" fill="#175EA8">Profile</text>
+  <text class="profile-title mono" x="530" y="168">web</text>
+  <text class="copy" x="414" y="202">dsh-base + dsh-web-app · Patch lifecycle: live</text>
+
+  <path class="profile-edge" d="M600 222 V268"/>
+  <rect x="534" y="232" width="132" height="28" rx="14" fill="#E8F1FC"/>
+  <text class="chip" x="600" y="252" text-anchor="middle" fill="#175EA8">展开并合成</text>
+
+  <!-- Runtime root -->
+  <rect x="414" y="276" width="372" height="76" rx="18" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="profile-title inverse" x="600" y="310" text-anchor="middle">Root Plugin Tree</text>
+  <text class="small inverse-muted" x="600" y="334" text-anchor="middle">Cordis Loader 的目标配置</text>
+
+  <!-- Tree branches connect to Plugin nodes, not Bundle source labels. -->
+  <path class="tree-edge" d="M600 352 V390 H308 V478"/>
+  <path class="tree-edge" d="M600 390 H892 V478"/>
+
+  <!-- dsh-base source region -->
+  <rect x="48" y="410" width="520" height="444" rx="22" fill="#FFFDF7" stroke="#D7A63F" stroke-width="1.6" stroke-dasharray="8 6"/>
+  <rect x="72" y="432" width="226" height="34" rx="17" fill="#FFF0C7"/>
+  <text class="chip mono" x="185" y="455" text-anchor="middle" fill="#8C6515">来源：dsh-base</text>
+  <text class="small" x="316" y="454">Bundle 来源，不是运行时父节点</text>
+
+  <path class="tree-edge" d="M92 500 V764"/>
+  <path class="tree-edge" d="M92 512 H118"/>
+  <path class="tree-edge" d="M92 594 H118"/>
+  <path class="tree-edge" d="M92 676 H118"/>
+  <path class="tree-edge" d="M92 758 H118"/>
+
+  <rect x="118" y="478" width="410" height="68" rx="14" fill="#FFFFFF" stroke="#D7A63F" stroke-width="1.4"/>
+  <text class="node-title" x="142" y="510">LLM · Session · Persistence</text>
+  <text class="small" x="142" y="533">模型访问、会话与持久化</text>
+
+  <rect x="118" y="560" width="410" height="68" rx="14" fill="#FFFFFF" stroke="#D7A63F" stroke-width="1.4"/>
+  <text class="node-title" x="142" y="592">Sandbox · Approval</text>
+  <text class="small" x="142" y="615">工具执行与安全控制</text>
+
+  <rect x="118" y="642" width="410" height="68" rx="14" fill="#FFFFFF" stroke="#D7A63F" stroke-width="1.4"/>
+  <text class="node-title" x="142" y="674">Registries · Agent Loop</text>
+  <text class="small" x="142" y="697">能力注册与 Agent 执行循环</text>
+
+  <rect x="118" y="724" width="410" height="68" rx="14" fill="#FFFFFF" stroke="#D7A63F" stroke-width="1.4"/>
+  <text class="node-title" x="142" y="766">公共宿主服务</text>
+
+  <!-- dsh-web-app source region -->
+  <rect x="632" y="410" width="520" height="444" rx="22" fill="#F8FBFF" stroke="#78AEE3" stroke-width="1.6" stroke-dasharray="8 6"/>
+  <rect x="656" y="432" width="254" height="34" rx="17" fill="#CFE5FA"/>
+  <text class="chip mono" x="783" y="455" text-anchor="middle" fill="#175EA8">来源：dsh-web-app</text>
+  <text class="small" x="928" y="454">Web 应用入口</text>
+
+  <path class="tree-edge" d="M676 500 V712"/>
+  <path class="tree-edge" d="M676 512 H702"/>
+  <path class="tree-edge" d="M676 594 H702"/>
+  <path class="tree-edge" d="M676 676 H702"/>
+
+  <rect x="702" y="478" width="410" height="68" rx="14" fill="#FFFFFF" stroke="#78AEE3" stroke-width="1.4"/>
+  <text class="node-title" x="726" y="510">HTTP / Web Server</text>
+  <text class="small" x="726" y="533">浏览器与 API 的服务入口</text>
+
+  <rect x="702" y="560" width="196" height="68" rx="14" fill="#FFFFFF" stroke="#78AEE3" stroke-width="1.4"/>
+  <text class="node-title" x="800" y="602" text-anchor="middle">Browser UI</text>
+  <rect x="916" y="560" width="196" height="68" rx="14" fill="#FFFFFF" stroke="#78AEE3" stroke-width="1.4"/>
+  <text class="node-title" x="1014" y="602" text-anchor="middle">API Gateway</text>
+
+  <rect x="702" y="642" width="410" height="68" rx="14" fill="#FFFFFF" stroke="#78AEE3" stroke-width="1.4"/>
+  <text class="node-title mono" x="726" y="674">dsh-agent-presets</text>
+  <text class="small" x="726" y="697">Agent Preset Roster</text>
+
+  <path class="choice-edge" d="M907 710 V740"/>
+  <text class="small" x="1108" y="732" text-anchor="end">每个 Session 独立选择</text>
+
+  <rect x="676" y="750" width="108" height="38" rx="19" fill="#DDF3EB" stroke="#60B985"/>
+  <text class="chip mono" x="730" y="775" text-anchor="middle" fill="#16785E">standard</text>
+  <rect x="794" y="750" width="92" height="38" rx="19" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="chip mono" x="840" y="775" text-anchor="middle">minimal</text>
+  <rect x="896" y="750" width="76" height="38" rx="19" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="chip mono" x="934" y="775" text-anchor="middle">ptc</text>
+  <rect x="982" y="750" width="104" height="38" rx="19" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="chip mono" x="1034" y="775" text-anchor="middle">cordis</text>
+  <text class="small" x="730" y="812" fill="#16785E">默认</text>
+
+  <!-- Legend -->
+  <rect x="170" y="882" width="860" height="34" rx="17" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <line x1="204" y1="899" x2="242" y2="899" class="tree-edge"/>
+  <text class="small" x="254" y="904">固定 Plugin Tree</text>
+  <line x1="444" y1="899" x2="482" y2="899" class="choice-edge"/>
+  <text class="small" x="494" y="904">Session 级选择</text>
+  <rect x="694" y="890" width="26" height="18" rx="5" fill="#FFFDF7" stroke="#D7A63F" stroke-dasharray="4 3"/>
+  <text class="small" x="732" y="904">Bundle 配置来源</text>
+</svg>

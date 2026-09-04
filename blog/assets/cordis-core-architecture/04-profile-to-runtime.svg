@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Profile 到 Cordis Runtime 的转换主线</title>
+  <desc id="desc">展示 Profile 选择有序 Bundle 和 Patch，合成最终 Plugin Tree，再由 Cordis Loader 挂载为各自拥有生命周期的 Fiber。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#21866B"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; }
+      .page-subtitle { font-size: 18px; fill: #667085; }
+      .section-label { font-size: 17px; font-weight: 750; }
+      .card-title { font-size: 25px; font-weight: 750; }
+      .copy { font-size: 18px; fill: #475467; }
+      .small { font-size: 16px; fill: #667085; }
+      .chip { font-size: 17px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #DDE7F2; }
+      .card { stroke-width: 1.6; }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.8; marker-end: url(#arrow-blue); }
+      .edge-green { fill: none; stroke: #21866B; stroke-width: 2.8; marker-end: url(#arrow-green); }
+      .edge-label { font-size: 16px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#F5F7FA"/>
+  <text class="page-title" x="48" y="56">Profile 如何变成运行中的 Plugin</text>
+  <text class="page-subtitle" x="48" y="88">配置层给出目标 Plugin Tree；Cordis 把树中的每个 Plugin 挂载为 Fiber。</text>
+
+  <rect x="48" y="120" width="1104" height="292" rx="24" fill="#FFFFFF" stroke="#D8DEE8" stroke-width="1.5"/>
+  <rect x="72" y="142" width="112" height="32" rx="16" fill="#E8F1FC"/>
+  <text class="section-label" x="128" y="164" text-anchor="middle" fill="#175EA8">配置层</text>
+
+  <rect class="card" x="80" y="208" width="250" height="144" rx="18" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title mono" x="105" y="248">Profile</text>
+  <text class="copy" x="105" y="280">选择应用组合</text>
+  <rect x="105" y="303" width="92" height="30" rx="15" fill="#CFE5FA"/>
+  <text class="chip mono" x="151" y="324" text-anchor="middle" fill="#175EA8">web</text>
+
+  <rect class="card" x="475" y="208" width="250" height="144" rx="18" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="card-title" x="500" y="248">Bundle / Patch</text>
+  <text class="copy" x="500" y="280">按顺序合并配置</text>
+  <rect x="500" y="303" width="86" height="30" rx="8" fill="#FFF0C7"/>
+  <text class="chip" x="543" y="324" text-anchor="middle" fill="#8C6515">base</text>
+  <rect x="594" y="303" width="106" height="30" rx="8" fill="#FFF0C7"/>
+  <text class="chip" x="647" y="324" text-anchor="middle" fill="#8C6515">web-app</text>
+
+  <rect class="card" x="870" y="208" width="250" height="144" rx="18" fill="#F2F4F7" stroke="#98A2B3" filter="url(#shadow)"/>
+  <text class="card-title" x="895" y="248">Plugin Tree</text>
+  <text class="copy" x="895" y="280">得到最终声明</text>
+  <rect x="895" y="303" width="58" height="30" rx="8" fill="#FFFFFF" stroke="#98A2B3"/>
+  <rect x="963" y="303" width="58" height="30" rx="8" fill="#FFFFFF" stroke="#98A2B3"/>
+  <rect x="1031" y="303" width="58" height="30" rx="8" fill="#FFFFFF" stroke="#98A2B3"/>
+
+  <path class="edge-blue" d="M330 280 H465"/>
+  <rect x="366" y="259" width="64" height="23" rx="11.5" fill="#FFFFFF"/>
+  <text class="edge-label" x="398" y="276" text-anchor="middle" fill="#175EA8">展开</text>
+  <path class="edge-blue" d="M725 280 H860"/>
+  <rect x="761" y="259" width="64" height="23" rx="11.5" fill="#FFFFFF"/>
+  <text class="edge-label" x="793" y="276" text-anchor="middle" fill="#175EA8">合成</text>
+
+  <path class="edge-green" d="M600 412 V474"/>
+  <rect x="529" y="426" width="142" height="28" rx="14" fill="#E8F7F2"/>
+  <text class="edge-label" x="600" y="446" text-anchor="middle" fill="#16785E">Loader 挂载</text>
+
+  <rect x="48" y="474" width="1104" height="230" rx="24" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <rect x="72" y="496" width="112" height="32" rx="16" fill="#DDF3EB"/>
+  <text class="section-label" x="128" y="518" text-anchor="middle" fill="#16785E">运行层</text>
+  <text class="card-title inverse" x="80" y="570">Cordis Runtime</text>
+  <text class="copy inverse-muted" x="80" y="602">同一棵树中的 Plugin 各自拥有独立生命周期</text>
+
+  <rect x="582" y="530" width="150" height="102" rx="18" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="chip mono" x="657" y="569" text-anchor="middle">Fiber A</text>
+  <text class="small" x="657" y="600" text-anchor="middle">Plugin A</text>
+  <rect x="754" y="530" width="150" height="102" rx="18" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="chip mono" x="829" y="569" text-anchor="middle">Fiber B</text>
+  <text class="small" x="829" y="600" text-anchor="middle">Plugin B</text>
+  <rect x="926" y="530" width="150" height="102" rx="18" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="chip mono" x="1001" y="569" text-anchor="middle">Fiber …</text>
+  <text class="small" x="1001" y="600" text-anchor="middle">Plugin …</text>
+
+  <text class="page-subtitle" x="600" y="738" text-anchor="middle">Profile 与 Bundle 决定“运行什么”；Cordis 决定“如何运行与管理”。</text>
+</svg>

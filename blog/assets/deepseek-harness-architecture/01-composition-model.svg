@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek Harness 的两条装配轴</title>
+  <desc id="desc">上半部分展示 Plugin 由 Bundle 配置和分发，Bundle 由 Profile 有序叠加，Profile 启动 DSH 进程。下半部分展示 Agent Preset 与宿主运行时共同形成 Agent 实例，Session Log 保存该实例的动态状态。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5F6370"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #303640; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #68707C; }
+      .lane-title { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+      .node-title { font-size: 21px; font-weight: 700; }
+      .node-copy { font-size: 15px; fill: #4B5360; }
+      .small { font-size: 14px; fill: #5F6773; }
+      .chip { font-size: 14px; font-weight: 600; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #EBEEF2; }
+      .edge { fill: none; stroke: #5F6370; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-label { font-size: 14px; font-weight: 600; fill: #5F6370; }
+      .card { stroke: #6F7782; stroke-width: 1.4; rx: 14; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="780" fill="#F5F7F9"/>
+  <text class="title" x="52" y="50">DeepSeek Harness：两条装配轴</text>
+  <text class="subtitle" x="52" y="76">Profile 定义进程；Agent Preset 定义会话中的 Agent 组合；Session Log 承载动态状态。</text>
+
+  <rect x="32" y="98" width="1136" height="300" rx="20" fill="#FFFFFF" stroke="#D5DAE0" stroke-width="1.5"/>
+  <text class="lane-title" x="58" y="130">① 应用启动轴</text>
+
+  <rect class="card" x="60" y="155" width="220" height="190" fill="#FFF7E2"/>
+  <text class="node-title" x="82" y="188">Plugin</text>
+  <text class="node-copy" x="82" y="213">功能、服务与运行时行为</text>
+  <rect x="82" y="234" width="72" height="30" rx="15" fill="#F4D58D"/>
+  <text class="chip" x="118" y="254" text-anchor="middle">LLM</text>
+  <rect x="162" y="234" width="92" height="30" rx="15" fill="#F4D58D"/>
+  <text class="chip" x="208" y="254" text-anchor="middle">Session</text>
+  <rect x="82" y="274" width="72" height="30" rx="15" fill="#F4D58D"/>
+  <text class="chip" x="118" y="294" text-anchor="middle">Tools</text>
+  <rect x="162" y="274" width="92" height="30" rx="15" fill="#F4D58D"/>
+  <text class="chip" x="208" y="294" text-anchor="middle">Sandbox</text>
+  <text class="small" x="82" y="326">最小运行时组合单元</text>
+
+  <rect class="card" x="335" y="155" width="225" height="190" fill="#E7F2F8"/>
+  <text class="node-title" x="357" y="188">Bundle</text>
+  <text class="node-copy" x="357" y="213">可安装、可覆盖的配置层</text>
+  <rect x="357" y="234" width="180" height="42" rx="10" fill="#A9C9DC"/>
+  <text class="chip" x="447" y="260" text-anchor="middle">Base Bundle</text>
+  <rect x="357" y="286" width="180" height="42" rx="10" fill="#C7DDE9"/>
+  <text class="chip" x="447" y="312" text-anchor="middle">Web App Bundle</text>
+  <text class="small" x="357" y="335">分发 Plugin 行与默认配置</text>
+
+  <rect class="card" x="615" y="155" width="240" height="190" fill="#E6F6F3"/>
+  <text class="node-title" x="637" y="188">Profile</text>
+  <text class="node-copy" x="637" y="213">完整应用的启动定义</text>
+  <rect x="637" y="232" width="196" height="80" rx="10" fill="#9EDFD8"/>
+  <text class="chip" x="655" y="256">web</text>
+  <text class="small" x="655" y="280">1. Base　2. Web App</text>
+  <text class="small" x="655" y="301">3. Profile / Home Patch</text>
+  <text class="small" x="637" y="335">规定 Bundle 顺序与覆盖层</text>
+
+  <rect class="card" x="920" y="155" width="220" height="190" fill="#5F6370" stroke="#4E535D"/>
+  <text class="node-title inverse" x="942" y="191">运行中的 DSH 进程</text>
+  <text class="inverse-muted" x="942" y="220" font-size="15">具象化的 Agent Runtime</text>
+  <line x1="942" y1="241" x2="1118" y2="241" stroke="#8A909A"/>
+  <text class="inverse" x="942" y="267" font-size="14">• Host services</text>
+  <text class="inverse" x="942" y="291" font-size="14">• Registries</text>
+  <text class="inverse" x="942" y="315" font-size="14">• Application entry</text>
+
+  <path class="edge" d="M280 250 H327"/>
+  <text class="edge-label" x="303" y="236" text-anchor="middle">组合</text>
+  <path class="edge" d="M560 250 H607"/>
+  <text class="edge-label" x="583" y="236" text-anchor="middle">排列</text>
+  <path class="edge" d="M855 250 H912"/>
+  <text class="edge-label" x="883" y="236" text-anchor="middle">启动</text>
+
+  <rect x="32" y="422" width="1136" height="306" rx="20" fill="#FFFFFF" stroke="#D5DAE0" stroke-width="1.5"/>
+  <text class="lane-title" x="58" y="456">② 会话装配轴</text>
+
+  <rect class="card" x="70" y="494" width="285" height="164" fill="#FDECEA"/>
+  <text class="node-title" x="94" y="529">Agent Preset</text>
+  <text class="node-copy" x="94" y="555">Agent 的角色与能力组合</text>
+  <rect x="94" y="576" width="92" height="30" rx="15" fill="#F2A7A0"/>
+  <text class="chip" x="140" y="596" text-anchor="middle">standard</text>
+  <rect x="194" y="576" width="80" height="30" rx="15" fill="#F6C5C0"/>
+  <text class="chip" x="234" y="596" text-anchor="middle">minimal</text>
+  <text class="small" x="94" y="632">Tools · Persona · Prompt · Skills</text>
+
+  <rect class="card" x="475" y="494" width="260" height="164" fill="#E6F6F3"/>
+  <text class="node-title" x="499" y="529">Agent 实例</text>
+  <text class="node-copy" x="499" y="555">宿主能力 + 所选 Preset</text>
+  <line x1="499" y1="575" x2="711" y2="575" stroke="#A9B1BA"/>
+  <text class="small" x="499" y="601">属于一个具体 Session</text>
+  <text class="small" x="499" y="628">通过 scope 解析可见注册项</text>
+
+  <rect class="card" x="850" y="494" width="280" height="164" fill="#EEF1F4"/>
+  <text class="node-title" x="874" y="529">Session State</text>
+  <text class="node-copy" x="874" y="555">由 Session Log 持久记录</text>
+  <text class="small" x="874" y="584">• preset 选择　• 消息</text>
+  <text class="small" x="874" y="608">• 工具调用　　• Goal / Plan</text>
+  <text class="small" x="874" y="632">• Sandbox / Approval 状态</text>
+
+  <path class="edge" d="M355 576 H467"/>
+  <text class="edge-label" x="411" y="562" text-anchor="middle">选择并挂载</text>
+  <path class="edge" d="M735 576 H842"/>
+  <text class="edge-label" x="788" y="562" text-anchor="middle">产生记录</text>
+  <path class="edge" d="M1030 345 V465 H605 V486"/>
+  <rect x="757" y="448" width="126" height="25" rx="12" fill="#FFFFFF"/>
+  <text class="edge-label" x="820" y="466" text-anchor="middle">提供宿主能力</text>
+
+  <rect x="182" y="686" width="836" height="28" rx="14" fill="#F5F7F9"/>
+  <text class="small" x="600" y="705" text-anchor="middle">Preset 定义是组合模板；会话选择的 preset id 与运行记录才属于状态。</text>
+</svg>

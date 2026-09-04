@@ -38,6 +38,8 @@ dsh --profile web --dump-config
 
 组装机制见 [app-boot](../packages/boot/app-boot/README.zh.md#profiles)；配置字段见生成的[配置目录](config-catalog.zh.md)。
 
+要了解这套架构表达的设计思路，请阅读 [DeepSeek Harness 总览](../blog/index.md)；要沿代码理解随附 Web 组合的全貌，包括 Loader 激活和每会话 Agent Preset，请阅读 [Web Profile 运行时](../blog/web-profile-runtime.md)。
+
 ## 应用启动
 
 所有受支持的 Node 应用都从 `dsh` CLI 与具名 profile 启动。随附应用是 `dsh web`（刻意为 `--profile web` 保留的别名）、`dsh --profile headless`、`dsh --profile sdk`、`dsh --profile sdk-minimal` 与 `dsh --profile acp`。TypeScript SDK 会解析其同版本 `dsh` 依赖并选择 `sdk`；自定义插件组合继续由 profile 与有序 patch 文件表达，而不是另一个可执行文件或内联应用树。`sdk-minimal` 是位于同一 launcher 后的仓库自有独立组合包，而不是由调用方提供的 Cordis 配置树。

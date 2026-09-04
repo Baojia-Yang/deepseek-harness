@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">一条 Session Log，三种观察结果</title>
+  <desc id="desc">提示词、模型响应、工具活动和会话状态持续追加到 Session Log。模型上下文、用户历史和产品状态分别从同一日志派生；工作区文件、设置凭据和跨会话记忆位于 Session 边界之外。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5F6370"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #303640; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #68707C; }
+      .section { font-size: 16px; font-weight: 700; letter-spacing: 0.4px; }
+      .node-title { font-size: 21px; font-weight: 700; }
+      .node-copy { font-size: 15px; fill: #4B5360; }
+      .small { font-size: 14px; fill: #5F6773; }
+      .chip { font-size: 14px; font-weight: 600; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #EBEEF2; }
+      .card { stroke: #6F7782; stroke-width: 1.4; }
+      .edge { fill: none; stroke: #5F6370; stroke-width: 2.2; marker-end: url(#arrow); }
+      .derive { fill: none; stroke: #5F6370; stroke-width: 2.2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+      .edge-label { font-size: 14px; font-weight: 600; fill: #5F6370; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#F5F7F9"/>
+  <text class="title" x="52" y="50">一条 Session Log，三种观察结果</text>
+  <text class="subtitle" x="52" y="76">日志保存会话事实；模型、用户和产品读取各自需要的视图。</text>
+
+  <rect x="32" y="100" width="1136" height="476" rx="20" fill="#FFFFFF" stroke="#D5DAE0" stroke-width="1.5"/>
+
+  <text class="section" x="62" y="136">会话中发生的事实</text>
+  <rect class="card" x="60" y="158" width="218" height="54" rx="14" fill="#FFF7E2"/>
+  <text class="chip" x="169" y="191" text-anchor="middle">用户提示词</text>
+  <rect class="card" x="60" y="228" width="218" height="54" rx="14" fill="#E6F6F3"/>
+  <text class="chip" x="169" y="261" text-anchor="middle">模型响应</text>
+  <rect class="card" x="60" y="298" width="218" height="54" rx="14" fill="#FDECEA"/>
+  <text class="chip" x="169" y="331" text-anchor="middle">工具开始与结果</text>
+  <rect class="card" x="60" y="368" width="218" height="54" rx="14" fill="#EEF1F4"/>
+  <text class="chip" x="169" y="401" text-anchor="middle">会话状态变化</text>
+
+  <path class="edge" d="M278 185 H346"/>
+  <path class="edge" d="M278 255 H346"/>
+  <path class="edge" d="M278 325 H346"/>
+  <path class="edge" d="M278 395 H346"/>
+  <text class="edge-label" x="311" y="151" text-anchor="middle">持续追加</text>
+
+  <rect x="354" y="150" width="292" height="304" rx="18" fill="#5F6370" stroke="#4E535D" stroke-width="1.5"/>
+  <text class="node-title inverse" x="382" y="188">Session Log</text>
+  <text class="inverse-muted" x="382" y="214" font-size="15">不可改写的会话事实序列</text>
+  <line x1="382" y1="236" x2="618" y2="236" stroke="#8A909A"/>
+  <rect x="382" y="256" width="236" height="38" rx="9" fill="#777C87"/>
+  <text class="inverse" x="400" y="281" font-size="14">001　用户提出任务</text>
+  <rect x="382" y="304" width="236" height="38" rx="9" fill="#777C87"/>
+  <text class="inverse" x="400" y="329" font-size="14">002　模型请求工具</text>
+  <rect x="382" y="352" width="236" height="38" rx="9" fill="#777C87"/>
+  <text class="inverse" x="400" y="377" font-size="14">003　工具返回结果</text>
+  <rect x="382" y="400" width="236" height="38" rx="9" fill="#878C96"/>
+  <text class="inverse" x="400" y="425" font-size="14">004　继续追加……</text>
+
+  <text class="section" x="742" y="136">从同一事实序列派生</text>
+  <rect class="card" x="748" y="158" width="358" height="90" rx="14" fill="#E6F6F3"/>
+  <text class="node-title" x="772" y="190">模型上下文 · Surface</text>
+  <text class="node-copy" x="772" y="216">只保留下一次请求当前有效的内容</text>
+  <text class="small" x="772" y="237">压缩后使用摘要与保留的尾部</text>
+
+  <rect class="card" x="748" y="270" width="358" height="90" rx="14" fill="#E7F2F8"/>
+  <text class="node-title" x="772" y="302">用户历史 · Transcript</text>
+  <text class="node-copy" x="772" y="328">呈现已经发生的对话与执行过程</text>
+  <text class="small" x="772" y="349">分页和压缩不改变既有事实</text>
+
+  <rect class="card" x="748" y="382" width="358" height="90" rx="14" fill="#FFF7E2"/>
+  <text class="node-title" x="772" y="414">产品状态 · Projections</text>
+  <text class="node-copy" x="772" y="440">标题 · 统计 · Goal · Todo · 权限</text>
+  <text class="small" x="772" y="461">状态可以重建，缓存不是权威来源</text>
+
+  <path class="derive" d="M646 244 H718 Q730 244 730 232 V203 H740"/>
+  <path class="derive" d="M646 304 H740"/>
+  <path class="derive" d="M646 364 H718 Q730 364 730 376 V427 H740"/>
+  <rect x="662" y="286" width="70" height="28" rx="14" fill="#FFFFFF"/>
+  <text class="edge-label" x="697" y="305" text-anchor="middle">派生</text>
+
+  <rect x="32" y="596" width="1136" height="112" rx="18" fill="#EEF1F4" stroke="#9FA7B1" stroke-width="1.5" stroke-dasharray="8 7"/>
+  <text class="section" x="58" y="628">Session 边界之外</text>
+  <rect x="58" y="646" width="300" height="40" rx="12" fill="#DDE2E8"/>
+  <text class="chip" x="208" y="671" text-anchor="middle">工作区与文件系统</text>
+  <rect x="379" y="646" width="300" height="40" rx="12" fill="#DDE2E8"/>
+  <text class="chip" x="529" y="671" text-anchor="middle">设置与凭据</text>
+  <rect x="700" y="646" width="300" height="40" rx="12" fill="#DDE2E8"/>
+  <text class="chip" x="850" y="671" text-anchor="middle">跨 Session 长期记忆</text>
+  <text class="small" x="1024" y="670">可被引用，但不由日志拥有</text>
+
+  <line x1="52" y1="730" x2="76" y2="730" stroke="#5F6370" stroke-width="2.2"/>
+  <text class="small" x="86" y="735">实线：事实进入日志</text>
+  <line x1="268" y1="730" x2="292" y2="730" stroke="#5F6370" stroke-width="2.2" stroke-dasharray="8 7"/>
+  <text class="small" x="302" y="735">虚线：从日志派生</text>
+  <text class="small" x="1148" y="735" text-anchor="end">Session Log ≠ 模型上下文 ≠ 整个运行环境</text>
+</svg>

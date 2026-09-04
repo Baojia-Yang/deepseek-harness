@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Plugin Tree 与 Context 的空间模型</title>
+  <desc id="desc">Plugin Tree 描述系统挂载了哪些 Plugin 以及它们的包含关系；Context 描述各作用域可以看到哪些 Service。子 Context 继承公共 Service，也可以拥有隔离的 Service。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#667085"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .title { font-size: 34px; font-weight: 750; } .subtitle { font-size: 18px; fill: #667085; }
+      .panel-title { font-size: 25px; font-weight: 750; } .node-title { font-size: 20px; font-weight: 700; }
+      .copy { font-size: 17px; fill: #475467; } .small { font-size: 15px; fill: #667085; } .chip { font-size: 16px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; } .inverse-muted { fill: #DDE7F2; }
+      .tree { fill: none; stroke: #667085; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .mapping { fill: none; stroke: #98A2B3; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="780" fill="#F5F7FA"/>
+  <text class="title" x="48" y="56">Plugin Tree 管组成，Context 管可见范围</text>
+  <text class="subtitle" x="48" y="88">同一个系统同时存在“挂载结构”和“能力视图”两种空间关系。</text>
+
+  <rect x="48" y="126" width="520" height="574" rx="24" fill="#FFFFFF" stroke="#D8DEE8" stroke-width="1.5"/>
+  <rect x="72" y="148" width="164" height="34" rx="17" fill="#FFF0C7"/>
+  <text class="chip" x="154" y="171" text-anchor="middle" fill="#8C6515">组成关系</text>
+  <text class="panel-title" x="72" y="224">Plugin Tree</text>
+  <text class="copy" x="72" y="254">回答：系统挂载了什么？</text>
+
+  <rect x="188" y="292" width="240" height="66" rx="16" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="node-title inverse" x="308" y="332" text-anchor="middle">Root</text>
+  <path class="tree" d="M308 358 V396 H154 V430 M308 396 H462 V430"/>
+  <rect x="72" y="430" width="164" height="72" rx="14" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="154" y="461" text-anchor="middle">Plugin A</text>
+  <text class="small" x="154" y="486" text-anchor="middle">公共能力</text>
+
+  <rect x="274" y="418" width="244" height="210" rx="18" fill="#F2F4F7" stroke="#98A2B3" stroke-dasharray="7 5"/>
+  <text class="chip" x="296" y="449">子树</text>
+  <path class="tree" d="M462 430 V486 H354 V516 M462 486 V516"/>
+  <rect x="298" y="516" width="112" height="68" rx="14" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="354" y="557" text-anchor="middle">Plugin B</text>
+  <rect x="426" y="516" width="68" height="68" rx="14" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="460" y="557" text-anchor="middle">C</text>
+  <text class="small" x="308" y="666" text-anchor="middle">树边表达包含与挂载关系</text>
+
+  <path class="mapping" d="M568 410 H614"/>
+  <text class="small" x="591" y="394" text-anchor="middle">形成视图</text>
+
+  <rect x="632" y="126" width="520" height="574" rx="24" fill="#FFFFFF" stroke="#D8DEE8" stroke-width="1.5"/>
+  <rect x="656" y="148" width="164" height="34" rx="17" fill="#DDF3EB"/>
+  <text class="chip" x="738" y="171" text-anchor="middle" fill="#16785E">可见范围</text>
+  <text class="panel-title" x="656" y="224">Context</text>
+  <text class="copy" x="656" y="254">回答：当前 Plugin 能看到什么？</text>
+
+  <rect x="670" y="286" width="444" height="354" rx="20" fill="#F6FEF9" stroke="#60B985" stroke-width="1.6"/>
+  <text class="node-title" x="694" y="322">Root Context</text>
+  <rect x="872" y="300" width="100" height="36" rx="18" fill="#CFE5FA"/>
+  <text class="chip" x="922" y="324" text-anchor="middle" fill="#175EA8">Service 1</text>
+  <rect x="982" y="300" width="100" height="36" rx="18" fill="#CFE5FA"/>
+  <text class="chip" x="1032" y="324" text-anchor="middle" fill="#175EA8">Service 2</text>
+  <rect x="694" y="356" width="152" height="62" rx="14" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="770" y="394" text-anchor="middle">Plugin A</text>
+
+  <rect x="710" y="446" width="370" height="164" rx="18" fill="#FFFFFF" stroke="#60B985" stroke-width="1.5"/>
+  <text class="node-title" x="734" y="480">Child Context</text>
+  <text class="small" x="1054" y="480" text-anchor="end">继承 Service 1 / 2</text>
+  <rect x="734" y="506" width="126" height="62" rx="14" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="797" y="544" text-anchor="middle">Plugin B</text>
+  <rect x="874" y="506" width="82" height="62" rx="14" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="915" y="544" text-anchor="middle">C</text>
+  <rect x="970" y="506" width="86" height="62" rx="14" fill="#F8D1CD" stroke="#DB7C73"/>
+  <text class="chip" x="1013" y="532" text-anchor="middle" fill="#A33C33">Service 3</text>
+  <text class="small" x="1013" y="554" text-anchor="middle">隔离</text>
+  <text class="small" x="892" y="666" text-anchor="middle">Context 可以继承，也可以隔离能力</text>
+
+  <text class="subtitle" x="600" y="744" text-anchor="middle">Plugin Tree 是结构；Context 是每个位置看到的 Service 世界。</text>
+</svg>

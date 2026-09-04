@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Plugin、Bundle 与 Profile 的分层关系</title>
+  <desc id="desc">从上到下展示 Profile 选择应用组合，Bundle 提供可复用装配，Plugin Tree 声明最终插件集合，Cordis Core 负责作用域、生命周期与依赖管理。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; }
+      .page-subtitle { font-size: 18px; fill: #667085; }
+      .layer-title { font-size: 27px; font-weight: 750; }
+      .layer-copy { font-size: 19px; fill: #475467; }
+      .role { font-size: 16px; font-weight: 700; }
+      .chip { font-size: 17px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .inverse { fill: #FFFFFF; }
+      .inverse-muted { fill: #DDE7F2; }
+      .layer { stroke-width: 1.6; }
+      .edge { fill: none; stroke: #2878C8; stroke-width: 2.7; marker-end: url(#arrow); }
+      .edge-label { font-size: 16px; font-weight: 700; fill: #175EA8; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#F5F7FA"/>
+  <text class="page-title" x="48" y="56">从 Profile 到 Cordis Core</text>
+  <text class="page-subtitle" x="48" y="88">上层描述应用组合，下层把 Plugin 变成可管理的运行实例。</text>
+
+  <rect x="48" y="120" width="1104" height="570" rx="24" fill="#FFFFFF" stroke="#D8DEE8" stroke-width="1.5"/>
+
+  <rect class="layer" x="118" y="148" width="964" height="102" rx="18" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <rect x="142" y="170" width="128" height="30" rx="15" fill="#CFE5FA"/>
+  <text class="role" x="206" y="191" text-anchor="middle" fill="#175EA8">应用入口</text>
+  <text class="layer-title mono" x="306" y="194">Profile</text>
+  <text class="layer-copy" x="306" y="224">选择 Bundle 的顺序，形成一种可启动的应用组合</text>
+
+  <path class="edge" d="M600 250 V274"/>
+  <rect x="552" y="253" width="96" height="23" rx="11.5" fill="#F5F7FA"/>
+  <text class="edge-label" x="600" y="270" text-anchor="middle">组合</text>
+
+  <rect class="layer" x="154" y="282" width="892" height="102" rx="18" fill="#FFF8E8" stroke="#D7A63F"/>
+  <rect x="178" y="304" width="128" height="30" rx="15" fill="#FFF0C7"/>
+  <text class="role" x="242" y="325" text-anchor="middle" fill="#8C6515">装配层</text>
+  <text class="layer-title mono" x="342" y="328">Bundle</text>
+  <text class="layer-copy" x="342" y="358">复用一组 Plugin Tree 与 Patch 配置</text>
+
+  <path class="edge" d="M600 384 V408"/>
+  <rect x="552" y="387" width="96" height="23" rx="11.5" fill="#F5F7FA"/>
+  <text class="edge-label" x="600" y="404" text-anchor="middle">声明</text>
+
+  <rect class="layer" x="190" y="416" width="820" height="112" rx="18" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="layer-title" x="218" y="455">Plugin Tree</text>
+  <text class="layer-copy" x="218" y="486">最终要挂载的 Plugin 集合</text>
+  <rect x="565" y="442" width="120" height="58" rx="13" fill="#FFFFFF" stroke="#98A2B3"/>
+  <text class="chip mono" x="625" y="477" text-anchor="middle">Plugin A</text>
+  <rect x="703" y="442" width="120" height="58" rx="13" fill="#FFFFFF" stroke="#98A2B3"/>
+  <text class="chip mono" x="763" y="477" text-anchor="middle">Plugin B</text>
+  <rect x="841" y="442" width="140" height="58" rx="13" fill="#FFFFFF" stroke="#98A2B3"/>
+  <text class="chip mono" x="911" y="477" text-anchor="middle">Plugin …</text>
+
+  <path class="edge" d="M600 528 V552"/>
+  <rect x="552" y="531" width="96" height="23" rx="11.5" fill="#F5F7FA"/>
+  <text class="edge-label" x="600" y="548" text-anchor="middle">挂载</text>
+
+  <rect class="layer" x="226" y="560" width="748" height="102" rx="18" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="layer-title inverse" x="254" y="600">Cordis Core</text>
+  <text class="layer-copy inverse-muted" x="254" y="632">运行 Plugin，并统一管理：</text>
+  <rect x="610" y="583" width="102" height="40" rx="20" fill="#DDF3EB"/>
+  <text class="chip" x="661" y="609" text-anchor="middle" fill="#16785E">作用域</text>
+  <rect x="728" y="583" width="118" height="40" rx="20" fill="#F8D1CD"/>
+  <text class="chip" x="787" y="609" text-anchor="middle" fill="#A33C33">生命周期</text>
+  <rect x="862" y="583" width="84" height="40" rx="20" fill="#CFE5FA"/>
+  <text class="chip" x="904" y="609" text-anchor="middle" fill="#175EA8">依赖</text>
+
+  <text class="page-subtitle" x="600" y="728" text-anchor="middle">Profile 与 Bundle 属于 DSH 组合层；Plugin 是进入 Cordis 运行时的基本单元。</text>
+</svg>

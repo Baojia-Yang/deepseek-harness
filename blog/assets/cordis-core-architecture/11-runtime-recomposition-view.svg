@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Cordis 运行时重组</title>
+  <desc id="desc">当 Provider A 被 Provider B 替换时，稳定 Service 暂时不可用，依赖它的 Consumer 暂停并撤销 Effect；新 Provider 恢复 Service 后 Consumer 重新运行并创建新 Effect。不依赖该 Service 的 Plugin 持续运行。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#667085"/></marker>
+    <marker id="arrow-coral" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#C45F55"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#21866B"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .title { font-size: 34px; font-weight: 750; } .subtitle { font-size: 18px; fill: #667085; }
+      .panel-title { font-size: 24px; font-weight: 750; } .node-title { font-size: 19px; font-weight: 700; }
+      .copy { font-size: 16px; fill: #475467; } .small { font-size: 14px; fill: #667085; } .chip { font-size: 15px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .edge { fill: none; stroke: #667085; stroke-width: 2.3; marker-end: url(#arrow); }
+      .edge-coral { fill: none; stroke: #C45F55; stroke-width: 2.6; marker-end: url(#arrow-coral); }
+      .edge-green { fill: none; stroke: #21866B; stroke-width: 2.6; marker-end: url(#arrow-green); }
+    </style>
+  </defs>
+  <rect width="1200" height="820" fill="#F5F7FA"/>
+  <text class="title" x="48" y="56">运行时重组：变化沿依赖传播，不重启整个系统</text>
+  <text class="subtitle" x="48" y="88">一次 Provider 替换把 Service 依赖和 Fiber / Effect 生命周期串在一起。</text>
+
+  <!-- Stable A -->
+  <rect x="32" y="132" width="348" height="592" rx="24" fill="#FFFFFF" stroke="#60B985" stroke-width="1.5"/>
+  <rect x="56" y="154" width="136" height="34" rx="17" fill="#DDF3EB"/>
+  <text class="chip" x="124" y="177" text-anchor="middle" fill="#16785E">状态 A · 稳定</text>
+  <text class="panel-title" x="56" y="226">旧实现运行中</text>
+
+  <rect x="70" y="264" width="272" height="66" rx="15" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="206" y="292" text-anchor="middle">Provider A</text>
+  <text class="small" x="206" y="316" text-anchor="middle">ACTIVE</text>
+  <path class="edge-green" d="M206 330 V354"/>
+  <rect x="94" y="362" width="224" height="64" rx="32" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="node-title" x="206" y="390" text-anchor="middle">Stable Service</text>
+  <text class="small" x="206" y="414" text-anchor="middle">可用</text>
+  <path class="edge-green" d="M206 426 V450"/>
+  <rect x="70" y="458" width="272" height="88" rx="15" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="node-title" x="206" y="488" text-anchor="middle">Consumer</text>
+  <text class="small" x="206" y="512" text-anchor="middle">ACTIVE</text>
+  <rect x="134" y="518" width="144" height="22" rx="11" fill="#F8D1CD"/>
+  <text class="small" x="206" y="534" text-anchor="middle" fill="#A33C33">旧 Effects</text>
+  <rect x="70" y="586" width="272" height="72" rx="15" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="node-title" x="206" y="616" text-anchor="middle">Independent Plugin</text>
+  <text class="small" x="206" y="642" text-anchor="middle">ACTIVE · 不依赖该 Service</text>
+
+  <path class="edge-coral" d="M380 428 H414"/>
+
+  <!-- Transition -->
+  <rect x="426" y="132" width="348" height="592" rx="24" fill="#FFF7F6" stroke="#DB7C73" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="450" y="154" width="136" height="34" rx="17" fill="#F8D1CD"/>
+  <text class="chip" x="518" y="177" text-anchor="middle" fill="#A33C33">变化中 · 受控</text>
+  <text class="panel-title" x="450" y="226">只处理受影响链</text>
+
+  <rect x="458" y="264" width="284" height="70" rx="15" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="node-title" x="482" y="292">1　Provider A 退出</text>
+  <text class="small" x="482" y="318">旧实现停止提供能力</text>
+  <path class="edge-coral" d="M600 334 V350"/>
+  <rect x="458" y="358" width="284" height="70" rx="15" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="node-title" x="482" y="386">2　Service 暂不可用</text>
+  <text class="small" x="482" y="412">依赖条件不再满足</text>
+  <path class="edge-coral" d="M600 428 V444"/>
+  <rect x="458" y="452" width="284" height="88" rx="15" fill="#FFFFFF" stroke="#DB7C73"/>
+  <text class="node-title" x="482" y="480">3　Consumer 暂停</text>
+  <text class="small" x="482" y="505">Fiber 卸载，旧 Effects 撤销</text>
+  <rect x="482" y="513" width="144" height="20" rx="10" fill="#F8D1CD"/>
+  <text class="small" x="554" y="528" text-anchor="middle" fill="#A33C33">等待依赖恢复</text>
+  <path class="edge-green" d="M600 540 V556"/>
+  <rect x="458" y="564" width="284" height="70" rx="15" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="node-title" x="482" y="592">4　Provider B 进入</text>
+  <text class="small" x="482" y="618">同一 Service 恢复可用</text>
+  <rect x="474" y="662" width="252" height="32" rx="16" fill="#DDF3EB"/>
+  <text class="small" x="600" y="683" text-anchor="middle" fill="#16785E">Independent Plugin 始终运行</text>
+
+  <path class="edge-green" d="M774 428 H808"/>
+
+  <!-- Stable B -->
+  <rect x="820" y="132" width="348" height="592" rx="24" fill="#FFFFFF" stroke="#60B985" stroke-width="1.5"/>
+  <rect x="844" y="154" width="136" height="34" rx="17" fill="#DDF3EB"/>
+  <text class="chip" x="912" y="177" text-anchor="middle" fill="#16785E">状态 B · 稳定</text>
+  <text class="panel-title" x="844" y="226">新实现接管</text>
+
+  <rect x="858" y="264" width="272" height="66" rx="15" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title mono" x="994" y="292" text-anchor="middle">Provider B</text>
+  <text class="small" x="994" y="316" text-anchor="middle">ACTIVE</text>
+  <path class="edge-green" d="M994 330 V354"/>
+  <rect x="882" y="362" width="224" height="64" rx="32" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="node-title" x="994" y="390" text-anchor="middle">Stable Service</text>
+  <text class="small" x="994" y="414" text-anchor="middle">再次可用</text>
+  <path class="edge-green" d="M994 426 V450"/>
+  <rect x="858" y="458" width="272" height="88" rx="15" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="node-title" x="994" y="488" text-anchor="middle">Consumer</text>
+  <text class="small" x="994" y="512" text-anchor="middle">RELOADED</text>
+  <rect x="922" y="518" width="144" height="22" rx="11" fill="#F8D1CD"/>
+  <text class="small" x="994" y="534" text-anchor="middle" fill="#A33C33">新 Effects</text>
+  <rect x="858" y="586" width="272" height="72" rx="15" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="node-title" x="994" y="616" text-anchor="middle">Independent Plugin</text>
+  <text class="small" x="994" y="642" text-anchor="middle">ACTIVE · 未被重启</text>
+
+  <text class="subtitle" x="600" y="774" text-anchor="middle">变化只沿 Service 依赖传播；生命周期所有权保证旧资源清理、新资源重建。</text>
+</svg>

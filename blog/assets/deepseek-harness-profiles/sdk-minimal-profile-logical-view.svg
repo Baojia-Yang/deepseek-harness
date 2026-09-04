@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1460" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">DeepSeek Harness SDK Minimal Profile 逻辑视图</title>
+  <desc id="desc">展示 sdk-minimal Profile 如何仅用 dsh-sdk-minimal Bundle 从空树声明完整 Cordis Runtime，通过 SDK JSON-RPC 服务多个 Session，并以 danger-full-access 提供持久 Shell 和 str_replace_editor。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#667085"/></marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; } .page-subtitle { font-size: 17px; fill: #667085; }
+      .section-title { font-size: 21px; font-weight: 750; } .section-copy { font-size: 15px; fill: #667085; }
+      .card-title { font-size: 20px; font-weight: 750; } .card-subtitle { font-size: 15px; font-weight: 650; }
+      .copy { font-size: 14px; fill: #475467; } .small { font-size: 13px; fill: #667085; } .chip { font-size: 13px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; } .inverse { fill: #FFFFFF; } .inverse-muted { fill: #DDE7F2; }
+      .section { fill: #FFFFFF; stroke: #D8DEE8; stroke-width: 1.5; } .card { stroke-width: 1.4; }
+      .edge { fill: none; stroke: #667085; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.4; marker-end: url(#arrow-blue); }
+      .edge-back { fill: none; stroke: #8795A8; stroke-width: 1.8; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .edge-label { font-size: 13px; font-weight: 650; fill: #667085; }
+    </style>
+  </defs>
+  <rect width="1600" height="1460" fill="#F5F7FA"/>
+  <text class="page-title" x="54" y="54">SDK Minimal Profile：独立、显式的极简 Runtime</text>
+  <text class="page-subtitle" x="54" y="84">不继承 dsh-base；一个 Bundle 从空树声明 SDK 协议、Agent 核心、DeepSeek、JSONL、持久 Shell 与编辑器。</text>
+
+  <rect class="section" x="40" y="112" width="1520" height="316" rx="22"/>
+  <rect x="64" y="134" width="188" height="34" rx="17" fill="#E8F1FC"/><text class="section-title" x="82" y="158" fill="#175EA8">1　启动装配</text>
+  <text class="section-copy" x="275" y="157">唯一不使用 dsh-base 的原生 Profile；Bundle 的单个 insert 就是完整插件树</text>
+  <rect class="card" x="72" y="190" width="280" height="174" rx="15" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="94" y="222">SDK Minimal Profile</text><text class="copy" x="94" y="250">名称：<tspan class="mono" font-weight="700">sdk-minimal</tspan></text>
+  <text class="small" x="94" y="278">Bundle 顺序：</text><text class="small mono" x="110" y="300">1. dsh-sdk-minimal</text>
+  <rect x="94" y="323" width="154" height="24" rx="12" fill="#CFE5FA"/><text class="chip" x="171" y="340" text-anchor="middle" fill="#175EA8">Patch Reload: startup</text>
+  <path class="edge-blue" d="M352 277 H406"/><text class="edge-label" x="379" y="260" text-anchor="middle">选择</text>
+  <rect class="card" x="414" y="190" width="380" height="174" rx="15" fill="#FFF1E8" stroke="#D57C45" filter="url(#shadow)"/>
+  <text class="card-title mono" x="436" y="222">dsh-sdk-minimal Bundle</text><text class="copy" x="436" y="250">一份完整 cordis.patch.yml</text>
+  <line x1="436" y1="267" x2="772" y2="267" stroke="#E8B895"/><text class="small" x="436" y="291">从空 Entry List 开始</text><text class="small" x="436" y="314">显式插入每个必需 Plugin Row</text><text class="small" x="436" y="337">不叠加、不裁剪 dsh-base</text>
+  <path class="edge-blue" d="M794 277 H848"/><text class="edge-label" x="821" y="260" text-anchor="middle">完整应用</text>
+  <rect class="card" x="856" y="190" width="314" height="174" rx="15" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="card-title" x="878" y="222">合并后的 Loader 配置</text><text class="copy" x="878" y="250">仅 sdk-minimal 插入的显式行</text>
+  <line x1="878" y1="267" x2="1148" y2="267" stroke="#E3C984"/><text class="small" x="878" y="291">Profile / Home / --patch 仍可覆盖</text><text class="small" x="878" y="314">没有隐含的 base 层</text><text class="small" x="878" y="337">stdout 仅承载 SDK Frame</text>
+  <path class="edge-blue" d="M1170 277 H1224"/><text class="edge-label" x="1197" y="260" text-anchor="middle">实例化</text>
+  <rect class="card" x="1232" y="190" width="288" height="174" rx="15" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="card-title inverse" x="1254" y="223">极简 SDK 进程</text><text class="copy inverse-muted" x="1254" y="252">独立 Cordis Root Plugin Tree</text>
+  <line x1="1254" y1="269" x2="1498" y2="269" stroke="#667085"/><text class="small inverse" x="1254" y="294">同一 SDK JSON-RPC 协议</text><text class="small inverse" x="1254" y="318">更小、更明确的能力集合</text><text class="small inverse" x="1254" y="342">只适合外部已隔离 workspace</text>
+  <rect x="356" y="382" width="888" height="29" rx="14.5" fill="#F2F4F7"/><text class="small" x="800" y="402" text-anchor="middle">sdk-minimal 是独立组合，不是“先装 dsh-base，再禁用大部分插件”。</text>
+
+  <rect class="section" x="40" y="456" width="1520" height="448" rx="22"/>
+  <rect x="64" y="478" width="188" height="34" rx="17" fill="#FFF1E8"/><text class="section-title" x="82" y="502" fill="#A74F1E">2　进程运行时</text>
+  <text class="section-copy" x="275" y="501">一棵显式最小树；协议、模型、Agent 核心、执行能力和持久化都由本 Bundle 逐项声明</text>
+  <rect x="72" y="534" width="1456" height="336" rx="18" fill="#FBFCFE" stroke="#98A2B3" stroke-width="1.6"/>
+  <rect x="94" y="554" width="358" height="32" rx="16" fill="#344054"/><text class="chip inverse" x="273" y="576" text-anchor="middle">SDK Minimal Process · Cordis Root</text>
+  <rect class="card" x="98" y="608" width="332" height="198" rx="15" fill="#EEE9FF" stroke="#9983D8"/>
+  <text class="card-title" x="118" y="641">SDK 协议入口</text><text class="copy" x="118" y="670">sdk-app-startup</text><text class="copy" x="118" y="696">sdk-jsonrpc-server</text><text class="copy" x="118" y="722">initialize / session/prompt / shutdown</text>
+  <rect x="118" y="751" width="210" height="25" rx="12.5" fill="#DCD3FA"/><text class="chip" x="223" y="769" text-anchor="middle" fill="#6849B8">与完整 SDK 使用同一协议</text>
+  <path class="edge" d="M430 707 H466"/>
+  <rect class="card" x="474" y="608" width="332" height="198" rx="15" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-title" x="494" y="641">最小 Agent 核心</text><text class="copy" x="494" y="670">LLM Registry + DeepSeek Adapter</text><text class="copy" x="494" y="696">Session + Agent + Agent Loop</text><text class="copy" x="494" y="722">System Prompt + Tools Registry</text>
+  <rect x="494" y="751" width="202" height="25" rx="12.5" fill="#CFE5FA"/><text class="chip" x="595" y="769" text-anchor="middle" fill="#175EA8">无 Agent Preset Roster</text>
+  <path class="edge" d="M806 707 H842"/>
+  <rect class="card" x="850" y="608" width="332" height="198" rx="15" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="card-title" x="870" y="641">本地执行能力</text><text class="copy" x="870" y="670">Subprocess + PTY + Local FS</text><text class="copy" x="870" y="696">Linux/macOS：Persistent Bash</text><text class="copy" x="870" y="722">Windows：Persistent PowerShell</text>
+  <rect x="870" y="751" width="206" height="25" rx="12.5" fill="#F7E3AE"/><text class="chip mono" x="973" y="769" text-anchor="middle" fill="#8A6108">str_replace_editor</text>
+  <path class="edge" d="M1182 707 H1218"/>
+  <rect class="card" x="1226" y="608" width="276" height="198" rx="15" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="card-title" x="1246" y="641">持久化</text><text class="copy" x="1246" y="670">Session JSONL</text><text class="copy" x="1246" y="696">位置：DSH_HOME/sessions</text><text class="copy" x="1246" y="722">压缩：none</text>
+  <rect x="1246" y="751" width="196" height="25" rx="12.5" fill="#D9F2E3"/><text class="chip" x="1344" y="769" text-anchor="middle" fill="#167047">状态可跨进程保存</text>
+  <rect x="210" y="829" width="1180" height="25" rx="12.5" fill="#FFF0EF"/><text class="small" x="800" y="847" text-anchor="middle" fill="#A33C33">刻意省略：Web · Settings · 托管凭据 · Telemetry · Compaction · Skills · 完整默认工具集 · Subagent</text>
+
+  <rect class="section" x="40" y="932" width="1520" height="444" rx="22"/>
+  <rect x="64" y="954" width="188" height="34" rx="17" fill="#E8F7F2"/><text class="section-title" x="82" y="978" fill="#16785E">3　SDK 调用与安全</text>
+  <text class="section-copy" x="275" y="977">协议支持多个 sessionId；所有 Agent 使用同一显式极简工具组合</text>
+  <rect class="card" x="78" y="1028" width="292" height="176" rx="16" fill="#EEE9FF" stroke="#9983D8" filter="url(#shadow)"/>
+  <text class="card-title" x="100" y="1062">SDK Client</text><text class="copy" x="100" y="1091">initialize：cwd / provider / model</text><text class="copy" x="100" y="1117">session/prompt：按 id 提交任务</text><text class="copy" x="100" y="1143">shutdown：停稳并退出</text><line x1="100" y1="1162" x2="348" y2="1162" stroke="#CEC2F1"/><text class="small" x="100" y="1187">建议提供独立 DSH_HOME</text>
+  <path class="edge-blue" d="M370 1116 H424"/><text class="edge-label" x="397" y="1099" text-anchor="middle">stdio</text>
+  <rect class="card" x="432" y="1028" width="292" height="176" rx="16" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="454" y="1062">JSON-RPC Server</text><text class="copy" x="454" y="1091">等待完整 Loader Tree 就绪</text><text class="copy" x="454" y="1117">按 sessionId 惰性创建 Agent</text><text class="copy" x="454" y="1143">流式发出事件与状态</text><line x1="454" y1="1162" x2="702" y2="1162" stroke="#B6D2ED"/><text class="small" x="454" y="1187">stdout 只承载协议帧</text>
+  <path d="M724 1116 H754 V1012 H1256" fill="none" stroke="#2878C8" stroke-width="2.4"/>
+  <path class="edge-blue" d="M932 1012 V1020"/><path class="edge-blue" d="M1256 1012 V1020"/>
+  <rect x="984" y="1000" width="220" height="24" rx="12" fill="#FFFFFF"/><text class="edge-label" x="1094" y="1017" text-anchor="middle">按 sessionId 路由并惰性创建</text>
+  <rect class="card" x="786" y="1028" width="292" height="176" rx="16" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="808" y="1062">Session A · Agent A</text><text class="copy" x="808" y="1091">Persistent Shell + Editor</text><text class="copy" x="808" y="1117">Session JSONL A</text><text class="copy" x="808" y="1143">独立消息与工具历史</text><rect x="808" y="1162" width="198" height="25" rx="12.5" fill="#D9F2E3"/><text class="chip" x="907" y="1180" text-anchor="middle" fill="#167047">进程级固定工具组合</text>
+  <rect class="card" x="1110" y="1028" width="292" height="176" rx="16" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="1132" y="1062">Session B · Agent B</text><text class="copy" x="1132" y="1091">Persistent Shell + Editor</text><text class="copy" x="1132" y="1117">Session JSONL B</text><text class="copy" x="1132" y="1143">独立消息与工具历史</text><rect x="1132" y="1162" width="198" height="25" rx="12.5" fill="#D9F2E3"/><text class="chip" x="1231" y="1180" text-anchor="middle" fill="#167047">进程级固定工具组合</text>
+  <rect x="1428" y="1028" width="94" height="176" rx="16" fill="#FFF0EF" stroke="#DB7C73" stroke-width="1.4"/>
+  <text class="chip" x="1475" y="1060" text-anchor="middle" fill="#A33C33">安全</text><text class="small" x="1475" y="1092" text-anchor="middle">danger-</text><text class="small" x="1475" y="1112" text-anchor="middle">full-access</text><line x1="1444" y1="1131" x2="1506" y2="1131" stroke="#EAB4AE"/><text class="small" x="1475" y="1157" text-anchor="middle">外部隔离</text><text class="small" x="1475" y="1177" text-anchor="middle">是前提</text>
+  <rect x="224" y="1244" width="1152" height="84" rx="18" fill="#FFF0EF" stroke="#EAB4AE"/>
+  <text class="card-subtitle" x="800" y="1275" text-anchor="middle" fill="#A33C33">安全边界</text>
+  <text class="copy" x="800" y="1302" text-anchor="middle">Shell 与编辑器可以修改进程可访问的任意路径；Profile 不提供 workspace 级保护，部署必须在外部隔离环境中运行。</text>
+  <rect x="340" y="1402" width="920" height="34" rx="17" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <circle cx="382" cy="1419" r="7" fill="#D57C45"/><text class="small" x="397" y="1424">独立 Bundle</text><circle cx="544" cy="1419" r="7" fill="#9983D8"/><text class="small" x="559" y="1424">SDK 协议</text><circle cx="687" cy="1419" r="7" fill="#60B985"/><text class="small" x="702" y="1424">Session Agent</text><text class="small" x="890" y="1424">核心关系：</text><text class="chip" x="960" y="1424">空树 → 显式最小 Runtime → 多个 Agent</text>
+</svg>

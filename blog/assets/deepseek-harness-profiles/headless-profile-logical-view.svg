@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1340" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">DeepSeek Harness Headless Profile 逻辑视图</title>
+  <desc id="desc">展示 headless Profile 如何从 dsh-base 与 dsh-headless 生成一次性任务进程，以及命令行任务、单个 Agent、Session Log、标准输出和进程退出之间的关系。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#667085"/></marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#2878C8"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .page-title { font-size: 34px; font-weight: 750; } .page-subtitle { font-size: 17px; fill: #667085; }
+      .section-title { font-size: 21px; font-weight: 750; } .section-copy { font-size: 15px; fill: #667085; }
+      .card-title { font-size: 20px; font-weight: 750; } .card-subtitle { font-size: 15px; font-weight: 650; }
+      .copy { font-size: 14px; fill: #475467; } .small { font-size: 13px; fill: #667085; } .chip { font-size: 13px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; } .inverse { fill: #FFFFFF; } .inverse-muted { fill: #DDE7F2; }
+      .section { fill: #FFFFFF; stroke: #D8DEE8; stroke-width: 1.5; } .card { stroke-width: 1.4; }
+      .edge { fill: none; stroke: #667085; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-blue { fill: none; stroke: #2878C8; stroke-width: 2.4; marker-end: url(#arrow-blue); }
+      .edge-back { fill: none; stroke: #8795A8; stroke-width: 1.8; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .edge-label { font-size: 13px; font-weight: 650; fill: #667085; }
+    </style>
+  </defs>
+  <rect width="1600" height="1340" fill="#F5F7FA"/>
+  <text class="page-title" x="54" y="54">Headless Profile：一次性任务进程</text>
+  <text class="page-subtitle" x="54" y="84">一个命令启动一个进程、创建一个 Agent、完成一个任务并退出；Agent 能力直接来自进程级 dsh-base。</text>
+
+  <rect class="section" x="40" y="112" width="1520" height="300" rx="22"/>
+  <rect x="64" y="134" width="188" height="34" rx="17" fill="#E8F1FC"/>
+  <text class="section-title" x="82" y="158" fill="#175EA8">1　启动装配</text>
+  <text class="section-copy" x="275" y="157">Profile 排列 Bundle Patch；合并结果启动一个短生命周期应用进程</text>
+  <rect class="card" x="72" y="190" width="260" height="158" rx="15" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="94" y="222">Headless Profile</text>
+  <text class="copy" x="94" y="250">名称：<tspan class="mono" font-weight="700">headless</tspan></text>
+  <text class="small mono" x="94" y="277">1. dsh-base</text>
+  <text class="small mono" x="94" y="299">2. dsh-headless</text>
+  <rect x="94" y="313" width="154" height="24" rx="12" fill="#CFE5FA"/><text class="chip" x="171" y="330" text-anchor="middle" fill="#175EA8">Patch Reload: startup</text>
+  <path class="edge-blue" d="M332 269 H380"/><text class="edge-label" x="356" y="252" text-anchor="middle">选择、排序</text>
+  <rect class="card" x="388" y="190" width="422" height="158" rx="15" fill="#F8FAFC" stroke="#98A2B3" filter="url(#shadow)"/>
+  <text class="card-title" x="410" y="222">Bundle Patch 层</text>
+  <rect x="410" y="244" width="178" height="73" rx="12" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-subtitle mono" x="428" y="272">① dsh-base</text><text class="small" x="428" y="297">完整公共 Agent Runtime</text>
+  <rect x="610" y="244" width="178" height="73" rx="12" fill="#FFF4E5" stroke="#DDA34B"/>
+  <text class="card-subtitle mono" x="628" y="272">② dsh-headless</text><text class="small" x="628" y="297">Startup + one-shot Runner</text>
+  <path class="edge-blue" d="M810 269 H860"/><text class="edge-label" x="835" y="252" text-anchor="middle">依次应用</text>
+  <rect class="card" x="868" y="190" width="278" height="158" rx="15" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="card-title" x="890" y="222">Loader 配置</text>
+  <text class="copy" x="890" y="251">base 行 + headless 行</text>
+  <line x1="890" y1="268" x2="1124" y2="268" stroke="#E3C984"/>
+  <text class="small" x="890" y="292">无 Web / HTTP / Browser</text>
+  <text class="small" x="890" y="316">无 Agent Preset Roster</text>
+  <path class="edge-blue" d="M1146 269 H1196"/><text class="edge-label" x="1171" y="252" text-anchor="middle">实例化</text>
+  <rect class="card" x="1204" y="190" width="316" height="158" rx="15" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="card-title inverse" x="1226" y="223">一次性 Headless 进程</text>
+  <text class="copy inverse-muted" x="1226" y="252">读取一个任务，完成后主动退出</text>
+  <line x1="1226" y1="269" x2="1498" y2="269" stroke="#667085"/>
+  <text class="small inverse" x="1226" y="294">不监听端口 · 不等待后续交互</text>
+  <text class="small inverse" x="1226" y="318">最终答案写 stdout</text>
+  <rect x="388" y="365" width="824" height="29" rx="14.5" fill="#F2F4F7"/><text class="small" x="800" y="385" text-anchor="middle">Bundle 只是装配来源；运行时是一棵进程级插件树。</text>
+
+  <rect class="section" x="40" y="440" width="1520" height="372" rx="22"/>
+  <rect x="64" y="462" width="188" height="34" rx="17" fill="#FFF4E5"/>
+  <text class="section-title" x="82" y="486" fill="#9B5D08">2　进程运行时</text>
+  <text class="section-copy" x="275" y="485">模型侧工具保留在全局层；新建 Agent 不加入任何 Preset</text>
+  <rect x="72" y="518" width="1456" height="260" rx="18" fill="#FBFCFE" stroke="#98A2B3" stroke-width="1.6"/>
+  <rect x="94" y="538" width="340" height="32" rx="16" fill="#344054"/><text class="chip inverse" x="264" y="560" text-anchor="middle">Headless Process · Cordis Root</text>
+  <rect class="card" x="98" y="592" width="422" height="150" rx="15" fill="#EAF3FF" stroke="#78AEE3"/>
+  <text class="card-title" x="118" y="625">dsh-base 公共 Runtime</text>
+  <text class="copy" x="118" y="654">LLM · Session/Persistence · Agent Loop</text>
+  <text class="copy" x="118" y="680">Tools · Skills · Sandbox · Approval</text>
+  <rect x="118" y="698" width="248" height="25" rx="12.5" fill="#CFE5FA"/><text class="chip" x="242" y="716" text-anchor="middle" fill="#175EA8">模型侧注册项位于进程全局层</text>
+  <path class="edge" d="M520 667 H566"/>
+  <rect class="card" x="574" y="592" width="422" height="150" rx="15" fill="#FFF4E5" stroke="#DDA34B"/>
+  <text class="card-title" x="594" y="625">dsh-headless 应用层</text>
+  <text class="copy" x="594" y="654">headless-startup：解析 task / --help</text>
+  <text class="copy" x="594" y="680">headless-runner：等待 Loader 后直接驱动</text>
+  <rect x="594" y="698" width="222" height="25" rx="12.5" fill="#F8DCB1"/><text class="chip" x="705" y="716" text-anchor="middle" fill="#9B5D08">每个进程只接受一个任务</text>
+  <path class="edge" d="M996 667 H1042"/>
+  <rect class="card" x="1050" y="592" width="452" height="150" rx="15" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="card-title" x="1070" y="625">一个新 Agent + 一个 Session</text>
+  <text class="copy" x="1070" y="654">Agent 直接解析进程级工具与提示词</text>
+  <text class="copy" x="1070" y="680">Session Log 持久记录任务执行</text>
+  <rect x="1070" y="698" width="242" height="25" rx="12.5" fill="#D9F2E3"/><text class="chip" x="1191" y="716" text-anchor="middle" fill="#167047">没有 dsh-agent-presets</text>
+
+  <rect class="section" x="40" y="840" width="1520" height="418" rx="22"/>
+  <rect x="64" y="862" width="188" height="34" rx="17" fill="#E8F7F2"/>
+  <text class="section-title" x="82" y="886" fill="#16785E">3　一次性流程</text>
+  <text class="section-copy" x="275" y="885">命令行输入成为普通用户消息；最终结果从持久 Session Log 汇总</text>
+  <rect class="card" x="78" y="940" width="288" height="170" rx="16" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="card-title" x="100" y="974">CLI 调用</text>
+  <text class="copy mono" x="100" y="1003">dsh --profile headless</text>
+  <text class="copy mono" x="100" y="1027">"分析这个项目"</text>
+  <line x1="100" y1="1047" x2="344" y2="1047" stroke="#B6D2ED"/>
+  <text class="small" x="100" y="1072">task 是本次进程的唯一输入</text>
+  <path class="edge-blue" d="M366 1025 H420"/><text class="edge-label" x="393" y="1008" text-anchor="middle">创建并提交</text>
+  <rect class="card" x="428" y="940" width="288" height="170" rx="16" fill="#F6FEF9" stroke="#60B985" filter="url(#shadow)"/>
+  <text class="card-title" x="450" y="974">Agent 执行一个 Turn</text>
+  <text class="copy" x="450" y="1003">模型请求与工具调用</text>
+  <text class="copy" x="450" y="1027">直到 Agent 完全停稳</text>
+  <line x1="450" y1="1047" x2="694" y2="1047" stroke="#BFE4CF"/>
+  <text class="small" x="450" y="1072">reasoning 增量同步写入 stderr</text>
+  <path class="edge-blue" d="M716 1025 H770"/><text class="edge-label" x="743" y="1008" text-anchor="middle">flush、汇总</text>
+  <rect class="card" x="778" y="940" width="288" height="170" rx="16" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="card-title" x="800" y="974">Session Log</text>
+  <text class="copy" x="800" y="1003">消息 · 工具调用 · turn/end</text>
+  <text class="copy" x="800" y="1027">最后一条非空 assistant 文本</text>
+  <line x1="800" y1="1047" x2="1044" y2="1047" stroke="#E3C984"/>
+  <text class="small" x="800" y="1072">持久记录是结果来源</text>
+  <path class="edge-blue" d="M1066 1025 H1120"/><text class="edge-label" x="1093" y="1008" text-anchor="middle">输出、退出</text>
+  <rect class="card" x="1128" y="940" width="394" height="170" rx="16" fill="#344054" stroke="#344054" filter="url(#shadow)"/>
+  <text class="card-title inverse" x="1150" y="974">进程结果</text>
+  <text class="copy inverse" x="1150" y="1003">stdout：最终答案</text>
+  <text class="copy inverse" x="1150" y="1027">stderr：reasoning / 错误</text>
+  <line x1="1150" y1="1047" x2="1500" y2="1047" stroke="#667085"/>
+  <text class="small inverse" x="1150" y="1072">completed → exit 0　其余 → exit 1</text>
+  <rect x="248" y="1148" width="1104" height="68" rx="18" fill="#F2F4F7"/>
+  <text class="card-subtitle" x="800" y="1176" text-anchor="middle">生命周期结论</text>
+  <text class="copy" x="800" y="1201" text-anchor="middle">Headless Profile 定义一次性应用进程；Agent 是该进程临时创建并驱动的一个运行实例。</text>
+  <rect x="384" y="1284" width="832" height="34" rx="17" fill="#FFFFFF" stroke="#D8DEE8"/>
+  <circle cx="426" cy="1301" r="7" fill="#78AEE3"/><text class="small" x="441" y="1306">装配</text>
+  <circle cx="546" cy="1301" r="7" fill="#DDA34B"/><text class="small" x="561" y="1306">一次性应用</text>
+  <circle cx="704" cy="1301" r="7" fill="#60B985"/><text class="small" x="719" y="1306">Agent / Session</text>
+  <text class="small" x="900" y="1306">核心关系：</text><text class="chip" x="970" y="1306">一个进程 → 一个任务 → 一个 Agent</text>
+</svg>

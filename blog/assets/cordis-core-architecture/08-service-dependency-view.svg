@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Service 依赖决定 Plugin 何时运行</title>
+  <desc id="desc">Consumer 把所需 Service 声明为运行条件。Service 不可用时 Consumer 等待；Provider 提供稳定 Service 后依赖得到满足，Consumer 自动进入运行状态。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="135%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#182230" flood-opacity="0.08"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#667085"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 Z" fill="#21866B"/></marker>
+    <style>
+      text { font-family: Inter, "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; fill: #182230; }
+      .title { font-size: 34px; font-weight: 750; } .subtitle { font-size: 18px; fill: #667085; }
+      .panel-title { font-size: 25px; font-weight: 750; } .node-title { font-size: 21px; font-weight: 750; }
+      .copy { font-size: 17px; fill: #475467; } .small { font-size: 15px; fill: #667085; } .chip { font-size: 16px; font-weight: 700; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .edge { fill: none; stroke: #98A2B3; stroke-width: 2.4; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .edge-green { fill: none; stroke: #21866B; stroke-width: 2.8; marker-end: url(#arrow-green); }
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#F5F7FA"/>
+  <text class="title" x="48" y="56">Service 依赖不是启动顺序，而是运行条件</text>
+  <text class="subtitle" x="48" y="88">Consumer 不需要猜测 Provider 何时启动；它只声明自己需要什么能力。</text>
+
+  <rect x="48" y="132" width="500" height="510" rx="24" fill="#FFFFFF" stroke="#D8DEE8" stroke-width="1.5"/>
+  <rect x="72" y="154" width="142" height="34" rx="17" fill="#FFF0C7"/>
+  <text class="chip" x="143" y="177" text-anchor="middle" fill="#8C6515">能力尚未出现</text>
+  <text class="panel-title" x="72" y="230">Consumer 等待</text>
+
+  <rect x="142" y="270" width="312" height="78" rx="16" fill="#F2F4F7" stroke="#98A2B3"/>
+  <text class="node-title" x="298" y="303" text-anchor="middle" fill="#667085">Provider</text>
+  <text class="small" x="298" y="330" text-anchor="middle">尚未挂载</text>
+  <path class="edge" d="M298 348 V382"/>
+  <rect x="174" y="390" width="248" height="74" rx="37" fill="#F2F4F7" stroke="#98A2B3" stroke-dasharray="7 5"/>
+  <text class="node-title" x="298" y="422" text-anchor="middle" fill="#667085">Service</text>
+  <text class="small" x="298" y="448" text-anchor="middle">不可用</text>
+  <path class="edge" d="M298 464 V498"/>
+  <rect x="142" y="506" width="312" height="88" rx="16" fill="#FFF8E8" stroke="#D7A63F" filter="url(#shadow)"/>
+  <text class="node-title" x="298" y="541" text-anchor="middle">Consumer</text>
+  <rect x="236" y="554" width="124" height="28" rx="14" fill="#FFF0C7"/>
+  <text class="chip" x="298" y="574" text-anchor="middle" fill="#8C6515">等待依赖</text>
+
+  <path class="edge-green" d="M560 387 H640"/>
+  <rect x="558" y="351" width="84" height="28" rx="14" fill="#DDF3EB"/>
+  <text class="chip" x="600" y="371" text-anchor="middle" fill="#16785E">能力出现</text>
+
+  <rect x="652" y="132" width="500" height="510" rx="24" fill="#FFFFFF" stroke="#60B985" stroke-width="1.5"/>
+  <rect x="676" y="154" width="142" height="34" rx="17" fill="#DDF3EB"/>
+  <text class="chip" x="747" y="177" text-anchor="middle" fill="#16785E">依赖得到满足</text>
+  <text class="panel-title" x="676" y="230">Consumer 自动运行</text>
+
+  <rect x="746" y="270" width="312" height="78" rx="16" fill="#FFF8E8" stroke="#D7A63F"/>
+  <text class="node-title" x="902" y="303" text-anchor="middle">Provider</text>
+  <text class="small" x="902" y="330" text-anchor="middle">提供具体实现</text>
+  <path class="edge-green" d="M902 348 V382"/>
+  <rect x="778" y="390" width="248" height="74" rx="37" fill="#EAF3FF" stroke="#78AEE3" filter="url(#shadow)"/>
+  <text class="node-title" x="902" y="422" text-anchor="middle">Stable Service</text>
+  <text class="small" x="902" y="448" text-anchor="middle">能力可用</text>
+  <path class="edge-green" d="M902 464 V498"/>
+  <rect x="746" y="506" width="312" height="88" rx="16" fill="#F6FEF9" stroke="#60B985"/>
+  <text class="node-title" x="902" y="541" text-anchor="middle">Consumer</text>
+  <rect x="840" y="554" width="124" height="28" rx="14" fill="#DDF3EB"/>
+  <text class="chip" x="902" y="574" text-anchor="middle" fill="#16785E">ACTIVE</text>
+
+  <text class="subtitle" x="600" y="696" text-anchor="middle">Service 的存在决定 Consumer 是否运行，因此不再需要手工编排启动先后。</text>
+</svg>
