@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="580" viewBox="0 0 1400 580" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
-  <title id="title">插件与注册一同进入和退出</title>
-  <desc id="desc">工具插件加载时向工具注册表注册能力，卸载时撤销自己的注册。Agent 下一次组装工具列表时读取当前可用工具。实线连接加载与注册，红色虚线表示撤销；注册表向下提供当前工具列表。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="590" viewBox="0 0 1400 590" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">服务是否就绪，决定插件能否运行</title>
+  <desc id="desc">以声明必需服务依赖的工具插件为例。第一阶段，必需服务尚未就绪，Consumer 等待激活，尚未产生注册。第二阶段，全部必需服务就绪，Consumer 激活并注册工具、监听器等能力。第三阶段，任一必需服务消失，Consumer 停用并撤销自身注册。下方回路表示必需服务恢复后可重新激活；它不保证运行中的任务无损恢复。阶段间箭头表示服务可用性变化，阶段内箭头表示服务条件决定 Consumer 状态。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
     <marker id="red-arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#b86252"/></marker>
@@ -10,41 +10,55 @@
       .label { font-size: 34px; font-weight: 600; }
       .copy { font-size: 30px; }
       .note { font-size: 26px; fill: #496277; }
-      .small { font-size: 24px; fill: #496277; }
-      .inverse { fill: #fff; }
-      .node { font-size: 30px; }
-      .node-small { font-size: 28px; }
       .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
-      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
       .withdraw { fill: none; stroke: #b86252; stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linejoin: round; marker-end: url(#red-arrow); }
-      .expand { fill: none; stroke: #496277; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow); }
     </style>
   </defs>
-  <rect width="1400" height="580" fill="#fff"/>
-  <text class="title" x="700" y="54" text-anchor="middle">插件与注册一同进入和退出</text>
-  <g data-node="load">
-    <rect x="48" y="100" width="632" height="116" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
-    <text class="label" x="364" y="146" text-anchor="middle">加载工具插件</text>
-    <text class="copy" x="364" y="194" text-anchor="middle">注册能力</text>
+  <rect width="1400" height="590" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">服务是否就绪，决定插件能否运行</text>
+  <text class="note" x="700" y="104" text-anchor="middle">以声明必需服务依赖的工具插件为例</text>
+
+  <rect x="48" y="140" width="400" height="344" rx="16" fill="#fffbf2" stroke="#c6a55f" stroke-width="2"/>
+  <text class="label" x="248" y="186" text-anchor="middle">① 等待依赖</text>
+  <g data-node="service-pending">
+    <rect x="72" y="214" width="352" height="76" rx="16" fill="#f5f8fc" stroke="#7d9ebc" stroke-width="2" stroke-dasharray="7 6"/>
+    <text class="copy" x="248" y="264" text-anchor="middle">必需服务尚未就绪</text>
   </g>
-  <g data-node="unload">
-    <rect x="720" y="100" width="632" height="116" rx="16" fill="#fce9e3" stroke="#cb8875" stroke-width="2" stroke-dasharray="7 6"/>
-    <text class="label" x="1036" y="146" text-anchor="middle">卸载工具插件</text>
-    <text class="copy" x="1036" y="194" text-anchor="middle">撤销注册</text>
+  <path class="flow" d="M248 290V326"/>
+  <g data-node="consumer-pending">
+    <rect x="72" y="338" width="352" height="118" rx="16" fill="#fff3d6" stroke="#c6a55f" stroke-width="2"/>
+    <text class="label" x="248" y="384" text-anchor="middle">Consumer</text>
+    <text class="copy" x="248" y="436" text-anchor="middle">等待激活，尚未注册</text>
   </g>
-  <path class="flow" d="M364 216V252"/>
-  <path class="withdraw" d="M1036 216V252"/>
-  <g data-node="registry">
-    <rect x="48" y="264" width="1304" height="80" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
-    <text class="label" x="550" y="316" text-anchor="middle">工具注册表</text>
-    <text class="copy" x="850" y="314" text-anchor="middle">当前可用工具</text>
+
+  <path class="flow" d="M460 312H488"/>
+  <rect x="500" y="140" width="400" height="344" rx="16" fill="#f5fbf8" stroke="#6b9e90" stroke-width="2"/>
+  <text class="label" x="700" y="186" text-anchor="middle">② 激活插件</text>
+  <g data-node="service-ready">
+    <rect x="524" y="214" width="352" height="76" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="copy" x="700" y="264" text-anchor="middle">全部必需服务就绪</text>
   </g>
-  <path class="flow" d="M700 344V396"/>
-  <text class="small" x="736" y="382" text-anchor="start">当前工具</text>
-  <g data-node="agent">
-    <rect x="48" y="408" width="1304" height="96" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
-    <text class="label" x="530" y="468" text-anchor="middle">Agent</text>
-    <text class="note" x="830" y="466" text-anchor="middle">下一次组装工具列表</text>
+  <path class="flow" d="M700 290V326"/>
+  <g data-node="consumer-active">
+    <rect x="524" y="338" width="352" height="118" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+    <text class="label" x="700" y="384" text-anchor="middle">Consumer</text>
+    <text class="copy" x="700" y="436" text-anchor="middle">激活并注册能力</text>
   </g>
-  <text class="note" x="700" y="556" text-anchor="middle">注册效果随插件生命周期管理</text>
+
+  <path class="withdraw" d="M912 312H940"/>
+  <rect x="952" y="140" width="400" height="344" rx="16" fill="#fff8f5" stroke="#cb8875" stroke-width="2"/>
+  <text class="label" x="1152" y="186" text-anchor="middle">③ 停用插件</text>
+  <g data-node="service-lost">
+    <rect x="976" y="214" width="352" height="76" rx="16" fill="#f5f8fc" stroke="#7d9ebc" stroke-width="2" stroke-dasharray="7 6"/>
+    <text class="copy" x="1152" y="264" text-anchor="middle">任一必需服务消失</text>
+  </g>
+  <path class="withdraw" d="M1152 290V326"/>
+  <g data-node="consumer-inactive">
+    <rect x="976" y="338" width="352" height="118" rx="16" fill="#fce9e3" stroke="#cb8875" stroke-width="2"/>
+    <text class="label" x="1152" y="384" text-anchor="middle">Consumer</text>
+    <text class="copy" x="1152" y="436" text-anchor="middle">停用并撤销注册</text>
+  </g>
+
+  <path class="flow" d="M1152 484V524H700V496"/>
+  <text class="note" x="926" y="570" text-anchor="middle">必需服务恢复后，可重新激活</text>
 </svg>

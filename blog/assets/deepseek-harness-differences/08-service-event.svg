@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="620" viewBox="0 0 1400 620" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">两种协作方式：调用能力，或参与过程</title>
+  <desc id="desc">左侧，Consumer 通过 Service 调用能力，Provider 提供具体实现；替换实现时，需要保持服务名称与接口约定。右侧，发起插件通过 Event 扩展点让监听插件参与过程，不必知道有哪些监听插件。事件连线表示参与关系，不表示并行执行；执行顺序和能否拦截取决于具体事件的分发约定。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect width="1400" height="620" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">两种协作方式：调用能力，或参与过程</text>
+
+  <rect x="48" y="106" width="632" height="446" rx="16" fill="#f5f8fc" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="label" x="364" y="160" text-anchor="middle">Service：调用能力</text>
+  <g data-node="consumer">
+    <rect x="80" y="212" width="244" height="108" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="202" y="258" text-anchor="middle">Consumer</text>
+    <text class="note" x="202" y="304" text-anchor="middle">使用能力的插件</text>
+  </g>
+  <g data-node="provider">
+    <rect x="404" y="212" width="244" height="108" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="526" y="258" text-anchor="middle">Provider</text>
+    <text class="note" x="526" y="304" text-anchor="middle">提供实现的插件</text>
+  </g>
+  <path class="flow" d="M202 320V352H280V374"/>
+  <path class="flow" d="M526 320V352H448V374"/>
+  <text class="note" x="166" y="368" text-anchor="end">调用</text>
+  <text class="note" x="562" y="368" text-anchor="start">提供</text>
+  <g data-node="service">
+    <rect x="162" y="386" width="404" height="100" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="364" y="430" text-anchor="middle">Service</text>
+    <text class="note" x="364" y="476" text-anchor="middle">稳定的名称与接口约定</text>
+  </g>
+  <text class="note" x="364" y="530" text-anchor="middle">替换 Provider，不必改 Consumer 代码</text>
+
+  <rect x="720" y="106" width="632" height="446" rx="16" fill="#f5fbf8" stroke="#6b9e90" stroke-width="2"/>
+  <text class="label" x="1036" y="160" text-anchor="middle">Event：参与过程</text>
+  <g data-node="producer">
+    <rect x="892" y="204" width="288" height="72" rx="16" fill="#fff" stroke="#6b9e90" stroke-width="2"/>
+    <text class="label" x="1036" y="252" text-anchor="middle">发起插件</text>
+  </g>
+  <path class="flow" d="M1036 276V312"/>
+  <text class="note" x="1072" y="310" text-anchor="start">发起</text>
+  <g data-node="event">
+    <rect x="892" y="324" width="288" height="72" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+    <text class="label" x="1036" y="372" text-anchor="middle">Event 扩展点</text>
+  </g>
+  <path class="tree" d="M1036 396V426M875 426H1197"/>
+  <path class="flow" d="M875 426V466"/>
+  <path class="flow" d="M1197 426V466"/>
+  <text class="note" x="1036" y="458" text-anchor="middle">参与</text>
+  <g data-node="listener-a">
+    <rect x="756" y="478" width="238" height="58" rx="16" fill="#fff" stroke="#6b9e90" stroke-width="2"/>
+    <text class="copy" x="875" y="518" text-anchor="middle">监听插件 A</text>
+  </g>
+  <g data-node="listener-b">
+    <rect x="1078" y="478" width="238" height="58" rx="16" fill="#fff" stroke="#6b9e90" stroke-width="2"/>
+    <text class="copy" x="1197" y="518" text-anchor="middle">监听插件 B</text>
+  </g>
+
+  <text class="note" x="700" y="602" text-anchor="middle">Event 连线表示参与关系；执行顺序和能否拦截，取决于事件约定</text>
+</svg>

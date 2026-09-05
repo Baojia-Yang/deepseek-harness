@@ -1,6 +1,6 @@
 # DeepSeek Harness 有什么不同：从插件组合到会话恢复
 
-![作者提供的 GitHub 页面截图，展示 DeepSeek Harness 的 Everything is a Plugin 横幅](deepseek-harness-differences.assets/everything-is-a-plugin.png)## 概述
+![](./deepseek-harness-differences.assets/image-2.png)\## 概述
 
 给 Agent 增加一个工具，和改变 Agent 的运行方式，是一回事吗？
 
@@ -49,21 +49,27 @@ DSH 则把运行组件本身也纳入插件体系。想调整某个环节，可�
 
 ## Cordis：让插件能够协作和替换
 
-把各项机制做成插件之后，还需要解决两个问题：插件怎样找到彼此提供的能力？替换或卸载一个插件时，它留下的注册又由谁清理？DSH 使用 Cordis 来管理这些协作和生命周期。理解这两件事，就能看懂它为什么支持运行机制的组合与替换。
+**把各项机制做成插件之后，还需要解决两个问题：插件怎样找到彼此提供的能力？替换或卸载一个插件时，它留下的注册又由谁清理？DSH 使用 Cordis 来管理这些协作和生命周期**。理解这两件事，就能看懂它为什么支持运行机制的组合与替换。
 
 ### 插件通过能力协作
 
-比如，一个工具需要读文件，可以依赖文件服务；需要调用模型，可以依赖模型服务。Cordis 负责连接使用服务和提供服务的插件。插件之间还可以通过事件协作，例如在工具执行前做权限检查，在模型请求前加入上下文。
+**一个工具需要读文件，可以调用文件服务；需要调用模型，可以调用模型服务**。这里的 Service，是有名称和接口约定的能力。使用能力的插件是 Consumer，提供具体实现的插件是 Provider。Consumer 依赖的是服务，不必直接引用某个 Provider 的实现；只要替代实现满足相同的服务名称和接口约定，就不必跟着修改 Consumer 的代码。
+
+**另一类需求，是让其他插件参与一个过程**。例如，在工具执行前做权限检查，在模型请求前加入上下文。这类协作可以通过 Event 完成：发起插件提供扩展点，监听插件按约定参与，发起方不必知道有哪些插件在监听。监听器能否修改结果、拦截后续执行，以及按什么顺序运行，都由具体事件的分发约定决定。
+
+![两种插件协作方式：Consumer 通过 Service 调用 Provider 提供的能力；发起插件通过 Event 扩展点让监听插件参与过程。替换服务实现需要保持名称与接口约定，事件连线不表示并行执行](assets/deepseek-harness-differences/08-service-event.svg)*图 4：Service 连接能力的使用者与提供者，Event 让其他插件参与已有过程。*
 
 对应到开发者手里的选择，就有两种改法：只想调整某个环节，可以在已有扩展点加入插件；想改变整套机制，则可以提供满足相应接口的替代实现。**Agent Loop 本身也是插件，意味着执行循环的实现也可以由开发者决定。** 工具和策略同样有各自的扩展位置，并不是每次定制都需要改 Loop。[Cordis 入门](../docs/cordis-primer.zh.md)、[DSH 扩展位置](../docs/architecture.md#where-new-behavior-goes)
 
 ### 插件可以加载，也可以退出
 
-再看一个更直观的问题：工具插件加载时注册了工具，卸载时该怎样处理？如果工具还留在注册表里，插件虽然退出了，它的影响却没有被清理。
+知道怎样协作之后，还要看插件何时能够运行。一个工具插件声明自己依赖文件服务，并不需要猜测文件服务由哪个插件先启动：Cordis 会等它声明的全部必需服务就绪，再激活它。这里的条件是“服务就绪”，不只是 Provider 已经挂载，因为服务也可能需要初始化。
 
-Cordis 把工具、服务和事件监听器等注册与插件实例的生命周期关联起来。卸载插件时，相应注册也被撤销；依赖某项服务的插件，则随服务的可用性激活或退出。图中以工具为例，Agent 下一次组装工具列表时，读取的是当时注册表里可用的工具。
+这个依赖关系在运行期间仍然有效。任一必需服务消失，依赖它的插件会停用；必需服务恢复后，插件可以重新激活。Cordis 同时把工具、服务和事件监听器等注册与插件实例的生命周期关联起来，插件停用或卸载时，会撤销自身的这些注册。[服务依赖](../docs/cordis-tutorial/03-services.zh.md)、[生命周期与副作用](../docs/cordis-tutorial/02-lifecycle-and-effects.zh.md)
 
-![工具插件加载时注册能力，卸载时撤销注册；Agent 根据当前工具注册表获得可用工具](assets/deepseek-harness-differences/01-plugin-lifecycle.svg)*图 4：以工具为例，插件的生命周期包括它对运行时产生的注册效果。*
+![同一个 Consumer 的三个阶段：必需服务未就绪时等待激活，全部就绪后激活并注册能力，任一必需服务消失后停用并撤销注册；服务恢复后可以重新激活](assets/deepseek-harness-differences/01-plugin-lifecycle.svg)*图 5：服务依赖是持续的运行条件，注册效果随插件的激活与停用一同进入和退出。*
+
+对应到工具列表，变化就很直观：工具插件激活时注册工具，停用时撤销注册；Agent 下一次组装工具列表时，读取的是当时注册表里可用的工具。Service 让调用方不必绑定具体实现，Event 提供参与过程的扩展点，依赖与生命周期管理则让这些插件能够进入和退出运行。
 
 这就是理解“运行时重组”的关键：变化既能被应用，相应的注册也能随插件退出而撤销。不过，框架支持什么，与具体应用默认开启什么，要分开看。当前内置 Web Profile 支持配置热重载，ACP、SDK、SDK Minimal 等 Profile 在启动时应用配置；插件代码的模块热更新需要另行启用。**配置热重载不等于任意组件都能无损升级**，正在进行的工作能否保留，还要看具体组件。[Profile 加载策略](../docs/architecture.md#profiles-and-bundles)
 
@@ -75,7 +81,7 @@ Everything is a plugin 听起来很抽象。它到底覆盖了哪些东西？先
 
 ### 从设置界面看见插件
 
-<img src="./deepseek-harness-differences.assets/web-plugin-settings.webp" alt="DSH Web 插件设置界面：agent-loop 与 fs-sandbox 被红框标出，tool-todo、tool-goal 和 tool-web 等显示“预设中启用”" width="543" />*图 5：DSH Web 的真实插件清单。截图及红框标注由作者提供。*
+<img src="./deepseek-harness-differences.assets/web-plugin-settings.webp" alt="DSH Web 插件设置界面：agent-loop 与 fs-sandbox 被红框标出，tool-todo、tool-goal 和 tool-web 等显示“预设中启用”" width="543" />*图 6：DSH Web 的真实插件清单。截图及红框标注由作者提供。*
 
 先留意红框里的两个名字：`agent-loop` 驱动 Agent 的执行循环，`fs-sandbox` 负责带沙箱策略的文件访问。再看同一屏的 `tools`、`system-prompt` 和 `llm-deepseek`，它们分别提供工具注册与执行机制、组织系统提示、接入模型。这里列出的，既有模型能调用的工具，也有让 Agent 运转起来的基础机制。
 
@@ -85,7 +91,7 @@ Everything is a plugin 听起来很抽象。它到底覆盖了哪些东西？先
 
 清单告诉我们有哪些插件，但还没有展示它们挂在哪里、哪些插件属于同一棵子树。把刚才的名字放回 Plugin Tree，关系就更直观了。下图保留 Web 配置的关键节点，并展开 `standard` 预设的一小部分。
 
-![Web 插件树的关键节点：根下包含 agent-loop、fs-sandbox、tools、system-prompt、llm-deepseek 及 Web 应用插件；agent-presets 管理的 standard 子树中包含 tool-todo、tool-goal 和 tool-web](assets/deepseek-harness-differences/06-web-plugin-tree.svg)*图 6：按 Web 的真实配置选取节点；名称省略* `@deepseek-ai/dsh-` *前缀。以* `standard` *已被会话使用为例，虚线省略了预设的中间挂载层；背景分区仅用于阅读，不是额外的父插件。*
+![Web 插件树的关键节点：根下包含 agent-loop、fs-sandbox、tools、system-prompt、llm-deepseek 及 Web 应用插件；agent-presets 管理的 standard 子树中包含 tool-todo、tool-goal 和 tool-web](assets/deepseek-harness-differences/06-web-plugin-tree.svg)*图 7：按 Web 的真实配置选取节点；名称省略* `@deepseek-ai/dsh-` *前缀。以* `standard` *已被会话使用为例，虚线省略了预设的中间挂载层；背景分区仅用于阅读，不是额外的父插件。*
 
 先看应用层：模型访问、会话持久化、沙箱、工具注册表等公共服务在这里，Web 服务和界面也在这里。再看预设子树：会话使用的工具、提示词和 Skill 由它提供。同一个 Web 进程可以同时服务使用不同预设的会话；使用同一预设的会话共享那组插件的装配，各自的会话状态仍然独立。[Web 配置](../packages/bundle/web-app/cordis.patch.yml)、[Standard 预设](../packages/preset/agent-presets/presets/standard/agent.cordis.yml)、[Agent Presets](../packages/preset/agent-presets/README.md)
 
@@ -99,7 +105,7 @@ Everything is a plugin 听起来很抽象。它到底覆盖了哪些东西？先
 
 Web 面向浏览器中的人，所以组合里有 Web 服务、会话界面、设置页和预设选择。ACP 是 Agent Client Protocol；DSH 的 ACP Profile 面向自动化调用方，提供通过标准输入输出通信的 ACP 服务，让其他程序提交任务、接收更新和管理会话。两者复用模型、Agent Loop、工具和持久化等公共插件，但启动的是各自独立的应用。[Web Bundle](../packages/bundle/web-app/README.md)、[ACP Bundle](../packages/bundle/acp-app/README.md)
 
-![web 和 acp 分别包含公共运行能力；web 增加 Web 服务、浏览器界面与 Agent Presets，acp 增加通过标准输入输出通信的 ACP 协议服务](assets/deepseek-harness-differences/02-web-acp.svg)*图 7：保留公共运行能力，改变应用入口与会话能力的组织方式。图中按能力分组，不表示插件之间的父子关系。*
+![web 和 acp 分别包含公共运行能力；web 增加 Web 服务、浏览器界面与 Agent Presets，acp 增加通过标准输入输出通信的 ACP 协议服务](assets/deepseek-harness-differences/02-web-acp.svg)*图 8：保留公共运行能力，改变应用入口与会话能力的组织方式。图中按能力分组，不表示插件之间的父子关系。*
 
 | 对比项 | `web` | `acp` |
 | --- | --- | --- |
@@ -116,7 +122,7 @@ Web 面向浏览器中的人，所以组合里有 Web 服务、会话界面、�
 
 `sdk` 提供完整的默认 Agent 组合，包含 Shell、文件操作、搜索、Skill、子 Agent 等工具及配套服务。`sdk-minimal` 则独立列出自己需要的插件，默认只向模型提供持久 Shell 和文本编辑两种工具。这里先明确一点：**Minimal 精简的是能力组合，不是换了更小的模型，也不是另一套 SDK 协议。** [SDK Bundle](../packages/bundle/sdk-app/README.md)、[SDK Minimal Bundle](../packages/bundle/sdk-minimal/README.md)
 
-![同一种 SDK 协议驱动两种 Agent 组合：sdk 提供丰富工具、上下文与配套服务，sdk-minimal 保留持久 Shell 和文本编辑；两者都有模型调用、Agent Loop 和 Session Log](assets/deepseek-harness-differences/03-sdk-minimal.svg)*图 8：调用方式相近，不代表模型面对的工作环境相同。*
+![同一种 SDK 协议驱动两种 Agent 组合：sdk 提供丰富工具、上下文与配套服务，sdk-minimal 保留持久 Shell 和文本编辑；两者都有模型调用、Agent Loop 和 Session Log](assets/deepseek-harness-differences/03-sdk-minimal.svg)*图 9：调用方式相近，不代表模型面对的工作环境相同。*
 
 | 对比项 | `sdk` | `sdk-minimal` |
 | --- | --- | --- |
@@ -149,7 +155,7 @@ Web 面向浏览器中的人，所以组合里有 Web 服务、会话界面、�
 
 组合从空配置开始，先按顺序应用 Bundle 的 Patch，再应用 Profile 自己的 Patch、Harness Home 中的 Patch，以及本次启动额外指定的 Patch。后面的层可以覆盖前面的选择，最终配置交给 Cordis 加载。下图把这个过程和最后的插件树连在了一起。
 
-![web Profile 选择 dsh-base 和 dsh-web-app，按顺序应用它们的配置并叠加用户 Patch，再由 Cordis 加载；来自两个 Bundle 的 agent-loop、fs-sandbox、host-webserver 和 agent-presets 都可以成为根下的插件节点](assets/deepseek-harness-differences/04-composition.svg)*图 9：Bundle 是配置来源，不必成为树中的父节点。来自不同 Bundle 的插件可以在同一层挂载。*
+![web Profile 选择 dsh-base 和 dsh-web-app，按顺序应用它们的配置并叠加用户 Patch，再由 Cordis 加载；来自两个 Bundle 的 agent-loop、fs-sandbox、host-webserver 和 agent-presets 都可以成为根下的插件节点](assets/deepseek-harness-differences/04-composition.svg)*图 10：Bundle 是配置来源，不必成为树中的父节点。来自不同 Bundle 的插件可以在同一层挂载。*
 
 回到 Web 这个例子，`dsh-base` 提供 `agent-loop`、`fs-sandbox` 等条目；`dsh-web-app` 加入 Web 服务、界面和 `agent-presets`，同时调整部分基础条目，把模型工具交由预设提供。所以，组合 Bundle 既可以增加插件，也可以改变已有插件的配置和启用位置。
 
@@ -169,7 +175,7 @@ Web 面向浏览器中的人，所以组合里有 Web 服务、会话界面、�
 
 DSH 把这件事规定为一条架构规则：**模型可见的内容，必须能够从 Session Log 重建。** 因此，日志同时参与运行和展示：模型使用的历史、用户查看的执行过程，以及由事件记录的 Goal、Todo 等状态，都可以从同一条事件流生成各自的视图。[Session Log 架构规则](../docs/architecture.md#session-log)
 
-![同一份 Session Log 分别生成模型上下文、会话执行历史和持久状态，并为恢复与分叉提供记录依据](assets/deepseek-harness-differences/05-session-log.svg)*图 10：同一份会话事实，可以服务于模型、用户界面和后续会话操作。*
+![同一份 Session Log 分别生成模型上下文、会话执行历史和持久状态，并为恢复与分叉提供记录依据](assets/deepseek-harness-differences/05-session-log.svg)*图 11：同一份会话事实，可以服务于模型、用户界面和后续会话操作。*
 
 同一份日志，为什么还需要不同视图？看上下文压缩就容易理解：压缩会改变下一次模型请求使用的历史，但已经发生的会话事实仍保留在日志里。用户可以查看的历史，与模型这一轮实际使用的上下文，不必完全相同。
 
