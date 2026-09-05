@@ -1,44 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="680" viewBox="0 0 640 680" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="500" viewBox="0 0 1400 500" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">同一份日志，生成多种视图</title>
   <desc id="desc">输入、模型响应、工具调用和结果进入只追加的 Session Log。同一份日志生成模型上下文、供用户查看的会话执行历史和持久会话状态，并为恢复和分叉提供记录依据。</desc>
   <defs>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#496277"/></marker>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <marker id="red-arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#b86252"/></marker>
     <style>
-      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
-      .title { font-size: 30px; font-weight: 700; text-anchor: start; }
-      .label { font-size: 26px; font-weight: 600; }
-      .copy { font-size: 24px; }
-      .inverse { fill: #ffffff; }
-      .line { fill: none; stroke: #496277; stroke-width: 2.5; marker-end: url(#arrow); }
-      .branch { fill: none; stroke: #496277; stroke-width: 2.5; }
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .small { font-size: 24px; fill: #496277; }
+      .inverse { fill: #fff; }
+      .node { font-size: 30px; }
+      .node-small { font-size: 28px; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
+      .withdraw { fill: none; stroke: #b86252; stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linejoin: round; marker-end: url(#red-arrow); }
+      .expand { fill: none; stroke: #496277; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow); }
     </style>
   </defs>
-  <rect width="640" height="680" rx="16" fill="#f6f8fb"/>
-  <text class="title" x="32" y="52">同一份日志，生成多种视图</text>
-  <rect x="32" y="88" width="576" height="76" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
-  <text class="copy" x="320" y="136">输入 · 模型响应 · 工具调用与结果</text>
-  <path class="line" d="M147 164V206"/>
-  <rect x="32" y="216" width="230" height="432" rx="12" fill="#17324d"/>
-  <text class="label inverse" x="147" y="276">Session Log</text>
-  <path d="M56 303H238" stroke="#60758a"/>
-  <text class="copy inverse" x="147" y="370">按顺序追加</text>
-  <text class="copy inverse" x="147" y="414">保存会话事实</text>
-  <text class="copy inverse" x="147" y="458">保留历史依据</text>
-  <path class="branch" d="M262 432H292M292 260V602"/>
-  <path class="line" d="M292 260H318"/>
-  <path class="line" d="M292 374H318"/>
-  <path class="line" d="M292 488H318"/>
-  <path class="line" d="M292 602H318"/>
-  <rect x="328" y="216" width="280" height="90" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
-  <text class="label" x="468" y="249">模型上下文</text>
-  <text class="copy" x="468" y="289">下一次请求使用</text>
-  <rect x="328" y="330" width="280" height="90" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
-  <text class="label" x="468" y="363">会话执行历史</text>
-  <text class="copy" x="468" y="403">供用户查看</text>
-  <rect x="328" y="444" width="280" height="90" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
-  <text class="label" x="468" y="477">持久会话状态</text>
-  <text class="copy" x="468" y="517">如 Goal、Todo</text>
-  <rect x="328" y="558" width="280" height="90" rx="12" fill="#dff2ec" stroke="#6b9e90"/>
-  <text class="label" x="468" y="591">恢复与分叉</text>
-  <text class="copy" x="468" y="631">从历史继续工作</text>
+  <rect width="1400" height="500" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">同一份日志，生成多种视图</text>
+  <text class="note" x="700" y="100" text-anchor="middle">模型、界面与后续会话，共用一份记录</text>
+  <g data-node="events">
+  <rect x="48" y="174" width="300" height="196" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2" />
+  <text class="label" x="198" y="228" text-anchor="middle">会话事件</text>
+  <text class="copy" x="198" y="284" text-anchor="middle">输入 · 模型响应</text>
+  <text class="copy" x="198" y="338" text-anchor="middle">工具调用与结果</text>
+  </g>
+  <path class="flow" d="M348 272H468"/>
+  <text class="note" x="408" y="246" text-anchor="middle">写入</text>
+  <g data-node="log">
+  <rect x="480" y="190" width="300" height="164" rx="16" fill="#17324d" stroke="#17324d" stroke-width="2" />
+  <text class="label inverse" x="630" y="250" text-anchor="middle">Session Log</text>
+  <text class="copy inverse" x="630" y="308" text-anchor="middle">按顺序追加</text>
+  </g>
+  <path class="tree" d="M780 272H856M856 156V432"/>
+  <path class="flow" d="M856 156H916"/>
+  <path class="flow" d="M856 248H916"/>
+  <path class="flow" d="M856 340H916"/>
+  <path class="flow" d="M856 432H916"/>
+  <g data-node="context">
+  <rect x="928" y="122" width="424" height="68" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="copy" x="952" y="167" text-anchor="start">模型上下文</text>
+  <text class="small" x="1330" y="165" text-anchor="end">下一次请求使用</text>
+  </g>
+  <g data-node="history">
+  <rect x="928" y="214" width="424" height="68" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="copy" x="952" y="259" text-anchor="start">会话执行历史</text>
+  <text class="small" x="1330" y="257" text-anchor="end">用户查看</text>
+  </g>
+  <g data-node="state">
+  <rect x="928" y="306" width="424" height="68" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="copy" x="952" y="351" text-anchor="start">持久会话状态</text>
+  <text class="small" x="1330" y="349" text-anchor="end">Goal / Todo</text>
+  </g>
+  <g data-node="resume">
+  <rect x="928" y="398" width="424" height="68" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2" />
+  <text class="copy" x="952" y="443" text-anchor="start">恢复与分叉</text>
+  <text class="small" x="1330" y="441" text-anchor="end">继续工作</text>
+  </g>
 </svg>

@@ -1,40 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="744" viewBox="0 0 640 744" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
-  <title id="title">从配置层到运行中的插件树</title>
-  <desc id="desc">Profile 选择按顺序应用的 Bundle Patch，再叠加 Profile、Home 和本次启动的用户 Patch，形成最终插件配置。Cordis 根据配置挂载插件树。树边表示挂载关系，子节点以能力类别示意。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Profile 选择来源，Cordis 挂载插件</title>
+  <desc id="desc">web Profile 依次选择 dsh-base 和 dsh-web-app 的 Bundle Patch，再叠加 Profile、Home 和本次启动的 Patch，生成配置并由 Cordis 加载。树中的 agent-loop、fs-sandbox 来自 Base，host-webserver、agent-presets 来自 Web App，它们可以同为根下节点；Bundle 是配置来源，不是必需的父节点。</desc>
   <defs>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#496277"/></marker>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <marker id="red-arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#b86252"/></marker>
     <style>
-      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
-      .title { font-size: 30px; font-weight: 700; text-anchor: start; }
-      .label { font-size: 26px; font-weight: 600; }
-      .copy { font-size: 24px; }
-      .line { fill: none; stroke: #496277; stroke-width: 2.5; marker-end: url(#arrow); }
-      .tree { fill: none; stroke: #496277; stroke-width: 2.5; }
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .small { font-size: 24px; fill: #496277; }
+      .inverse { fill: #fff; }
+      .node { font-size: 30px; }
+      .node-small { font-size: 28px; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
+      .withdraw { fill: none; stroke: #b86252; stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linejoin: round; marker-end: url(#red-arrow); }
+      .expand { fill: none; stroke: #496277; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow); }
     </style>
   </defs>
-  <rect width="640" height="744" rx="16" fill="#f6f8fb"/>
-  <text class="title" x="32" y="52">从配置层到运行中的插件树</text>
-  <rect x="32" y="84" width="576" height="94" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
-  <text class="label" x="320" y="123">Profile 选择有序 Bundle</text>
-  <text class="copy" x="320" y="160">Bundle 的 Patch 按顺序应用</text>
-  <path class="line" d="M320 178V204"/>
-  <rect x="32" y="214" width="576" height="100" rx="12" fill="#fff2d9" stroke="#c3a668"/>
-  <text class="label" x="320" y="254">继续叠加用户 Patch</text>
-  <text class="copy" x="320" y="291">Profile → Home → 本次启动</text>
-  <path class="line" d="M320 314V346"/>
-  <rect x="32" y="356" width="576" height="64" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
-  <text class="label" x="320" y="398">最终插件配置</text>
-  <path d="M320 420V438" stroke="#496277" stroke-width="2.5"/>
-  <text class="copy" x="320" y="472">Cordis 挂载</text>
-  <path class="line" d="M320 488V510"/>
-  <rect x="32" y="520" width="576" height="196" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
-  <rect x="204" y="538" width="232" height="52" rx="8" fill="#e5eef9"/>
-  <text class="label" x="320" y="573">Plugin Tree</text>
-  <path class="tree" d="M320 590V614H140V642M320 614V642M320 614H500V642"/>
-  <rect x="60" y="642" width="160" height="52" rx="8" fill="#dff2ec" stroke="#6b9e90"/>
-  <rect x="240" y="642" width="160" height="52" rx="8" fill="#dff2ec" stroke="#6b9e90"/>
-  <rect x="420" y="642" width="160" height="52" rx="8" fill="#dff2ec" stroke="#6b9e90"/>
-  <text class="copy" x="140" y="677">服务插件</text>
-  <text class="copy" x="320" y="677">工具插件</text>
-  <text class="copy" x="500" y="677">入口插件</text>
+  <rect width="1400" height="560" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">Profile 选择来源，Cordis 挂载插件</text>
+  <text class="note" x="700" y="100" text-anchor="middle">从配置来源，到实际挂载的节点</text>
+  <g data-node="profile">
+  <rect x="48" y="248" width="210" height="148" rx="16" fill="#17324d" stroke="#17324d" stroke-width="2" />
+  <text class="label inverse" x="153" y="298" text-anchor="middle">Profile</text>
+  <text class="label inverse" x="153" y="356" text-anchor="middle">web</text>
+  </g>
+  <path class="flow" d="M258 322H310"/>
+  <rect x="322" y="140" width="298" height="304" rx="16" fill="#f6f8fb" stroke="#d7e1ec" stroke-width="2" />
+  <text class="copy" x="471" y="190" text-anchor="middle">Bundle Patch</text>
+  <g data-node="base">
+  <rect x="342" y="222" width="258" height="76" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2" />
+  <text class="node" x="471" y="270" text-anchor="middle">① dsh-base</text>
+  </g>
+  <g data-node="web-app">
+  <rect x="342" y="328" width="258" height="76" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="node-small" x="471" y="376" text-anchor="middle">② dsh-web-app</text>
+  </g>
+  <path class="flow" d="M471 298V316"/>
+  <path class="flow" d="M620 322H672"/>
+  <g data-node="patch">
+  <rect x="684" y="224" width="248" height="196" rx="16" fill="#fff2d9" stroke="#c3a668" stroke-width="2" />
+  <text class="label" x="808" y="276" text-anchor="middle">用户 Patch</text>
+  <text class="note" x="808" y="332" text-anchor="middle">Profile → Home</text>
+  <text class="note" x="808" y="380" text-anchor="middle">→ 本次启动</text>
+  </g>
+  <path class="flow" d="M932 322H996"/>
+  <text class="small" x="966" y="296" text-anchor="middle">加载</text>
+  <text class="label" x="1176" y="140" text-anchor="middle">Plugin Tree</text>
+  <text class="small" x="1176" y="182" text-anchor="middle">最终配置交给 Cordis</text>
+  <g data-node="root">
+  <rect x="1008" y="286" width="78" height="72" rx="16" fill="#17324d" stroke="#17324d" stroke-width="2" />
+  <text class="label inverse" x="1047" y="334" text-anchor="middle">根</text>
+  </g>
+  <path class="tree" d="M1086 322H1108M1108 228V456M1108 228H1124M1108 304H1124M1108 380H1124M1108 456H1124"/>
+  <g data-node="agent-loop">
+  <rect x="1124" y="200" width="228" height="56" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2" />
+  <text class="node-small" x="1238" y="238" text-anchor="middle">agent-loop</text>
+  </g>
+  <g data-node="fs-sandbox">
+  <rect x="1124" y="276" width="228" height="56" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2" />
+  <text class="node-small" x="1238" y="314" text-anchor="middle">fs-sandbox</text>
+  </g>
+  <g data-node="webserver">
+  <rect x="1124" y="352" width="228" height="56" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="small" x="1238" y="390" text-anchor="middle">host-webserver</text>
+  </g>
+  <g data-node="presets">
+  <rect x="1124" y="428" width="228" height="56" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="node-small" x="1238" y="466" text-anchor="middle">agent-presets</text>
+  </g>
+  <text class="note" x="700" y="540" text-anchor="middle">Bundle 是配置来源，不必成为树中的父节点</text>
 </svg>

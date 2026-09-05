@@ -1,33 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
-  <title id="title">SDK 接口相同，能力组合不同</title>
-  <desc id="desc">sdk 使用 Base 加 SDK 应用层，提供默认工具、上下文和配套服务。sdk-minimal 使用独立 Bundle，默认提供持久 Shell、文本编辑及精简提示上下文。两者都保留 SDK 协议、Agent Loop 和 Session Log。</desc>
-  <style>
-    text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
-    .title { font-size: 30px; font-weight: 700; text-anchor: start; }
-    .label { font-size: 28px; font-weight: 600; }
-    .copy { font-size: 24px; }
-  </style>
-  <rect width="640" height="640" rx="16" fill="#f6f8fb"/>
-  <text class="title" x="32" y="52">SDK 接口相同，能力组合不同</text>
-  <rect x="32" y="88" width="276" height="402" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
-  <text class="label" x="170" y="136">sdk</text>
-  <text class="copy" x="170" y="178">Base + SDK App</text>
-  <path d="M56 202H284" stroke="#b3c5da"/>
-  <text class="copy" x="170" y="256">默认工具与上下文</text>
-  <text class="copy" x="170" y="306">Skill、子 Agent</text>
-  <text class="copy" x="170" y="356">压缩、设置等服务</text>
-  <rect x="52" y="418" width="236" height="52" rx="8" fill="#ffffff"/>
-  <text class="copy" x="170" y="452">完整默认组合</text>
-  <rect x="332" y="88" width="276" height="402" rx="12" fill="#dff2ec" stroke="#6b9e90"/>
-  <text class="label" x="470" y="136">sdk-minimal</text>
-  <text class="copy" x="470" y="178">独立 Bundle</text>
-  <path d="M356 202H584" stroke="#a3c6ba"/>
-  <text class="copy" x="470" y="256">持久 Shell</text>
-  <text class="copy" x="470" y="306">文本编辑</text>
-  <text class="copy" x="470" y="356">精简提示上下文</text>
-  <rect x="352" y="418" width="236" height="52" rx="8" fill="#ffffff"/>
-  <text class="copy" x="470" y="452">精简默认组合</text>
-  <rect x="32" y="518" width="576" height="98" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
-  <text class="copy" x="320" y="552">两者都保留</text>
-  <text class="copy" x="320" y="594">SDK 协议 · Agent Loop · Session Log</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="500" viewBox="0 0 1400 500" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">同一种 SDK 协议，不同的能力组合</title>
+  <desc id="desc">SDK 客户端选择 sdk 或 sdk-minimal 运行组合。sdk 提供多种专用工具、Skill、子 Agent 和丰富提示上下文；sdk-minimal 提供持久 Shell、文本编辑和精简提示上下文。两者都保留模型、Agent Loop、Session Log 与持久化。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <marker id="red-arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#b86252"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .small { font-size: 24px; fill: #496277; }
+      .inverse { fill: #fff; }
+      .node { font-size: 30px; }
+      .node-small { font-size: 28px; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
+      .withdraw { fill: none; stroke: #b86252; stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linejoin: round; marker-end: url(#red-arrow); }
+      .expand { fill: none; stroke: #496277; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1400" height="500" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">同一种 SDK 协议，不同的能力组合</text>
+  <g data-node="sdk-protocol">
+  <rect x="48" y="104" width="1304" height="60" rx="16" fill="#17324d" stroke="#17324d" stroke-width="2" />
+  <text class="copy inverse" x="700" y="146" text-anchor="middle">SDK JSON-RPC：选择运行组合</text>
+  </g>
+  <path class="flow" d="M364 164V184"/>
+  <path class="flow" d="M1036 164V184"/>
+  <g data-node="sdk">
+  <rect x="48" y="196" width="632" height="208" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="label" x="364" y="246" text-anchor="middle">sdk</text>
+  <text class="copy" x="364" y="306" text-anchor="middle">专用工具 · Skill · 子 Agent</text>
+  <text class="note" x="364" y="362" text-anchor="middle">丰富提示上下文</text>
+  </g>
+  <g data-node="sdk-minimal">
+  <rect x="720" y="196" width="632" height="208" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2" />
+  <text class="label" x="1036" y="246" text-anchor="middle">sdk-minimal</text>
+  <text class="copy" x="1036" y="306" text-anchor="middle">持久 Shell · 文本编辑</text>
+  <text class="note" x="1036" y="362" text-anchor="middle">精简提示上下文</text>
+  </g>
+  <g data-node="common">
+  <rect x="48" y="430" width="1304" height="52" rx="16" fill="#f6f8fb" stroke="#d7e1ec" stroke-width="2" />
+  <text class="note" x="700" y="466" text-anchor="middle">共同保留：模型 · Agent Loop · Session Log · 持久化</text>
+  </g>
 </svg>

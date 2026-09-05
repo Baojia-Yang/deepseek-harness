@@ -18,15 +18,14 @@
 - [按顺序阅读源码](#source-reading)
 - [开发备注](#dev-note)
 
------
+---
 
-<a id="comparison-boundary"></a>
 ## 明确比较边界
 
 直接把“DSH Desktop”和“`web` Profile”放在同一行比较会丢失一个关键层次：前者是完整产品和启动器，后者是应用装配模板。本文先把两者放进同一套层次，再比较每一层由谁提供、谁拥有状态以及何时生效。
 
 | 对象 | 原生 `dsh web` | DSH Desktop |
-|---|---|---|
+| --- | --- | --- |
 | 产品入口 | `dsh web` CLI | `dsh-desktop` Electron 应用 |
 | 默认 Profile | 随附模板 `web` | Desktop 管理的 `desktop`，也可选择其他 Web-capable Profile |
 | 基础 Bundle | `dsh-base + dsh-web-app` | 仍以所安装 DSH 的 `PROFILE_TEMPLATES.web` 为基础 |
@@ -36,9 +35,8 @@
 
 本文的官方侧依据当前工作区源码；DSH Desktop 侧固定到仓库修订 `469aa633ddaa0b4726faf9abc70fb2ccb9c3d3ae`，避免外部 `master` 更新后让结论失去对应代码。该 Desktop 修订将 DSH runtime 固定为 `0.1.2-rc.1`、上游提交 `a66e4702047846cdaa10c66c9d3df3951f5ea70d`。因此，本文把“Desktop 主动增加或替换的结构”与“两份 DSH 版本之间普通的上游演进”分开；某个官方插件在两个版本中的增删不自动算作 Desktop 定制。
 
------
+---
 
-<a id="unified-model"></a>
 ## 建立统一逻辑模型
 
 两条路径最终都产生一棵 Cordis 插件树，但组合权威不同。原生路径由 `dsh` CLI 和 Profile loader 完成；Desktop 路径由 Electron 启动器先解析 Profile，再插入一个不写入 Profile manifest 的产品层。
@@ -66,21 +64,18 @@ DSH Desktop
           → 每个 Session 仍选择官方 Agent Preset
 ```
 
-![原生 Web 与 DSH Desktop 装配差异](assets/dsh-desktop-vs-web/composition-delta.svg)
-
-这张图只表达一个结论：Desktop 在官方 Web 应用组合之外增加原生宿主能力，但没有另建 Agent Runtime 或会话级 Agent 组合体系。
+![原生 Web 与 DSH Desktop 装配差异](assets/dsh-desktop-vs-web/composition-delta.svg)这张图只表达一个结论：Desktop 在官方 Web 应用组合之外增加原生宿主能力，但没有另建 Agent Runtime 或会话级 Agent 组合体系。
 
 | 层次 | 原生 Web 的所有者 | Desktop 的处理 |
-|---|---|---|
+| --- | --- | --- |
 | Launcher | `dsh` CLI | Electron main 自己调用 `dsh-app-boot.boot()` |
 | Profile | `web` 模板和用户持久化目录 | 选择 Web-capable Profile；只主动修复默认 `desktop` Profile |
 | Bundle/Patch | Profile 按顺序列出 Bundle，再叠加用户 Patch | 沿用 Profile Bundle，同时在 `dsh-web-app` 后强制插入 Desktop Patch |
 | Plugin Tree | Loader 激活最终配置行 | 同一个 Loader 激活官方、Desktop 和第三方插件 |
 | Agent Preset | Web Session Controller 选择，`dsh-agent-presets` 发现并挂载 | 沿用相同服务和选择路径，只适配打包后的 preset 根目录 |
 
------
+---
 
-<a id="profile-comparison"></a>
 ## 比较 Profile
 
 Profile 回答“这次启动采用哪组有序应用层”，不直接等于某个 Agent，也不拥有每个插件的实现。原生 Web 和 Desktop 都使用这一抽象，但 Desktop 在 Profile 之外还持有产品级选择状态。
@@ -115,7 +110,7 @@ Desktop 还可以从托盘选择另一个现有 Profile，但候选必须能够�
 ### Profile 层的关键差异
 
 | 问题 | 原生 `dsh web` | DSH Desktop |
-|---|---|---|
+| --- | --- | --- |
 | 谁选择 Profile | CLI 参数或 `web` 别名 | Electron 私有选择状态和托盘操作 |
 | 默认名称 | `web` | `desktop` |
 | 是否只运行一个固定 Profile | 是，本次进程由 CLI 选择 | 否，产品可以选择任意满足要求的 Web-capable Profile |
@@ -125,9 +120,8 @@ Desktop 还可以从托盘选择另一个现有 Profile，但候选必须能够�
 
 所以，“Desktop 使用 `desktop` Profile”只描述默认选择；更完整的说法是：“Desktop 启动器承载一个 Web-capable Profile，并在它的 Web Bundle 后加入 Desktop 产品层。”
 
------
+---
 
-<a id="bundle-patch-comparison"></a>
 ## 比较 Bundle 与 Patch
 
 Bundle 是 Patch 的分发单位，Patch 则对配置行进行插入、禁用或整段 `config` 替换。两边都使用相同的 Cordis Loader 语义，主要差别在于 Desktop 新增了 Profile 之外的组合权威。
@@ -135,7 +129,7 @@ Bundle 是 Patch 的分发单位，Patch 则对配置行进行插入、禁用或
 ### 原生 Web 的层顺序
 
 | 顺序 | 层 | 主要内容 |
-|---:|---|---|
+| --- | --- | --- |
 | 1 | `dsh-base/cordis.patch.yml` | Agent、Session、LLM、持久化、注册表、沙箱、审批与默认工具组合 |
 | 2 | `dsh-web-app/cordis.patch.yml` | Web Host、API、浏览器 Client roster、Web 配置覆盖及 Agent Preset roster |
 | 3 | `profiles/web/cordis.patch.yml` | 当前 Web Profile 的用户覆盖 |
@@ -146,7 +140,7 @@ Bundle 是 Patch 的分发单位，Patch 则对配置行进行插入、禁用或
 ### Desktop 的层顺序
 
 | 顺序 | 层 | 主要内容 |
-|---:|---|---|
+| --- | --- | --- |
 | 1 | 选中 Profile 的 `dsh-base` | 官方基础 Host Runtime |
 | 2 | 选中 Profile 的 `dsh-web-app` | 官方 Web 应用 |
 | 3 | Desktop 静态 Patch | 七个 Desktop Loader 行和 `web-runtime` 配置 |
@@ -156,9 +150,7 @@ Bundle 是 Patch 的分发单位，Patch 则对配置行进行插入、禁用或
 | 7 | Home Patch | 共享 Harness home 覆盖 |
 | 8 | Desktop 生成 Patch | 设置、网络、UI 模式、preset 根、平台 adapter、WebServer、遥测与 shell 配置 |
 
-![固定 Desktop Patch 插入七个 Desktop Plugin 并重配 web-runtime，同时保留 Agent Runtime 与 Session 语义](assets/dsh-desktop-vs-web/desktop-patch-detail.svg)
-
-图中只展开固定的 `dsh-plugin-desktop/cordis.patch.yml`：它插入七个 Desktop Loader 行，并重配官方 `web-runtime`。这些改动为 Web 应用增加桌面宿主能力，但不会替换 Agent Runtime、Session 日志或 Agent Preset 语义。
+![固定 Desktop Patch 插入七个 Desktop Plugin 并重配 web-runtime，同时保留 Agent Runtime 与 Session 语义](assets/dsh-desktop-vs-web/desktop-patch-detail.svg)图中只展开固定的 `dsh-plugin-desktop/cordis.patch.yml`：它插入七个 Desktop Loader 行，并重配官方 `web-runtime`。这些改动为 Web 应用增加桌面宿主能力，但不会替换 Agent Runtime、Session 日志或 Agent Preset 语义。
 
 `dsh-plugin-desktop/package.json` 自己声明了 `dsh.bundle.patch`，所以这个包具备普通 DSH Bundle 的分发形式。但是 Desktop 产品启动器会把 `dsh-plugin-desktop` 从默认 `desktop` Profile 的持久 Bundle 列表中排除，并在遍历到 `dsh-web-app` 后加载同一个 Patch。由此产生两个同时成立的事实：
 
@@ -177,9 +169,8 @@ Plugin Tree
 
 所有最终行为仍由 Cordis Plugin、Service、事件与 effect 实现，但并非每一条 Patch 都必须来自 Profile manifest 中列出的 Bundle。
 
------
+---
 
-<a id="plugin-tree-comparison"></a>
 ## 比较 Plugin Tree
 
 Desktop 没有复制整棵 Web 插件树。它先继承官方树，再通过少量新增行、服务提供和 provider 替换把 Web 应用放进原生桌面宿主。
@@ -187,7 +178,7 @@ Desktop 没有复制整棵 Web 插件树。它先继承官方树，再通过少�
 ### 两边共享的官方插件
 
 | 平面 | 共享能力 |
-|---|---|
+| --- | --- |
 | Host Agent Runtime | Agent registry、Agent Loop、LLM adapter、Session log、持久化、投影、设置、凭据、Storage、Sandbox、Approval、工具与 capability registry |
 | Web Host | Web 应用启动、API Gateway、Session/Settings/Workspace Controller、静态前端、Connection 与 Client module 扫描 |
 | Web Client | 官方 layout、sidebar、conversation、chat、settings、approval、model、permission、preset、tool 与 workspace 等 UI 插件 |
@@ -200,7 +191,7 @@ Desktop 没有复制整棵 Web 插件树。它先继承官方树，再通过少�
 Desktop 的静态 `cordis.patch.yml` 在 `dsh-web-app` 后插入七个 Host 行：
 
 | 行 id | 包入口 | 主要职责 |
-|---|---|---|
+| --- | --- | --- |
 | `desktop-shell` | `dsh-plugin-desktop` | BrowserWindow、导航策略、Desktop 设置及关闭/退出生命周期 |
 | `desktop-terminal` | `dsh-plugin-desktop/terminal` | 打开指向当前 Profile 的隔离终端；Linux 默认禁用 |
 | `desktop-diagnostics` | `dsh-plugin-desktop/diagnostics` | 日志与诊断导出 |
@@ -216,7 +207,7 @@ Desktop 的静态 `cordis.patch.yml` 在 `dsh-web-app` 后插入七个 Host 行�
 不是所有 Desktop 能力都先表现为 YAML 行。Electron launcher 在调用 `boot()` 时，通过 Host bootstrap callback 直接提供 generation-scoped runtime 服务，再让 Desktop Loader 行消费：
 
 | 能力 | 性质 | 使用者 |
-|---|---|---|
+| --- | --- | --- |
 | `desktopRuntime` | Electron 窗口、托盘、系统对话框和平台 adapter 的私有能力 | Desktop 自有插件 |
 | `desktopBrowserAccess` | renderer 与普通浏览器访问策略 | Desktop shell 与网络层 |
 | `desktopLanHttps` | 局域网 HTTPS edge 和本地 CA 状态 | Desktop shell |
@@ -232,7 +223,7 @@ Desktop 的静态 `cordis.patch.yml` 在 `dsh-web-app` 后插入七个 Host 行�
 Desktop 会根据平台、网络与显示模式生成最后一组 Patch：
 
 | 目标 | Desktop 行为 | Agent 平面是否改变 |
-|---|---|---|
+| --- | --- | --- |
 | `webserver` | 禁用选中 Profile 的 provider，插入或启用 `dsh-plugin-desktop/webserver` | 否，仍承载普通 Web API 与 Client |
 | `ui-layout` | compatibility 保留官方布局；extended/advanced 禁用官方 root layout，由 Desktop Client 提供桌面布局 | 否，官方 sidebar、conversation 与 details occupant 继续使用 |
 | Windows directory picker | 禁用自适应行，插入 browse Host 与 Client surface，并增加原生文件夹按钮 | 否 |
@@ -247,15 +238,14 @@ Desktop 会根据平台、网络与显示模式生成最后一组 Patch：
 
 Desktop 没有建立第二套 renderer 插件协议，也没有把原始 Electron API 暴露给 Web 页面。第三方 Web 插件仍然声明标准 `dsh.client` 元数据并进入官方模块图；只有确实需要托盘、Profile 或打包 pnpm 的插件才选择性消费 Desktop service。
 
------
+---
 
-<a id="preset-comparison"></a>
 ## 比较 Agent Preset
 
 DSH Desktop 有 Agent Preset 能力，因为它继承 `dsh-web-app`；但它没有定义一套 Desktop 专属 Preset。两边的会话级 Agent 组合由官方 `dsh-agent-presets` 服务完成。
 
 | 问题 | 原生 `dsh web` | DSH Desktop |
-|---|---|---|
+| --- | --- | --- |
 | 谁把 roster 放进 Host 树 | `dsh-web-app` Patch 插入 `agent-presets` 行 | 继承同一行 |
 | 随附 preset | `standard`、`minimal`、`ptc`、`cordis` | 相同，来自 Desktop 固定的官方 DSH runtime |
 | 默认 preset | `standard`，可由设置修改 | 相同 |
@@ -271,15 +261,14 @@ Desktop 的额外处理位于打包边界：`prepareDesktopProfile()` 找到与 
 
 Session Log 的职责也没有变化。会话能够恢复，依赖官方 Session 日志、持久化和事件投影；Preset 只提供恢复当前 Agent 组合所需的 preset id，不保存历史 preset 源码或依赖版本。
 
------
+---
 
-<a id="lifecycle-comparison"></a>
 ## 比较生命周期与持久化
 
 两边共享会话生命周期，但应用配置的生效方式不同。原生 Web 以运行中的 Node Host 为中心；Desktop 以完整 Electron/Cordis generation 为应用生命周期单位。
 
 | 变化或状态 | 原生 `dsh web` | DSH Desktop |
-|---|---|---|
+| --- | --- | --- |
 | Profile/Home Patch | `web` Profile 的 `patchReload: live` 由官方启动路径安装 watcher | Desktop launcher 先生成完整 Patch 快照再直接调用 `boot()`；下一 generation 重新读取 |
 | Bundle manifest 增删 | 需要重新解析 Profile 和依赖 | 明确要求重启，Desktop 不监视 Profile manifest |
 | Profile 切换 | 通过另一次 CLI 启动选择 | 保存选择、dispose 当前树并重启 Electron |
@@ -294,9 +283,8 @@ Session Log 的职责也没有变化。会话能够恢复，依赖官方 Session
 
 Desktop 的 checkpoint 只保护 Profile 声明文件、Profile Patch、共享 `settings.yaml` 和 Home Patch 等配置。凭据、`.env`、Session、Storage、缓存和生成的依赖状态不进入 checkpoint。由此可见，Desktop Recovery 是应用配置恢复能力，不是另一套 Session 持久化机制。
 
------
+---
 
-<a id="architecture-implications"></a>
 ## 理解它验证了哪些 Harness 能力
 
 DSH Desktop 的价值不在于重新实现 Agent，而在于证明 Harness 的插件装配可以扩展到完整产品宿主。
@@ -348,9 +336,8 @@ DSH Desktop 再补充一条：
 
 所以，Profile 是主要的声明式应用装配入口，但不是所有组合权威的唯一来源；Agent Preset 则始终位于进程树激活之后，解决每个 Session 的 Agent 差异。
 
------
+---
 
-<a id="conclusions"></a>
 ## 形成差异性结论
 
 第一，DSH Desktop 与原生 `dsh web` 的关系是“产品宿主扩展”，不是“另一个 Agent Runtime”。两者底部是同一个官方 `dsh-base`，Web API、浏览器 Client 和每会话 Agent Preset 也主要来自同一个 `dsh-web-app`。
@@ -369,15 +356,14 @@ DSH Desktop 再补充一条：
 
 > 原生 `dsh web` 定义可组合的浏览器 Agent 应用；DSH Desktop 保留这套应用和会话级 Agent 组合，在它外面增加一个由 Electron 启动器强制装配、由普通 Cordis Plugin 实现的桌面产品层。
 
------
+---
 
-<a id="source-reading"></a>
 ## 按顺序阅读源码
 
 下面的阅读路线先建立官方基准，再只看 Desktop 相对该基准增加的部分。
 
 | 顺序 | 文件 | 核对内容 |
-|---:|---|---|
+| --- | --- | --- |
 | 1 | [原生 Profile 模板](../packages/boot/app-boot/src/profile.ts) | `web = dsh-base + dsh-web-app` 与 `patchReload: live` |
 | 2 | [原生 base Patch](../packages/bundle/base/cordis.patch.yml) | Agent Runtime、Session、LLM、工具与安全基础 |
 | 3 | [原生 web-app Patch](../packages/bundle/web-app/cordis.patch.yml) | Web Host/Client 行、被移入 Agent plane 的行和 `agent-presets` |
@@ -391,9 +377,8 @@ DSH Desktop 再补充一条：
 | 11 | [Desktop Client plugin](https://github.com/anywhere-labs/dsh-desktop/blob/469aa633ddaa0b4726faf9abc70fb2ccb9c3d3ae/dsh-plugin-desktop/src/client/index.ts) | 官方 Client module graph 中的 Desktop UI |
 | 12 | [Desktop 上游版本记录](https://github.com/anywhere-labs/dsh-desktop/blob/469aa633ddaa0b4726faf9abc70fb2ccb9c3d3ae/upstream.json) | Desktop 分析所对应的确切 DSH runtime |
 
------
+---
 
-<a id="dev-note"></a>
 ## 开发备注
 
 无。

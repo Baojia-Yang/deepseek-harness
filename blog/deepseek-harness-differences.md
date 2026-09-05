@@ -6,12 +6,12 @@
 
 ## 目录
 
-- [DSH 把什么交给了开发者](#what-is-open)
-- [Cordis：让插件能够协作和替换](#cordis)
-- [Everything is a plugin：组合决定应用的样子](#plugin-composition)
-- [Session Log：从记录生成上下文和状态](#session-log)
-- [什么时候这些差异有价值](#when-it-matters)
-- [延伸阅读](#further-reading)
+- [DSH 把什么交给了开发者](#dsh-%E6%8A%8A%E4%BB%80%E4%B9%88%E4%BA%A4%E7%BB%99%E4%BA%86%E5%BC%80%E5%8F%91%E8%80%85)
+- [Cordis：让插件能够协作和替换](#cordis%E8%AE%A9%E6%8F%92%E4%BB%B6%E8%83%BD%E5%A4%9F%E5%8D%8F%E4%BD%9C%E5%92%8C%E6%9B%BF%E6%8D%A2)
+- [Everything is a plugin：组合决定应用的样子](#everything-is-a-plugin%E7%BB%84%E5%90%88%E5%86%B3%E5%AE%9A%E5%BA%94%E7%94%A8%E7%9A%84%E6%A0%B7%E5%AD%90)
+- [Session Log：从记录生成上下文和状态](#session-log%E4%BB%8E%E8%AE%B0%E5%BD%95%E7%94%9F%E6%88%90%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C%E7%8A%B6%E6%80%81)
+- [什么时候这些差异有价值](#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%BF%99%E4%BA%9B%E5%B7%AE%E5%BC%82%E6%9C%89%E4%BB%B7%E5%80%BC)
+- [延伸阅读](#%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB)
 
 ---
 
@@ -47,47 +47,85 @@ DSH 使用 Cordis 管理插件。把 Cordis 理解为负责插件协作和生命
 
 ## Everything is a plugin：组合决定应用的样子
 
-Everything is a plugin 的含义，可以从实际产品看出来：DSH 的运行能力由插件提供，插件的选择和组织共同决定应用的行为。同一套基础能力可以用于浏览器交互，也可以通过协议交给其他程序调用；Agent 的工具和上下文也可以按需求组合。
+Everything is a plugin 的含义，可以先从 DSH Web 的设置界面看起。下面这张截图里，工具、模型服务和 Agent 的运行机制，都出现在同一份插件清单中。
 
-### Plugin Tree 代表什么
+### 从设置界面看见插件
 
-Plugin Tree 描述一次运行中挂载了哪些插件，以及它们的父子关系。树中的节点对应插件挂载，子树提供一种组织和管理插件的方式。树边表示挂载关系；服务依赖和执行时的调用关系需要分别理解。
+<img src="./deepseek-harness-differences.assets/web-plugin-settings.webp" alt="DSH Web 插件设置界面：agent-loop 与 fs-sandbox 被红框标出，tool-todo、tool-goal 和 tool-web 等显示“预设中启用”" width="543" />图 2：DSH Web 的真实插件清单。截图及红框标注由作者提供。
 
-与插件树一起工作的还有 Context，它决定插件在当前位置能看到哪些服务。公共服务可以被复用，需要独立的服务则可以隔离。在 Web 应用里，这让共享的运行基础设施和每个会话各自装配的 Agent 能力能够同时存在。
+红框里的 `agent-loop` 负责驱动 Agent 的执行循环，`fs-sandbox` 负责带沙箱策略的文件访问。同一屏中的 `tools` 提供工具注册与执行机制，`system-prompt` 组织系统提示，`llm-deepseek` 接入模型。这些名称说明，DSH 的“插件”既包括模型能调用的工具，也包括让 Agent 运转起来的基础机制。
 
-对使用者来说，插件树回答了一个很实际的问题：当前应用拥有的这些能力，分别是由什么组合出来的？下面两组对比能把这个问题讲得更具体。
+截图还显示了两种配置状态。“已启用”表示该条目在应用的全局配置中启用；“预设中启用”表示全局条目没有直接启用，而是有 Agent Preset 提供这项插件，例如 `tool-todo` 和 `tool-web`。这里的 Preset 可以先理解为供会话选择的一组 Agent 能力。这个标签不表示所有会话都有这项工具，也不表示对应预设此刻一定已经运行。[插件清单界面](../packages/client/ui-settings-plugin-inventory/README.md)
 
-### Web 与 ACP：把能力提供给不同的使用者
+### 从插件清单映射到 Plugin Tree
 
-Web 面向浏览器中的人：用户查看会话、输入消息、选择模型、管理设置，并通过界面与 Agent 交互。它在公共基础上增加 Web 服务和界面相关插件，还通过 Preset 为每个会话装配 Agent 能力。
+设置页便于逐项查看插件。Plugin Tree 则进一步展示插件挂在哪里、哪些插件组成一棵子树。下面保留 Web 配置中的关键节点，并展开 `standard` 预设的一小部分，让截图中的名字有一个具体位置。
 
-ACP 是 Agent Client Protocol。DSH 的 ACP Profile 提供面向自动化程序的协议入口：调用方通过标准协议创建会话、提交任务、接收更新，并管理会话生命周期。它与 Web 复用 Base Bundle 中的模型、工具、持久化等基础能力，同时拥有自己的协议服务和启动方式。[Web Bundle](../packages/bundle/web-app/README.md)、[ACP Bundle](../packages/bundle/acp-app/README.md)
+![Web 插件树的关键节点：根下包含 agent-loop、fs-sandbox、tools、system-prompt、llm-deepseek 及 Web 应用插件；agent-presets 管理的 standard 子树中包含 tool-todo、tool-goal 和 tool-web](assets/deepseek-harness-differences/06-web-plugin-tree.svg)图 3：按 Web 的真实配置选取节点；名称省略 `@deepseek-ai/dsh-` 前缀。以 `standard` 已被会话使用为例，虚线省略了预设的中间挂载层；背景分区仅用于阅读，不是额外的父插件。
 
-![Web 与 ACP 各自复用 Base Bundle；Web 增加浏览器界面与会话 Preset，ACP 增加自动化协议入口，分别形成独立应用](assets/deepseek-harness-differences/02-web-acp.svg)图 2：同一份基础组合可以被不同应用复用。两种 Profile 启动的是各自的运行时。
+这棵树可以从两个层次理解。应用层提供模型访问、会话持久化、沙箱、工具注册表等公共服务，也提供 Web 服务与界面。预设子树则提供供会话使用的工具、提示词和 Skill。同一个 Web 进程可以同时服务使用不同预设的会话；使用同一预设的会话共享那组插件的装配，各自的会话状态仍然独立。[Web 配置](../packages/bundle/web-app/cordis.patch.yml)、[Standard 预设](../packages/preset/agent-presets/presets/standard/agent.cordis.yml)、[Agent Presets](../packages/preset/agent-presets/README.md)
 
-这说明插件化能够决定整个应用的交互方式。开发者既可以为人组合一个交互产品，也可以把 Agent 能力交给另一个程序使用。
+例如，截图中的 `web-search-deepseek` 提供搜索服务，`tool-web` 把网页能力作为工具提供给模型。前者属于共享服务，后者由预设决定是否提供给会话。于是，“应用具备这项基础能力”和“这个 Agent 能调用这项工具”是两个可以分别配置的问题。
 
-### SDK 与 SDK Minimal：选择 Agent 拥有的能力
+树边表示挂载层次，并不表示调用顺序；`fs-sandbox` 与 `agent-loop` 并列，也不意味着两者互不依赖。服务如何被找到、哪些注册对某个会话可见，由 Cordis 的 Context 和作用域机制管理。读到这里，只需要记住：插件树组织了运行中的能力，而能力的可见范围也可以被控制。
 
-另一组对比发生在同一种程序调用方式之内。SDK 客户端通过协议驱动 DSH；它启动哪一种 Profile，决定背后运行的是哪套能力组合。
+### Web 与 ACP：改变应用面向谁
 
-`sdk` 使用 Base Bundle 加 SDK 应用层，提供默认工具和配套服务。`sdk-minimal` 使用独立 Bundle，显式列出所需插件：它保留模型调用、Agent Loop、会话持久化和 SDK 协议，默认向模型提供两种工具——持久 Shell 与文本编辑。Shell 在 Linux、macOS 上使用 Bash，在 Windows 上使用 PowerShell。
+如果选择另一套插件，应用会怎样变化？先看 `web` 与 `acp` 这两个启动配置，DSH 将这样的命名配置称为 Profile。
 
-Minimal 的默认组合没有 Skill 工具、子 Agent 和上下文压缩等能力，也省去了完整 Profile 中的多项上下文贡献。因此，模型接收到的工具与提示内容也随组合改变。这种差异既影响开发者接入了哪些功能，也影响模型实际如何工作。[SDK Bundle](../packages/bundle/sdk-app/README.md)、[SDK Minimal Bundle](../packages/bundle/sdk-minimal/README.md)
+Web 面向浏览器中的人，增加 Web 服务、会话界面、设置页和预设选择。ACP 是 Agent Client Protocol；DSH 的 ACP Profile 面向自动化调用方，增加通过标准输入输出通信的 ACP 服务，由其他程序提交任务、接收更新和管理会话。两者复用模型、Agent Loop、工具和持久化等公共插件，但启动的是各自独立的应用。[Web Bundle](../packages/bundle/web-app/README.md)、[ACP Bundle](../packages/bundle/acp-app/README.md)
 
-![sdk 使用 Base 加 SDK 应用层，sdk-minimal 使用独立的精简 Bundle；两者都保留 SDK 协议、Agent Loop 和会话日志，但默认模型能力不同](assets/deepseek-harness-differences/03-sdk-minimal.svg)图 3：同样通过 SDK 调用，背后的 Agent 仍可以采用不同的能力组合。
+![web 和 acp 分别包含公共运行能力；web 增加 Web 服务、浏览器界面与 Agent Presets，acp 增加通过标准输入输出通信的 ACP 协议服务](assets/deepseek-harness-differences/02-web-acp.svg)图 4：保留公共运行能力，改变应用入口与会话能力的组织方式。图中按能力分组，不表示插件之间的父子关系。
 
-Minimal 也有相应的使用条件：它默认采用完整访问权限，适合放在由调用方隔离好的运行环境中。选择组合时，功能和权限策略需要一起考虑。
+| 对比项 | `web` | `acp` |
+| --- | --- | --- |
+| 直接使用者 | 在浏览器里工作的用户 | 实现 ACP 的自动化调用方 |
+| 交互方式 | 会话界面、设置页、模型与预设选择 | 协议请求、响应和会话更新；不包含 Web 界面 |
+| Agent 能力组织 | 公共服务加预设；会话选择对应能力组合 | 默认使用应用中挂载的工具组合，不包含 Web 的预设管理 |
+| 配置生效 | 内置 Profile 支持配置热重载 | 内置 Profile 在启动时应用配置 |
+
+这不只是给同一个界面换一种访问方式。Web 需要的展示、设置与预设管理，ACP 不必全部携带；ACP 需要的协议服务，也可以作为插件接到公共能力上。对开发者来说，可组合的范围覆盖了整个应用形态。
+
+### SDK 与 SDK Minimal：改变模型实际拿到什么
+
+`sdk` 与 `sdk-minimal` 则展示另一种差异：两者都通过 DSH 的 SDK JSON-RPC 协议供程序调用，也都保留模型请求、Agent Loop、Session Log 与持久化，但模型拿到的工具和上下文不同。
+
+`sdk` 提供完整的默认 Agent 组合，包含 Shell、文件操作、搜索、Skill、子 Agent 等工具及配套服务。`sdk-minimal` 独立列出自己需要的插件，默认只向模型提供持久 Shell 和文本编辑两种工具。这里的“精简”指能力组合精简，不是换用了更小的模型，也不是换了一套 SDK 协议。[SDK Bundle](../packages/bundle/sdk-app/README.md)、[SDK Minimal Bundle](../packages/bundle/sdk-minimal/README.md)
+
+![同一种 SDK 协议驱动两种 Agent 组合：sdk 提供丰富工具、上下文与配套服务，sdk-minimal 保留持久 Shell 和文本编辑；两者都有模型调用、Agent Loop 和 Session Log](assets/deepseek-harness-differences/03-sdk-minimal.svg)图 5：调用方式相近，不代表模型面对的工作环境相同。
+
+| 对比项 | `sdk` | `sdk-minimal` |
+| --- | --- | --- |
+| 默认模型工具 | Shell、文件操作与搜索、Skill、子 Agent、Todo、Web 等 | 持久 Shell 与文本编辑 |
+| Shell 形态 | 默认 Shell 工具及后台任务控制工具 | 持久 Shell，在多次调用之间保留状态；不提供单独的后台任务控制工具 |
+| 提示上下文 | 系统提示、运行环境信息、工作区指令等上下文贡献 | 简短默认提示，不加入 Harness 身份与运行环境段落，也不组合工作区指令插件 |
+| 配套能力 | 包含上下文压缩、Skill 加载、子 Agent、设置等插件 | 默认不组合这些插件 |
+| 会话基础 | 模型调用、循环执行、会话日志与持久化 | 同样保留，日志默认保存为未压缩 JSONL |
+
+例如，同样提出“检查项目并修改一个文件”，普通 SDK 的 Agent 可以获得专门的文件与搜索工具，也可以使用预先组合好的 Skill 或子 Agent；Minimal 的 Agent 主要通过 Shell 检查项目，再使用文本编辑工具修改内容。插件组合改变了模型可选择的操作，以及它开始工作时获得的信息。
+
+Minimal 的持久 Shell 在 Linux、macOS 上使用 Bash，在 Windows 上使用 PowerShell。它默认采用 `danger-full-access`，文本编辑直接使用本地文件系统，运行环境的隔离需要由调用方负责。功能少不等于权限小；比较这两种组合时，也要检查它们各自的权限配置。[Minimal 配置](../packages/bundle/sdk-minimal/cordis.patch.yml)
 
 ### 插件树是怎样组合出来的
 
-这里用四个概念就能串起来：Plugin 提供具体能力；Bundle 把一组插件配置组织成可复用的分发单元；Profile 选择这次启动要使用哪些 Bundle；Patch 用于调整配置、启停插件或加入新的插件。
+看过这些具体应用，再回头看 Plugin、Bundle 和 Profile，它们的分工就更清楚了：Plugin 提供能力；Bundle 分发一组插件配置及其依赖；Profile 选择本次启动按什么顺序使用哪些 Bundle。Plugin Tree 是这些配置被加载后形成的挂载结构。
 
-组合从空配置开始，先按 Profile 指定的顺序应用 Bundle，再依次应用 Profile 自己的 Patch、Harness Home 中的 Patch，以及本次启动额外指定的 Patch。后面的层可以覆盖前面的选择。最终配置交给 Cordis，形成运行中的插件树。
+前面四个 Profile 的内置组合分别是：
 
-![Profile 选择有序 Bundle，依次叠加 Profile、Home 和本次启动的 Patch，形成配置，再由 Cordis 挂载为插件树](assets/deepseek-harness-differences/04-composition.svg)图 4：Profile 决定应用如何组合，Patch 让复用的组合仍然可以调整。树中的节点按能力类别示意。
+| Profile | 按顺序应用的 Bundle |
+| --- | --- |
+| `web` | `dsh-base` → `dsh-web-app` |
+| `acp` | `dsh-base` → `dsh-acp-app` |
+| `sdk` | `dsh-base` → `dsh-sdk-app` |
+| `sdk-minimal` | `dsh-sdk-minimal`，独立提供完整配置，不叠加 `dsh-base` |
 
-Web 中还会出现 Preset：Profile 负责这次启动的应用，而 Preset 负责一个会话中的 Agent 能力，例如工具、提示词和 Skill。于是，“整个应用提供什么基础设施”和“这个会话使用哪些能力”可以分别选择。[Profile 与 Bundle](../docs/architecture.md#profiles-and-bundles)、[Agent Presets](../packages/preset/agent-presets/README.md)
+Bundle 通过 Patch 提供配置。Patch 可以插入插件条目，也可以按条目的标识调整配置或启停状态。组合从空配置开始：先依次应用 Bundle 的 Patch，再应用 Profile 自己的 Patch、Harness Home 中的 Patch，以及本次启动额外指定的 Patch。后面的层可以覆盖前面的选择，最终配置交给 Cordis 加载。
+
+![web Profile 选择 dsh-base 和 dsh-web-app，按顺序应用它们的配置并叠加用户 Patch，再由 Cordis 加载；来自两个 Bundle 的 agent-loop、fs-sandbox、host-webserver 和 agent-presets 都可以成为根下的插件节点](assets/deepseek-harness-differences/04-composition.svg)图 6：Bundle 是配置来源，不必成为树中的父节点。来自不同 Bundle 的插件可以在同一层挂载。
+
+以 Web 为例，`dsh-base` 提供 `agent-loop`、`fs-sandbox` 等条目；`dsh-web-app` 加入 Web 服务、界面和 `agent-presets`，同时调整部分基础条目，把模型工具交由预设提供。因此，Bundle 的组合既能增加插件，也能改变已有插件的配置和启用位置。
+
+Profile 与 Preset 也各有作用：Profile 选择整个应用，Preset 选择会话使用的 Agent 能力。Web 设置页中“已启用”和“预设中启用”的区别，正是这种分层组合在产品中的直接表现。[Profile 与 Bundle](../docs/architecture.md#profiles-and-bundles)、[Agent Presets](../packages/preset/agent-presets/README.md)
 
 ---
 
@@ -101,7 +139,7 @@ Web 中还会出现 Preset：Profile 负责这次启动的应用，而 Preset �
 
 DSH 把“模型可见内容必须能够从日志重建”作为明确的架构规则。日志因此同时参与运行和展示：模型历史、用户查看的执行过程，以及由事件记录的 Goal、Todo 等状态，可以从同一条事件流生成各自的视图。[Session Log 架构规则](../docs/architecture.md#session-log)
 
-![同一份 Session Log 分别生成模型上下文、会话执行历史和持久状态，并为恢复与分叉提供记录依据](assets/deepseek-harness-differences/05-session-log.svg)图 5：同一份会话事实，可以服务于模型、用户界面和后续会话操作。
+![同一份 Session Log 分别生成模型上下文、会话执行历史和持久状态，并为恢复与分叉提供记录依据](assets/deepseek-harness-differences/05-session-log.svg)图 7：同一份会话事实，可以服务于模型、用户界面和后续会话操作。
 
 这些视图不必包含完全相同的内容。例如，上下文压缩会改变下一次模型请求使用的历史，但已经发生的会话事实仍保留在日志里。用户可查看的历史与模型当前使用的上下文，可以有各自的呈现方式。
 

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="768" viewBox="0 0 1400 768" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Web 的插件树：关键节点</title>
+  <desc id="desc">根下的实际插件包括 agent-loop、fs-sandbox、tools、system-prompt、llm-deepseek，以及 agent-presets、host-webserver、client-ui-renderer、message-feedback 和 session-log-export。agent-presets 管理预设子树，这里以 standard 已被使用为例，展开 tool-todo、tool-goal 和 tool-web。实线表示挂载关系，虚线省略预设的中间挂载层；背景分区不是父插件。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <marker id="red-arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#b86252"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .small { font-size: 24px; fill: #496277; }
+      .inverse { fill: #fff; }
+      .node { font-size: 30px; }
+      .node-small { font-size: 26px; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
+      .withdraw { fill: none; stroke: #b86252; stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linejoin: round; marker-end: url(#red-arrow); }
+      .expand { fill: none; stroke: #496277; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1400" height="768" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">Web 的插件树：关键节点</text>
+  <text class="small" x="700" y="100" text-anchor="middle">实线：挂载关系；虚线：省略预设的中间挂载层</text>
+  <g data-node="root">
+  <rect x="48" y="118" width="1304" height="64" rx="16" fill="#17324d" stroke="#17324d" stroke-width="2"/>
+  <text class="label inverse" x="700" y="162" text-anchor="middle">根插件树</text>
+  </g>
+  <rect x="48" y="212" width="632" height="280" rx="16" fill="#f6f8fb" stroke="#d7e1ec" stroke-width="2"/>
+  <rect x="720" y="212" width="632" height="280" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="copy" x="364" y="254" text-anchor="middle">公共运行能力</text>
+  <text class="copy" x="1036" y="254" text-anchor="middle">Web 应用能力</text>
+  <path class="tree" d="M364 182V198H72V446M72 274H372V376M1036 182V198H744V446M744 274H1044V376"/>
+  <path class="tree" d="M72 306H104M372 306H392M72 376H104M372 376H392M72 446H236"/>
+  <path class="tree" d="M744 306H776M1044 306H1064M744 376H776M1044 376H1064M744 446H908"/>
+  <g data-node="agent-loop">
+  <rect x="104" y="280" width="248" height="52" rx="16" fill="#fff7f5" stroke="#cf6559" stroke-width="2"/>
+  <text class="node" x="228" y="316" text-anchor="middle">agent-loop</text>
+  </g>
+  <g data-node="fs-sandbox">
+  <rect x="392" y="280" width="260" height="52" rx="16" fill="#fff7f5" stroke="#cf6559" stroke-width="2"/>
+  <text class="node" x="522" y="316" text-anchor="middle">fs-sandbox</text>
+  </g>
+  <g data-node="tools">
+  <rect x="104" y="350" width="248" height="52" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="node" x="228" y="386" text-anchor="middle">tools</text>
+  </g>
+  <g data-node="system-prompt">
+  <rect x="392" y="350" width="260" height="52" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="node" x="522" y="386" text-anchor="middle">system-prompt</text>
+  </g>
+  <g data-node="llm-deepseek">
+  <rect x="236" y="420" width="256" height="52" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="node" x="364" y="456" text-anchor="middle">llm-deepseek</text>
+  </g>
+  <g data-node="host-webserver">
+  <rect x="776" y="280" width="248" height="52" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="node-small" x="900" y="316" text-anchor="middle">host-webserver</text>
+  </g>
+  <g data-node="client-ui-renderer">
+  <rect x="1064" y="280" width="260" height="52" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="node-small" x="1194" y="316" text-anchor="middle">client-ui-renderer</text>
+  </g>
+  <g data-node="message-feedback">
+  <rect x="776" y="350" width="248" height="52" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="node-small" x="900" y="386" text-anchor="middle">message-feedback</text>
+  </g>
+  <g data-node="session-log-export">
+  <rect x="1064" y="350" width="260" height="52" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="node-small" x="1194" y="386" text-anchor="middle">session-log-export</text>
+  </g>
+  <g data-node="agent-presets">
+  <rect x="908" y="420" width="256" height="52" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+  <text class="node-small" x="1036" y="456" text-anchor="middle">agent-presets</text>
+  </g>
+  <path class="expand" d="M1036 472V522"/>
+  <text class="small" x="1070" y="514" text-anchor="start">展开</text>
+  <rect x="48" y="534" width="1304" height="166" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+  <text class="label" x="600" y="580" text-anchor="middle">standard</text>
+  <text class="note" x="800" y="578" text-anchor="middle">预设子树</text>
+  <path class="tree" d="M700 596V612M280 632V612H1120V632M700 612V632"/>
+  <g data-node="tool-todo">
+  <rect x="130" y="632" width="300" height="52" rx="16" fill="#fff" stroke="#a3c6ba" stroke-width="2"/>
+  <text class="node" x="280" y="668" text-anchor="middle">tool-todo</text>
+  </g>
+  <g data-node="tool-goal">
+  <rect x="550" y="632" width="300" height="52" rx="16" fill="#fff" stroke="#a3c6ba" stroke-width="2"/>
+  <text class="node" x="700" y="668" text-anchor="middle">tool-goal</text>
+  </g>
+  <g data-node="tool-web">
+  <rect x="970" y="632" width="300" height="52" rx="16" fill="#fff" stroke="#a3c6ba" stroke-width="2"/>
+  <text class="node" x="1120" y="668" text-anchor="middle">tool-web</text>
+  </g>
+  <text class="small" x="700" y="746" text-anchor="middle">同一预设的会话共享插件装配，各自保留会话状态</text>
+</svg>

@@ -1,39 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="630" viewBox="0 0 640 630" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
-  <title id="title">Web 与 ACP：不同的应用入口</title>
-  <desc id="desc">Web 和 ACP 分别复用 Base Bundle。Web 增加界面、服务和会话级 Preset，面向浏览器用户；ACP 增加协议服务，面向自动化程序。两种 Profile 各自启动运行时。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="500" viewBox="0 0 1400 500" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">Web 与 ACP：改变应用面向谁</title>
+  <desc id="desc">web 和 acp 各自包含公共运行插件，包括模型、Agent Loop、工具和 Session Log。web 增加 Web 服务、浏览器界面和 Agent Presets，面向浏览器用户；acp 增加标准输入输出上的 ACP 协议服务，面向自动化调用方。分组表示能力类别，不表示挂载层级或共同运行实例。</desc>
   <defs>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#496277"/></marker>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <marker id="red-arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#b86252"/></marker>
     <style>
-      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; text-anchor: middle; }
-      .title { font-size: 30px; font-weight: 700; text-anchor: start; }
-      .label { font-size: 28px; font-weight: 600; }
-      .copy { font-size: 24px; }
-      .line { fill: none; stroke: #496277; stroke-width: 2.5; marker-end: url(#arrow); }
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .small { font-size: 24px; fill: #496277; }
+      .inverse { fill: #fff; }
+      .node { font-size: 30px; }
+      .node-small { font-size: 28px; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
+      .withdraw { fill: none; stroke: #b86252; stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linejoin: round; marker-end: url(#red-arrow); }
+      .expand { fill: none; stroke: #496277; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow); }
     </style>
   </defs>
-  <rect width="640" height="630" rx="16" fill="#f6f8fb"/>
-  <text class="title" x="32" y="52">Web 与 ACP：不同的应用入口</text>
-  <rect x="32" y="88" width="576" height="130" rx="12" fill="#ffffff" stroke="#7d9ebc"/>
-  <text class="label" x="320" y="128">Base Bundle</text>
-  <text class="copy" x="320" y="166">模型 · 工具 · 会话持久化</text>
-  <text class="copy" x="320" y="202">权限策略等基础能力</text>
-  <path class="line" d="M320 218V244H170V272"/>
-  <path class="line" d="M320 244H470V272"/>
-  <rect x="32" y="282" width="276" height="276" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
-  <text class="label" x="170" y="324">web</text>
-  <path d="M56 342H284" stroke="#b3c5da"/>
-  <text class="copy" x="170" y="380">Web 应用层</text>
-  <text class="copy" x="170" y="420">界面与服务</text>
-  <text class="copy" x="170" y="460">会话级 Preset</text>
-  <rect x="52" y="486" width="236" height="52" rx="8" fill="#ffffff"/>
-  <text class="copy" x="170" y="520">浏览器中的人</text>
-  <rect x="332" y="282" width="276" height="276" rx="12" fill="#e5eef9" stroke="#7d9ebc"/>
-  <text class="label" x="470" y="324">acp</text>
-  <path d="M356 342H584" stroke="#b3c5da"/>
-  <text class="copy" x="470" y="380">ACP 应用层</text>
-  <text class="copy" x="470" y="420">协议服务</text>
-  <text class="copy" x="470" y="460">请求与更新</text>
-  <rect x="352" y="486" width="236" height="52" rx="8" fill="#ffffff"/>
-  <text class="copy" x="470" y="520">自动化程序</text>
-  <text class="copy" x="320" y="604">各自启动运行时，复用配置与插件</text>
+  <rect width="1400" height="500" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">Web 与 ACP：改变应用面向谁</text>
+  <text class="note" x="700" y="100" text-anchor="middle">复用公共能力，组合不同的应用入口</text>
+  <rect x="48" y="130" width="632" height="282" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <rect x="720" y="130" width="632" height="282" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
+  <text class="label" x="80" y="182" text-anchor="start">web</text>
+  <text class="copy" x="648" y="180" text-anchor="end">浏览器用户</text>
+  <text class="label" x="752" y="182" text-anchor="start">acp</text>
+  <text class="copy" x="1320" y="180" text-anchor="end">自动化调用方</text>
+  <g data-node="web-base">
+  <rect x="80" y="212" width="568" height="64" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2" />
+  <text class="note" x="364" y="254" text-anchor="middle">模型 · Agent Loop · 工具 · Session Log</text>
+  </g>
+  <g data-node="acp-base">
+  <rect x="752" y="212" width="568" height="64" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2" />
+  <text class="note" x="1036" y="254" text-anchor="middle">模型 · Agent Loop · 工具 · Session Log</text>
+  </g>
+  <g data-node="web-app">
+  <rect x="80" y="294" width="568" height="100" rx="16" fill="#fff" stroke="#fff" stroke-width="2" />
+  <text class="copy" x="364" y="336" text-anchor="middle">Web 服务 · 浏览器界面</text>
+  <text class="note" x="364" y="380" text-anchor="middle">会话级 Agent Presets</text>
+  </g>
+  <g data-node="acp-app">
+  <rect x="752" y="294" width="568" height="100" rx="16" fill="#fff" stroke="#fff" stroke-width="2" />
+  <text class="copy" x="1036" y="336" text-anchor="middle">ACP 协议服务</text>
+  <text class="note" x="1036" y="380" text-anchor="middle">标准输入输出 · 请求与会话更新</text>
+  </g>
+  <text class="note" x="700" y="470" text-anchor="middle">各自启动运行时；能力分组不表示插件父子关系</text>
 </svg>
