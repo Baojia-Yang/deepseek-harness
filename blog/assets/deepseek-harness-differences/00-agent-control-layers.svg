@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">定制 Agent：能改到哪一层？</title>
+  <desc id="desc">从上到下是 Model、Harness 和 Capability Assets 三个分析层次，不表示执行顺序。Model 是模型权重与持久配置，不是本次插件机制比较的重点；两者都能扩展 Prompt、Skill 和工具描述等能力资产。中间的 Harness 层横向对照：Claude Code 通过配置和 Hooks 等既定扩展点定制行为，公开插件机制未提供内置运行组件的替换入口；DSH 还支持用符合接口的独立插件和配置组合，非侵入式替换 Agent Loop、LLM 适配和工具调用系统，无需直接修改原有实现。</desc>
+  <defs>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .heading { font-size: 30px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .inverse { fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1400" height="650" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">定制 Agent：能改到哪一层？</text>
+  <text class="note" x="184" y="126" text-anchor="middle">定制对象</text>
+  <text class="label" x="596" y="126" text-anchor="middle">Claude Code</text>
+  <text class="label" x="1112" y="126" text-anchor="middle">DSH</text>
+
+  <g data-node="model-label">
+    <rect x="48" y="154" width="272" height="104" rx="16" fill="#f6f8fb" stroke="#d7e1ec" stroke-width="2"/>
+    <text class="label" x="184" y="198" text-anchor="middle">Model</text>
+    <text class="note" x="184" y="248" text-anchor="middle">模型本体</text>
+  </g>
+  <g data-node="model">
+    <rect x="354" y="154" width="998" height="104" rx="16" fill="#f6f8fb" stroke="#d7e1ec" stroke-width="2"/>
+    <text class="copy" x="853" y="198" text-anchor="middle">模型权重与持久配置</text>
+    <text class="note" x="853" y="248" text-anchor="middle">不作为本次插件机制的比较重点</text>
+  </g>
+
+  <g data-node="harness-label">
+    <rect x="48" y="282" width="272" height="208" rx="16" fill="#17324d" stroke="#17324d" stroke-width="2"/>
+    <text class="label inverse" x="184" y="350" text-anchor="middle">Harness</text>
+    <text class="copy inverse" x="184" y="406" text-anchor="middle">Agent Runtime</text>
+    <text class="note inverse" x="184" y="450" text-anchor="middle">怎样组织运行</text>
+  </g>
+  <g data-node="claude-harness">
+    <rect x="354" y="282" width="482" height="208" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="heading" x="595" y="332" text-anchor="middle">通过既定扩展点定制行为</text>
+    <text class="copy" x="595" y="378" text-anchor="middle">配置 · Hooks</text>
+    <text class="note" x="595" y="424" text-anchor="middle">公开插件机制</text>
+    <text class="note" x="595" y="464" text-anchor="middle">未提供内置运行组件的替换入口</text>
+  </g>
+  <g data-node="dsh-harness">
+    <rect x="870" y="282" width="482" height="208" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+    <text class="heading" x="1111" y="332" text-anchor="middle">还可非侵入式替换运行组件</text>
+    <text class="copy" x="1111" y="378" text-anchor="middle">Agent Loop · LLM 适配</text>
+    <text class="copy" x="1111" y="424" text-anchor="middle">工具注册 · 调度 · 执行</text>
+    <text class="note" x="1111" y="464" text-anchor="middle">独立插件，通过配置组合</text>
+  </g>
+
+  <g data-node="assets-label">
+    <rect x="48" y="514" width="272" height="104" rx="16" fill="#f6f8fb" stroke="#d7e1ec" stroke-width="2"/>
+    <text class="heading" x="184" y="558" text-anchor="middle">Capability Assets</text>
+    <text class="note" x="184" y="608" text-anchor="middle">可加载的能力资产</text>
+  </g>
+  <g data-node="assets">
+    <rect x="354" y="514" width="998" height="104" rx="16" fill="#f6f8fb" stroke="#d7e1ec" stroke-width="2"/>
+    <text class="copy" x="853" y="558" text-anchor="middle">均可扩展：Prompt · Skill · 工具描述等</text>
+    <text class="note" x="853" y="608" text-anchor="middle">这些资产由运行机制加载和使用</text>
+  </g>
+</svg>
