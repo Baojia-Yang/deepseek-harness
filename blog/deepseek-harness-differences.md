@@ -1,7 +1,8 @@
 # DeepSeek Harness 有什么不同：从插件组合到会话恢复
 
-![](./deepseek-harness-differences.assets/image-2.png)## 概述
+![](./deepseek-harness-differences.assets/image-2.png)
 
+## 概述
 给 Agent 增加一个工具，和改变 Agent 的运行方式，是一回事吗？
 
 用过 Claude Code 的人，对接入工具、添加 Skill 应该不陌生。比起继续增加能力，我更关心另一个问题：如果想替换 Agent Loop、模型接入或工具调用系统，是否必须直接修改原有实现？
