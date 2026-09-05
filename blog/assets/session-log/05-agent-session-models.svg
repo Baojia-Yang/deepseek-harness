@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 880" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="880" viewBox="0 0 1200 880" role="img" aria-labelledby="title desc">
   <title id="title">不同 Agent 系统的会话中心</title>
   <desc id="desc">DeepSeek Harness 以不可改写的会话事实日志为中心，并派生模型上下文、用户历史和产品状态。Claude Code 以 transcript 为中心，Codex 以 Thread、Turn 和 Item 为中心，OpenAI Agents SDK 以消息 items 集合为中心，LangGraph 以图状态 checkpoint 为中心。</desc>
   <defs>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
   <title id="title">从工具可见性到 Sandbox 强制执行</title>
   <desc id="desc">Agent Preset 决定 Agent 是否看到 Bash 工具，Permission Preset 决定会话的 Sandbox 模式和 Approval 策略，Profile 与 Bundle 安装执行基础设施。工具调用解析有效策略后由 Sandbox Backend 强制执行；显式升权请求可经过一次性 Approval。</desc>
   <defs>

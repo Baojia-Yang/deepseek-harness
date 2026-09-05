@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">Cordis 的系统责任</title>
   <desc id="desc">Cordis 接收一棵目标 Plugin Tree，通过 Context、Service 依赖、Service 与 Event、Fiber 与 Effect 四类机制，将它维持为可组合、可隔离、可替换、可重组的运行系统。</desc>
   <defs>

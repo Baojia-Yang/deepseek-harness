@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">Service 依赖决定 Plugin 何时运行</title>
   <desc id="desc">Consumer 把所需 Service 声明为运行条件。Service 不可用时 Consumer 等待；Provider 提供稳定 Service 后依赖得到满足，Consumer 自动进入运行状态。</desc>
   <defs>

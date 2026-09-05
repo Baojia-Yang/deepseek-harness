@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
   <title id="title">同一段历史的三种继续方式</title>
   <desc id="desc">正常恢复沿用原 Session ID 并在完整历史后继续追加；Fork 从选定的已完成前缀创建新 Session ID，原会话保持不变；崩溃恢复沿用原 ID，先追加中断或工具结果未知的说明，再继续工作。</desc>
   <defs>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
   <title id="title">DeepSeek Harness 的两条装配轴</title>
   <desc id="desc">上半部分展示 Plugin 由 Bundle 配置和分发，Bundle 由 Profile 有序叠加，Profile 启动 DSH 进程。下半部分展示 Agent Preset 与宿主运行时共同形成 Agent 实例，Session Log 保存该实例的动态状态。</desc>
   <defs>

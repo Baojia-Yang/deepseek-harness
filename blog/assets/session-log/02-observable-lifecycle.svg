@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
   <title id="title">Session 对外生命周期</title>
   <desc id="desc">一个 Session 获得稳定标识后，在多轮交互中持续追加历史。关闭运行实例不会删除持久会话；恢复同一标识后，旧历史用于重建上下文，新工作继续追加，旧更新不会被当作新事件再次播放。</desc>
   <defs>

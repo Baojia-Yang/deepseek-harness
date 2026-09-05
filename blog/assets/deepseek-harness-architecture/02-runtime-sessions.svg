@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
   <title id="title">一个 Web Runtime 中的多个 Agent</title>
   <desc id="desc">一个 Web Profile 启动的 DSH 进程包含共享宿主能力，以及 standard 和 minimal 两个 Agent Preset scope。Session A 和 C 加入 standard，Session B 加入 minimal；每个 Session 都拥有独立的日志和动态状态。</desc>
   <defs>

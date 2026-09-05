@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">Cordis 运行时重组</title>
   <desc id="desc">当 Provider A 被 Provider B 替换时，稳定 Service 暂时不可用，依赖它的 Consumer 暂停并撤销 Effect；新 Provider 恢复 Service 后 Consumer 重新运行并创建新 Effect。不依赖该 Service 的 Plugin 持续运行。</desc>
   <defs>

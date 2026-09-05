@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
   <title id="title">压缩改变模型所见，不删除会话事实</title>
   <desc id="desc">压缩前，完整日志、用户历史和模型上下文都包含消息 A、B、C。压缩后，日志继续保留 A、B、C，并追加压缩记录、摘要 S 和后续消息 D；用户历史仍保留原始对话，而模型上下文只使用摘要 S 和消息 D。</desc>
   <defs>

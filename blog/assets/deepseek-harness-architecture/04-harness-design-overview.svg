@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
   <title id="title">DeepSeek Harness 的组合、运行与记录模型</title>
   <desc id="desc">应用级 Profile、Bundle 和 Patch，以及会话级 Preset，从左侧装配进入中间的 Cordis 运行时。运行时中的会话事实持续追加到右侧 Session Log，再派生模型上下文、用户历史和产品状态。</desc>
   <defs>

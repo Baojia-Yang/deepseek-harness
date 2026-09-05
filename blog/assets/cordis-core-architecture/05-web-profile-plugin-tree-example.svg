@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 940" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="940" viewBox="0 0 1200 940" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">web Profile 的 Plugin Tree 示例</title>
   <desc id="desc">展示 web Profile 由 dsh-base 和 dsh-web-app 两个 Bundle 贡献 Plugin。dsh-base 提供 Agent Runtime 基础，dsh-web-app 提供 Web 入口和 Agent Preset Roster；Preset 由不同 Session 独立选择。</desc>
   <defs>

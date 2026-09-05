@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">Plugin、Bundle 与 Profile 的分层关系</title>
   <desc id="desc">从上到下展示 Profile 选择应用组合，Bundle 提供可复用装配，Plugin Tree 声明最终插件集合，Cordis Core 负责作用域、生命周期与依赖管理。</desc>
   <defs>

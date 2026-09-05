@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">Fiber 与 Effect 的生命周期所有权</title>
   <desc id="desc">Plugin 是可复用行为定义。每次挂载产生一个 Fiber 运行实例，运行期间创建的 Service 注册、Event 监听、子 Plugin 和连接等 Effect 都归该 Fiber 所有；Fiber 卸载时这些资源统一撤销。</desc>
   <defs>

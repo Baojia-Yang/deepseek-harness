@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">Plugin Tree 与 Context 的空间模型</title>
   <desc id="desc">Plugin Tree 描述系统挂载了哪些 Plugin 以及它们的包含关系；Context 描述各作用域可以看到哪些 Service。子 Context 继承公共 Service，也可以拥有隔离的 Service。</desc>
   <defs>

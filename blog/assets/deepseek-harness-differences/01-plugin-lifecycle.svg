@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="460" viewBox="0 0 1400 460" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="580" viewBox="0 0 1400 580" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
   <title id="title">插件与注册一同进入和退出</title>
-  <desc id="desc">工具插件加载时向工具注册表注册能力，卸载时撤销自己的注册。Agent 下一次组装工具列表时读取当前可用工具。实线连接加载与注册，红色虚线表示撤销；注册表向右提供当前工具列表。</desc>
+  <desc id="desc">工具插件加载时向工具注册表注册能力，卸载时撤销自己的注册。Agent 下一次组装工具列表时读取当前可用工具。实线连接加载与注册，红色虚线表示撤销；注册表向下提供当前工具列表。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
     <marker id="red-arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#b86252"/></marker>
@@ -20,31 +20,31 @@
       .expand { fill: none; stroke: #496277; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow); }
     </style>
   </defs>
-  <rect width="1400" height="460" fill="#fff"/>
+  <rect width="1400" height="580" fill="#fff"/>
   <text class="title" x="700" y="54" text-anchor="middle">插件与注册一同进入和退出</text>
   <g data-node="load">
-  <rect x="48" y="124" width="344" height="128" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2" />
-  <text class="label" x="220" y="174" text-anchor="middle">加载工具插件</text>
-  <text class="copy" x="220" y="226" text-anchor="middle">注册能力</text>
+    <rect x="48" y="100" width="632" height="116" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+    <text class="label" x="364" y="146" text-anchor="middle">加载工具插件</text>
+    <text class="copy" x="364" y="194" text-anchor="middle">注册能力</text>
   </g>
   <g data-node="unload">
-  <rect x="48" y="278" width="344" height="128" rx="16" fill="#fce9e3" stroke="#cb8875" stroke-width="2" stroke-dasharray="7 6"/>
-  <text class="label" x="220" y="328" text-anchor="middle">卸载工具插件</text>
-  <text class="copy" x="220" y="380" text-anchor="middle">撤销注册</text>
+    <rect x="720" y="100" width="632" height="116" rx="16" fill="#fce9e3" stroke="#cb8875" stroke-width="2" stroke-dasharray="7 6"/>
+    <text class="label" x="1036" y="146" text-anchor="middle">卸载工具插件</text>
+    <text class="copy" x="1036" y="194" text-anchor="middle">撤销注册</text>
   </g>
-  <path class="flow" d="M392 188H462V230H540"/>
-  <path class="withdraw" d="M392 342H462V298H540"/>
+  <path class="flow" d="M364 216V252"/>
+  <path class="withdraw" d="M1036 216V252"/>
   <g data-node="registry">
-  <rect x="552" y="186" width="340" height="156" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2" />
-  <text class="label" x="722" y="244" text-anchor="middle">工具注册表</text>
-  <text class="copy" x="722" y="298" text-anchor="middle">当前可用工具</text>
+    <rect x="48" y="264" width="1304" height="80" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="550" y="316" text-anchor="middle">工具注册表</text>
+    <text class="copy" x="850" y="314" text-anchor="middle">当前可用工具</text>
   </g>
-  <path class="flow" d="M892 264H1036"/>
-  <text class="small" x="964" y="238" text-anchor="middle">当前工具</text>
+  <path class="flow" d="M700 344V396"/>
+  <text class="small" x="736" y="382" text-anchor="start">当前工具</text>
   <g data-node="agent">
-  <rect x="1048" y="186" width="304" height="156" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2" />
-  <text class="label" x="1200" y="244" text-anchor="middle">Agent</text>
-  <text class="note" x="1200" y="298" text-anchor="middle">下一次组装工具列表</text>
+    <rect x="48" y="408" width="1304" height="96" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="530" y="468" text-anchor="middle">Agent</text>
+    <text class="note" x="830" y="466" text-anchor="middle">下一次组装工具列表</text>
   </g>
-  <text class="note" x="700" y="442" text-anchor="middle">注册效果随插件生命周期管理</text>
+  <text class="note" x="700" y="556" text-anchor="middle">注册效果随插件生命周期管理</text>
 </svg>
