@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="610" viewBox="0 0 1400 610" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">会话恢复之外，开发者还能定制什么</title>
+  <desc id="desc">两者都能保存会话、恢复历史和分叉继续。左侧示例展示开发者调用 Claude Code 的公开恢复或分叉接口，继续已有会话。右侧示例展示 DSH 插件新增会话状态，将状态变化写入 Session Log，再从日志重建新增状态。DSH 还允许扩展事件与视图、替换持久化实现。箭头分别表示会话操作顺序与新增状态的记录和恢复流程；两侧不是全部能力清单，重建会话状态也不表示恢复整个运行环境。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .inverse { fill: #fff; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1400" height="610" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">会话恢复之外，开发者还能定制什么</text>
+
+  <g data-node="shared-capabilities">
+    <rect x="48" y="96" width="1304" height="64" rx="16" fill="#17324d"/>
+    <text class="copy inverse" x="700" y="139" text-anchor="middle">共有能力：保存会话 · 恢复历史 · 分叉继续</text>
+  </g>
+
+  <rect x="48" y="194" width="632" height="364" rx="16" fill="#f5f8fc" stroke="#7d9ebc" stroke-width="2"/>
+  <text class="label" x="364" y="242" text-anchor="middle">Claude Code</text>
+  <g data-node="cc-developer">
+    <rect x="80" y="270" width="568" height="58" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="copy" x="364" y="310" text-anchor="middle">开发者</text>
+  </g>
+  <path class="flow" d="M364 328V348"/>
+  <g data-node="cc-public-operations">
+    <rect x="80" y="360" width="568" height="58" rx="16" fill="#fff" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="copy" x="364" y="400" text-anchor="middle">调用公开恢复／分叉接口</text>
+  </g>
+  <path class="flow" d="M364 418V438"/>
+  <g data-node="cc-continued-session">
+    <rect x="80" y="450" width="568" height="58" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="copy" x="364" y="490" text-anchor="middle">继续已有会话</text>
+  </g>
+  <text class="note" x="364" y="544" text-anchor="middle">公开会话操作示例</text>
+
+  <rect x="720" y="194" width="632" height="364" rx="16" fill="#f5fbf8" stroke="#6b9e90" stroke-width="2"/>
+  <text class="label" x="1036" y="242" text-anchor="middle">DSH</text>
+  <g data-node="dsh-plugin-state">
+    <rect x="752" y="270" width="568" height="58" rx="16" fill="#fff" stroke="#6b9e90" stroke-width="2"/>
+    <text class="copy" x="1036" y="310" text-anchor="middle">插件增加会话状态</text>
+  </g>
+  <path class="flow" d="M1036 328V348"/>
+  <g data-node="dsh-session-log">
+    <rect x="752" y="360" width="568" height="58" rx="16" fill="#17324d"/>
+    <text class="copy inverse" x="1036" y="400" text-anchor="middle">状态变化写入 Session Log</text>
+  </g>
+  <path class="flow" d="M1036 418V438"/>
+  <g data-node="dsh-rebuilt-state">
+    <rect x="752" y="450" width="568" height="58" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+    <text class="copy" x="1036" y="490" text-anchor="middle">从日志重建新增状态</text>
+  </g>
+  <text class="note" x="1036" y="544" text-anchor="middle">可扩展事件与视图 · 可替换持久化</text>
+
+  <text class="note" x="700" y="594" text-anchor="middle">示例对照：公开会话操作与插件扩展，不表示全部能力</text>
+</svg>
