@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="500" viewBox="0 0 1400 500" role="img" aria-labelledby="title desc" xml:lang="zh-CN">
+  <title id="title">同一套 Harness，支撑多种产品形态</title>
+  <desc id="desc">DeepSeek Harness 提供 Agent Loop、模型接入、工具执行和会话等公共运行机制。通过按需组合能力与入口，可以支撑面向浏览器的 DSH Web、面向自动化调用方的 DSH ACP、供应用集成的 DSH SDK，以及复用 Web 界面、Host 服务和插件系统的独立社区项目 DSH Desktop。连线表示公共机制的复用与组合，不表示插件挂载层级或同一个运行实例。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#496277"/></marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #17324d; }
+      .title { font-size: 40px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 600; }
+      .copy { font-size: 30px; }
+      .note { font-size: 26px; fill: #496277; }
+      .inverse { fill: #fff; }
+      .flow { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; marker-end: url(#arrow); }
+      .tree { fill: none; stroke: #496277; stroke-width: 2.5; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect width="1400" height="500" fill="#fff"/>
+  <text class="title" x="700" y="54" text-anchor="middle">同一套 Harness，支撑多种产品形态</text>
+
+  <g data-node="harness">
+    <rect x="48" y="106" width="1304" height="112" rx="16" fill="#17324d" stroke="#17324d" stroke-width="2"/>
+    <text class="label inverse" x="700" y="152" text-anchor="middle">DeepSeek Harness 公共运行机制</text>
+    <text class="copy inverse" x="700" y="200" text-anchor="middle">Agent Loop · 模型接入 · 工具执行 · 会话</text>
+  </g>
+
+  <path class="tree" d="M700 218V252M199 252H1201"/>
+  <path class="flow" d="M199 252V310"/>
+  <path class="flow" d="M533 252V310"/>
+  <path class="flow" d="M867 252V310"/>
+  <path class="flow" d="M1201 252V310"/>
+  <text class="note" x="700" y="302" text-anchor="middle">按需组合 · 产品扩展</text>
+
+  <g data-node="web">
+    <rect x="48" y="326" width="302" height="124" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="199" y="374" text-anchor="middle">DSH Web</text>
+    <text class="copy" x="199" y="426" text-anchor="middle">浏览器使用</text>
+  </g>
+  <g data-node="acp">
+    <rect x="382" y="326" width="302" height="124" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="533" y="374" text-anchor="middle">DSH ACP</text>
+    <text class="copy" x="533" y="426" text-anchor="middle">自动化接入</text>
+  </g>
+  <g data-node="sdk">
+    <rect x="716" y="326" width="302" height="124" rx="16" fill="#e5eef9" stroke="#7d9ebc" stroke-width="2"/>
+    <text class="label" x="867" y="374" text-anchor="middle">DSH SDK</text>
+    <text class="copy" x="867" y="426" text-anchor="middle">应用集成</text>
+  </g>
+  <g data-node="desktop">
+    <rect x="1050" y="326" width="302" height="124" rx="16" fill="#dff2ec" stroke="#6b9e90" stroke-width="2"/>
+    <text class="label" x="1201" y="374" text-anchor="middle">DSH Desktop</text>
+    <text class="copy" x="1201" y="426" text-anchor="middle">第三方桌面产品</text>
+  </g>
+
+  <text class="note" x="700" y="486" text-anchor="middle">复用同一套机制，各自组合应用</text>
+</svg>
