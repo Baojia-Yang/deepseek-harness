@@ -1,6 +1,7 @@
 # DeepSeek Harness 有什么不同：从插件组合到会话恢复
 
-![](./deepseek-harness-differences.assets/image-2.png)\## 概述
+![](./deepseek-harness-differences.assets/image-2.png)
+## 概述
 
 给 Agent 增加一个工具，和改变 Agent 的运行方式，是一回事吗？
 
@@ -173,7 +174,7 @@ Web 面向浏览器中的人，所以组合里有 Web 服务、会话界面、�
 
 下面是 DSH Web 的“轨迹”视图。它把会话事件整理成按轮次和步骤组织的记录，并用顶部时间概览展示输入、模型与工具活动。**这里看到的是 Session Log 的一种可视化呈现，不是原始日志文件本身。**
 
-[![DSH Web 的轨迹视图：顶部时间概览区分输入、模型和工具活动；下方按轮次展示系统提示、用户输入、注入的上下文、助手内容和工具调用](deepseek-harness-differences.assets/session-log-trajectory.png)](deepseek-harness-differences.assets/session-log-trajectory.png)*图 11：一次调研会话留下的执行记录。截图由作者提供；点击图片可查看原图。*
+![DSH Web 的轨迹视图：顶部时间概览区分输入、模型和工具活动；下方按轮次展示系统提示、用户输入、注入的上下文、助手内容和工具调用](deepseek-harness-differences.assets/session-log-trajectory.png)*图 11：一次调研会话留下的执行记录。截图由作者提供；点击图片可查看原图。*
 
 读这张图，可以先看三个地方：
 
@@ -207,7 +208,7 @@ DSH 把这件事规定为一条架构规则：**模型可见的内容，必须�
 
 比如，你通过插件增加了一项需要在恢复后保留的会话状态，就可以把它的变化写成事件，再从历史事件恢复相应状态。这样，插件体系与 Session Log 就连起来了：新增能力也能参与会话的记录与延续。
 
-[![两者都能保存、恢复和分叉会话；左侧展示 Claude Code 的公开会话操作，右侧展示 DSH 插件将新增状态写入 Session Log 并在恢复时重建](assets/deepseek-harness-differences/09-session-extensibility.svg)](assets/deepseek-harness-differences/09-session-extensibility.svg)*图 13：恢复会话是共有能力；DSH 的插件体系让新增状态也能参与记录、展示与恢复。图中比较的是本节讨论的公开使用和扩展方式。*
+![两者都能保存、恢复和分叉会话；左侧展示 Claude Code 的公开会话操作，右侧展示 DSH 插件将新增状态写入 Session Log 并在恢复时重建](assets/deepseek-harness-differences/09-session-extensibility.svg)*图 13：恢复会话是共有能力；DSH 的插件体系让新增状态也能参与记录、展示与恢复。图中比较的是本节讨论的公开使用和扩展方式。*
 
 ---
 
